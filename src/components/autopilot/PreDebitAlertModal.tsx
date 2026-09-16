@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TaxDueItem, UserProfile } from '../../types/tax';
 import { formatINR } from '../../services/taxCalculator';
 import {
@@ -36,6 +36,18 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
   const [settlementStage, setSettlementStage] = useState<'preview' | 'processing' | 'success'>('preview');
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [generatedChallanId, setGeneratedChallanId] = useState<string>('');
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && settlementStage !== 'processing') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose, settlementStage]);
 
   if (!isOpen) return null;
 
@@ -117,10 +129,15 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-lg w-full overflow-hidden shadow-m3-4 border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && settlementStage !== 'processing') onClose();
+      }}
+    >
+      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-lg w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-m3-4 border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404]">
+        <div className="p-5 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center">
               <Smartphone className="w-5 h-5" />
@@ -143,16 +160,20 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
             disabled={settlementStage === 'processing'}
-            className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer shrink-0"
+            title="Close Preview (Esc)"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* STAGE 1: WhatsApp Pre-Debit Notice Preview */}
-        {settlementStage === 'preview' && (
+        {/* Scrollable Modal Body */}
+        <div className="flex-1 overflow-y-auto">
+          {/* STAGE 1: WhatsApp Pre-Debit Notice Preview */}
+          {settlementStage === 'preview' && (
           <>
             <div className="p-5 bg-slate-100 dark:bg-[#050505] flex flex-col items-center transition-colors">
               <div className="w-full max-w-sm bg-[#EFEAE2] dark:bg-[#111B21] rounded-3xl p-4 shadow-sm border border-slate-300/60 dark:border-[#202C33] text-slate-800 dark:text-slate-200 text-xs space-y-3">
@@ -380,6 +401,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
             </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

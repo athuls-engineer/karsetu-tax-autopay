@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AutopayMode, ProfileType, UserProfile } from '../../types/tax';
 import { formatINR } from '../../services/taxCalculator';
 import { allMunicipalities } from '../../data/municipalities';
@@ -41,6 +41,18 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
   const [autopayMode, setAutopayMode] = useState<AutopayMode>('direct_sweep');
   const [upiId, setUpiId] = useState('rahul@okhdfcbank');
   const [isVerifying, setIsVerifying] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -96,13 +108,18 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-3xl max-w-xl w-full overflow-hidden shadow-m3-4 border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="bg-white dark:bg-[#0A0A0A] rounded-3xl max-w-xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-m3-4 border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors my-auto">
         {/* Progress Bar & Header */}
-        <div className="p-6 border-b border-slate-100 dark:border-white/[0.08] bg-m3-surface-container-low dark:bg-[#040404]">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-full bg-m3-primary text-white text-xs font-bold flex items-center justify-center">
+              <span className="w-8 h-8 rounded-full bg-m3-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
                 {step}/3
               </span>
               <div>
@@ -119,10 +136,12 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
               </div>
             </div>
             <button
+              type="button"
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer shrink-0"
+              title="Close Setup Wizard (Esc)"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
@@ -135,9 +154,11 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
           </div>
         </div>
 
-        {/* Step 1: Profile Type */}
-        {step === 1 && (
-          <div className="p-6 space-y-4">
+        {/* Scrollable Step Content Body */}
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
+          {/* Step 1: Profile Type */}
+          {step === 1 && (
+            <div className="space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
               What best describes your income?
             </span>
@@ -205,7 +226,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
 
         {/* Step 2: Connect Sources */}
         {step === 2 && (
-          <div className="p-6 space-y-4">
+          <div className="space-y-4">
             <div>
               <label className="text-xs font-bold text-slate-700 dark:text-neutral-300 block mb-1">
                 Permanent Account Number (PAN)
@@ -350,7 +371,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
 
         {/* Step 3: Autopilot Mandate Activation */}
         {step === 3 && (
-          <div className="p-6 space-y-4">
+          <div className="space-y-4">
             <div className="text-center pb-2">
               <div className="w-12 h-12 rounded-3xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 border border-emerald-200 dark:border-emerald-800/40">
                 <Sparkles className="w-6 h-6 text-emerald-700 dark:text-emerald-400" />
@@ -362,7 +383,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
             </div>
 
             {/* Mode Selector */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setAutopayMode('direct_sweep')}
@@ -376,7 +397,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                   <Landmark className="w-4 h-4 text-blue-700 dark:text-blue-400" />
                   <span>Direct Bank Sweep</span>
                 </div>
-                <p className="text-[10px] text-slate-500 dark:text-neutral-400">Debits bank directly on tax due date</p>
+                <p className="text-[10px] text-slate-500 dark:text-neutral-400">Pay directly from bank account via UPI</p>
               </button>
 
               <button
@@ -419,24 +440,42 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
             </div>
           </div>
         )}
+        </div>
 
         {/* Footer Navigation */}
-        <div className="p-5 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-white dark:bg-[#040404]">
+        <div className="p-4 sm:p-5 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-white dark:bg-[#040404] shrink-0">
           {step > 1 ? (
-            <button
-              onClick={() => setStep((step - 1) as 1 | 2)}
-              className="px-4 py-2 text-xs font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-slate-200"
-            >
-              Back
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setStep((step - 1) as 1 | 2)}
+                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-[#141414] transition-colors cursor-pointer"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-3 py-2 text-xs font-medium text-slate-400 hover:text-slate-700 dark:hover:text-neutral-300 transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
           ) : (
-            <div />
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-neutral-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-[#141414] transition-colors cursor-pointer"
+            >
+              Cancel & Close
+            </button>
           )}
 
           <button
+            type="button"
             onClick={handleStepNext}
             disabled={isVerifying}
-            className="px-6 py-2.5 rounded-2xl text-xs font-bold bg-m3-primary hover:bg-m3-primary-hover text-white shadow-sm transition-all flex items-center gap-1.5"
+            className="px-6 py-2.5 rounded-2xl text-xs font-bold bg-m3-primary hover:bg-m3-primary-hover text-white shadow-sm transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
           >
             {isVerifying ? (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

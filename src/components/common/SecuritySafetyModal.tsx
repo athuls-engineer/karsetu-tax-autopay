@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ShieldCheck,
   X,
@@ -33,6 +33,16 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
   const [activeTab, setActiveTab] = useState<'trail' | 'architecture' | 'simulator' | 'faq'>(initialTab);
   const [simState, setSimState] = useState<'idle' | 'testing' | 'blocked'>('idle');
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleRunSim = () => {
@@ -43,10 +53,15 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-3xl w-full max-h-[92vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404]">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
@@ -67,15 +82,17 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+            aria-label="Close security modal"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Navigation (Responsive Segmented Control - Zero Spillage) */}
-        <div className="px-4 sm:px-6 pt-3 pb-2.5 bg-slate-50/70 dark:bg-[#070707] border-b border-slate-100 dark:border-white/[0.08]">
+        <div className="px-4 sm:px-6 pt-3 pb-2.5 bg-slate-50/70 dark:bg-[#070707] border-b border-slate-100 dark:border-white/[0.08] shrink-0">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-slate-200/70 dark:bg-[#141414] rounded-2xl text-xs font-bold">
             <button
               onClick={() => setActiveTab('trail')}
@@ -471,14 +488,15 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 flex-wrap gap-2">
+        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 flex-wrap gap-2 shrink-0">
           <span className="flex items-center gap-1.5 font-medium">
             <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>256-Bit SSL/TLS Encryption • DPDP Act 2023 Compliant</span>
           </span>
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold hover:bg-slate-800 dark:hover:bg-neutral-200 transition-colors"
+            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold hover:bg-slate-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer active:scale-95"
           >
             I Understand & Feel Safe
           </button>

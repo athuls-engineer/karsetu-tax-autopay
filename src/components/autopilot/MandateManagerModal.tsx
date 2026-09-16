@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AutopayMode, UserProfile } from '../../types/tax';
 import { formatINR } from '../../services/taxCalculator';
 import {
@@ -36,6 +36,16 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
   const [isActive, setIsActive] = useState<boolean>(user.mandate.isActive);
   const [isSaved, setIsSaved] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSave = () => {
@@ -54,10 +64,15 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white dark:bg-[#080808] rounded-4xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors duration-300">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="bg-white dark:bg-[#080808] rounded-4xl max-w-lg w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-2xl border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors duration-300 my-auto">
         {/* Header */}
-        <div className="p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#030303]">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#030303] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-m3-secondary-container dark:bg-emerald-950/60 text-m3-on-secondary-container dark:text-emerald-300 flex items-center justify-center">
               <Shield className="w-5 h-5 text-m3-secondary dark:text-emerald-400" />
@@ -72,15 +87,17 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-neutral-200 hover:bg-slate-200/60 dark:hover:bg-neutral-800 rounded-full transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-neutral-200 hover:bg-slate-200/60 dark:hover:bg-neutral-800 rounded-full transition-colors cursor-pointer"
+            aria-label="Close settings"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 space-y-6 overflow-y-auto max-h-[75vh]">
+        <div className="p-5 sm:p-6 space-y-6 overflow-y-auto flex-1">
           {/* Theme & Appearance Setting */}
           <div className="p-4 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-3">
             <div className="flex items-center justify-between">
@@ -273,16 +290,18 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-5 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-end gap-3 bg-white dark:bg-[#040404]">
+        <div className="p-5 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-end gap-3 bg-white dark:bg-[#040404] shrink-0">
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-neutral-400 hover:bg-slate-100 dark:hover:bg-neutral-900 transition-colors"
+            className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-neutral-400 hover:bg-slate-100 dark:hover:bg-neutral-900 transition-colors cursor-pointer"
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleSave}
-            className="px-6 py-2.5 rounded-2xl text-xs font-bold bg-m3-primary hover:bg-m3-primary-hover text-white shadow-sm transition-all flex items-center gap-1.5"
+            className="px-6 py-2.5 rounded-2xl text-xs font-bold bg-m3-primary hover:bg-m3-primary-hover text-white shadow-sm transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
           >
             {isSaved ? (
               <>
