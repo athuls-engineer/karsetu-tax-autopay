@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   ChallanReceipt,
   LanguageMode,
@@ -119,8 +119,8 @@ export function App() {
   }, [theme]);
 
   // Recalculate advance tax installments dynamically for current user, synchronized with paidQuarters
-  const baseAdvanceData = calculateAdvanceTaxInstallments(currentUser);
-  const advanceData = {
+  const baseAdvanceData = useMemo(() => calculateAdvanceTaxInstallments(currentUser), [currentUser]);
+  const advanceData = useMemo(() => ({
     ...baseAdvanceData,
     installments: baseAdvanceData.installments.map((inst, index, arr) => {
       const isPaid = paidQuarters.includes(inst.quarter);
@@ -145,7 +145,7 @@ export function App() {
         status: 'upcoming' as const,
       };
     }),
-  };
+  }), [baseAdvanceData, paidQuarters, challans]);
 
   // Dynamic Autopay Confirmation for ANY Tax Category (Direct Tax, BBPS, GST)
   const handleConfirmAutoPay = (taxItem: TaxDueItem, openVaultWithChallanId?: string) => {
