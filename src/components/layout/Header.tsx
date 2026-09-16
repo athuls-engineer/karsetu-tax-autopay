@@ -18,6 +18,7 @@ import {
   Layers,
   CheckCircle2,
 } from 'lucide-react';
+import { KarSetuLogo } from '../common/KarSetuLogo';
 
 interface HeaderProps {
   user: UserProfile;
@@ -92,11 +93,9 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#000000]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] transition-colors duration-300 w-full max-w-full">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4 w-full">
         {/* Brand Logo & Status Pill */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-m3-1 relative overflow-hidden shrink-0">
-            <span className="font-black text-sm sm:text-lg tracking-tighter">KS</span>
-            <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-500 rounded-full border-2 border-white dark:border-black" />
-          </div>
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          <KarSetuLogo size={34} className="sm:hidden" />
+          <KarSetuLogo size={40} className="hidden sm:inline-flex" />
 
           <div className="flex items-center gap-2">
             <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
