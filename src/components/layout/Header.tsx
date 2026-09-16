@@ -94,8 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4 w-full">
         {/* Brand Logo & Status Pill */}
         <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-          <KarSetuLogo size={34} className="sm:hidden" />
-          <KarSetuLogo size={40} className="hidden sm:inline-flex" />
+          <KarSetuLogo className="w-9 h-9 sm:w-10 sm:h-10" />
 
           <div className="flex items-center gap-2">
             <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 interface KarSetuLogoProps {
   size?: number;
@@ -7,10 +7,14 @@ interface KarSetuLogoProps {
 }
 
 export const KarSetuLogo: React.FC<KarSetuLogoProps> = ({
-  size = 40,
+  size = 38,
   className = '',
   showBadge = true,
 }) => {
+  const rawId = useId();
+  // Sanitize React useId for safe SVG ID naming
+  const id = 'ks_' + rawId.replace(/[^a-zA-Z0-9_-]/g, '_');
+
   return (
     <div className={`relative inline-flex items-center justify-center shrink-0 ${className}`}>
       <svg
@@ -19,72 +23,81 @@ export const KarSetuLogo: React.FC<KarSetuLogoProps> = ({
         viewBox="0 0 64 64"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="transform transition-transform hover:scale-105 duration-300 drop-shadow-md"
+        className="w-full h-full transform transition-transform hover:scale-105 duration-300 drop-shadow-md select-none"
       >
         <defs>
-          {/* Sovereign Vault Gradient */}
-          <linearGradient id="ksBaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0B1938" />
-            <stop offset="50%" stopColor="#082154" />
-            <stop offset="100%" stopColor="#020B1E" />
+          {/* Sovereign Midnight Navy Container Gradient */}
+          <linearGradient id={`${id}_bg`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1E3A8A" />
+            <stop offset="45%" stopColor="#0F172A" />
+            <stop offset="100%" stopColor="#020617" />
           </linearGradient>
 
-          {/* Core Setu Arch Gradient (Electric Blue -> Cyan -> Emerald) */}
-          <linearGradient id="ksBridgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#2563EB" />
-            <stop offset="50%" stopColor="#06B6D4" />
+          {/* Upper Bridge Cable / Ascending "K" Arm (Brilliant White to Electric Cyan) */}
+          <linearGradient id={`${id}_upper`} x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="40%" stopColor="#60A5FA" />
+            <stop offset="100%" stopColor="#38BDF8" />
+          </linearGradient>
+
+          {/* Lower Bridge Cable / Foundation Arch (Brilliant White to Emerald Green) */}
+          <linearGradient id={`${id}_lower`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="35%" stopColor="#34D399" />
             <stop offset="100%" stopColor="#10B981" />
           </linearGradient>
 
-          {/* Pillar Gradient (Sovereign Indigo) */}
-          <linearGradient id="ksPillarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#60A5FA" />
-            <stop offset="50%" stopColor="#3B82F6" />
-            <stop offset="100%" stopColor="#1D4ED8" />
+          {/* Sovereign Pylon Mast Gradient */}
+          <linearGradient id={`${id}_pylon`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="60%" stopColor="#93C5FD" />
+            <stop offset="100%" stopColor="#2563EB" />
           </linearGradient>
 
-          {/* Deck Horizontal Ray Gradient */}
-          <linearGradient id="ksDeckGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
-            <stop offset="50%" stopColor="#34D399" />
+          {/* High-Speed Clearance Deck Gradient (Cyan to Amber Gold to Emerald) */}
+          <linearGradient id={`${id}_deck`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#38BDF8" />
+            <stop offset="50%" stopColor="#F59E0B" />
             <stop offset="100%" stopColor="#10B981" />
           </linearGradient>
 
-          {/* Outer Border Rim */}
-          <linearGradient id="ksRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(255, 255, 255, 0.4)" />
-            <stop offset="50%" stopColor="rgba(59, 130, 246, 0.3)" />
-            <stop offset="100%" stopColor="rgba(16, 185, 129, 0.25)" />
+          {/* Subtle Outer Rim Stroke */}
+          <linearGradient id={`${id}_rim`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(255, 255, 255, 0.5)" />
+            <stop offset="50%" stopColor="rgba(56, 189, 248, 0.4)" />
+            <stop offset="100%" stopColor="rgba(16, 185, 129, 0.4)" />
           </linearGradient>
-
-          {/* Glow Filter */}
-          <filter id="ksGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="1.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
         </defs>
 
-        {/* 1. Base Squircle Vessel */}
+        {/* 1. Base Squircle Vessel - High Contrast on both white & black */}
         <rect
-          x="2.5"
-          y="2.5"
-          width="59"
-          height="59"
-          rx="18"
-          fill="url(#ksBaseGrad)"
-          stroke="url(#ksRimGrad)"
+          x="2"
+          y="2"
+          width="60"
+          height="60"
+          rx="16"
+          fill={`url(#${id}_bg)`}
+          stroke={`url(#${id}_rim)`}
           strokeWidth="1.5"
         />
 
-        {/* 2. Precision Architectural Grid & Radiance Lines */}
+        {/* 2. Architectural Bridge Cable Geometry Grid (Subtle) */}
         <path
-          d="M20 18 L46 44 M20 44 L46 18"
-          stroke="white"
-          strokeOpacity="0.04"
+          d="M12 48 Q32 38 52 48"
+          stroke="#38BDF8"
+          strokeOpacity="0.25"
           strokeWidth="1"
           strokeDasharray="2 2"
+          fill="none"
         />
-        <circle cx="32" cy="32" r="22" stroke="white" strokeOpacity="0.03" strokeWidth="1" />
+        <path
+          d="M12 16 Q32 26 52 16"
+          stroke="#38BDF8"
+          strokeOpacity="0.25"
+          strokeWidth="1"
+          strokeDasharray="2 2"
+          fill="none"
+        />
 
         {/* 3. The Left Anchor Pillar of the Setu (Vertical Mast of "K") */}
         <rect
@@ -93,75 +106,85 @@ export const KarSetuLogo: React.FC<KarSetuLogoProps> = ({
           width="7"
           height="34"
           rx="3.5"
-          fill="url(#ksPillarGrad)"
+          fill={`url(#${id}_pylon)`}
         />
-        {/* Pillar Highlight Bead */}
-        <circle cx="18.5" cy="19" r="1.5" fill="#E0F2FE" />
+        {/* Top Pylon Beacon */}
+        <circle cx="18.5" cy="18.5" r="1.5" fill="#FFFFFF" />
 
-        {/* 4. Suspension Cable Lines (Structural Bridge Geometry) */}
-        <line x1="18.5" y1="20" x2="43" y2="20" stroke="#38BDF8" strokeOpacity="0.25" strokeWidth="1" strokeDasharray="1.5 1.5" />
-        <line x1="18.5" y1="44" x2="43" y2="44" stroke="#10B981" strokeOpacity="0.25" strokeWidth="1" strokeDasharray="1.5 1.5" />
-
-        {/* 5. Upper Bridge Beam / Ascending "K" Arm (The Trajectory) */}
+        {/* 4. Upper Bridge Beam / Ascending "K" Arm (Ascending Financial Trajectory) */}
         <path
-          d="M23 29.5 C25 29.5 28 27.5 32 23 L44 17"
-          stroke="url(#ksBridgeGrad)"
+          d="M23 29 C27 28 31 23 45 15"
+          stroke={`url(#${id}_upper)`}
           strokeWidth="5.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          filter="url(#ksGlow)"
         />
 
-        {/* 6. Lower Bridge Arch / Anchoring "K" Leg (The Foundation) */}
+        {/* 5. Lower Bridge Arch / Anchoring "K" Leg (Safety Net & Rock-Solid Compliance) */}
         <path
-          d="M23 34.5 C26 34.5 29 36.5 33 41 L43 47"
-          stroke="url(#ksBridgeGrad)"
+          d="M23 35 C27 36 31 41 45 49"
+          stroke={`url(#${id}_lower)`}
           strokeWidth="5.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          filter="url(#ksGlow)"
         />
 
-        {/* 7. Central High-Speed Deck Span (The Citizen-Treasury Rail) */}
+        {/* 6. Central High-Speed Clearance Deck (Citizen-to-Treasury Highway) */}
         <path
-          d="M13 32 H49"
-          stroke="url(#ksDeckGrad)"
+          d="M11 32 H53"
+          stroke={`url(#${id}_deck)`}
           strokeWidth="2.5"
           strokeLinecap="round"
         />
 
-        {/* 8. Cryptographic Clearance Node (Golden Keystone) */}
+        {/* 7. Apex Clearance Node (Sky/Cyan Terminal) */}
         <circle
-          cx="44"
-          cy="17"
-          r="3"
+          cx="45"
+          cy="15"
+          r="3.5"
           fill="#38BDF8"
           stroke="#FFFFFF"
           strokeWidth="1.5"
         />
         <circle
-          cx="44"
-          cy="17"
+          cx="45"
+          cy="15"
           r="1.2"
           fill="#FFFFFF"
         />
 
-        {/* 9. Treasury Settlement Point (Emerald Terminal) */}
+        {/* 8. Treasury Settlement Node (Emerald Terminal) */}
         <circle
-          cx="43"
-          cy="47"
+          cx="45"
+          cy="49"
+          r="3.5"
+          fill="#10B981"
+          stroke="#FFFFFF"
+          strokeWidth="1.5"
+        />
+        <circle
+          cx="45"
+          cy="49"
+          r="1.2"
+          fill="#FFFFFF"
+        />
+
+        {/* 9. Central Bridge Keystone (Golden Interchange) */}
+        <circle
+          cx="23"
+          cy="32"
           r="2.5"
-          fill="#34D399"
-          stroke="#064E3B"
+          fill="#F59E0B"
+          stroke="#FFFFFF"
           strokeWidth="1"
         />
       </svg>
 
       {/* 10. Live Sovereign Pulse Beacon (Outer Status Ring) */}
       {showBadge && (
-        <span className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center">
+        <span className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center pointer-events-none">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border-2 border-white dark:border-[#020B1E]" />
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border-2 border-white dark:border-[#020617] shadow-xs" />
         </span>
       )}
     </div>
