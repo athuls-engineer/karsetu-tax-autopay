@@ -424,7 +424,7 @@ export function App() {
       />
 
       {/* Main Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-24 sm:pb-8 space-y-6">
         {/* Top Control Bar: Tabs + Quick Calculator & Audit buttons */}
         <div className="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3 w-full">
           {/* Navigation Tabs (Material 3 Expressive Pill Bar) */}

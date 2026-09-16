@@ -22,6 +22,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
   );
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'advance' | 'property' | 'gst'>('all');
+  const [mobileTab, setMobileTab] = useState<'list' | 'receipt'>(activeChallanId ? 'receipt' : 'list');
 
   const handleExportCsv = () => {
     const headers = ['Receipt ID', 'Tax Type', 'Major Head', 'Minor Head', 'PAN / GSTIN', 'Amount (INR)', 'Paid On', 'CIN', 'BSR Code', 'Bank Ref'];
@@ -50,6 +51,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
   useEffect(() => {
     if (activeChallanId) {
       setSelectedChallanId(activeChallanId);
+      setMobileTab('receipt');
     } else if (challans.length > 0 && !challans.some((c) => c.id === selectedChallanId)) {
       setSelectedChallanId(challans[0].id);
     }
@@ -179,10 +181,38 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
           </div>
         </div>
 
+        {/* Mobile View Toggle (Challan List vs View Receipt) */}
+        <div className="lg:hidden px-5 pt-3 shrink-0">
+          <div className="flex items-center p-1 bg-slate-100 dark:bg-[#141414] rounded-2xl border border-slate-200/80 dark:border-white/[0.06]">
+            <button
+              type="button"
+              onClick={() => setMobileTab('list')}
+              className={`flex-1 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                mobileTab === 'list'
+                  ? 'bg-white dark:bg-[#202020] text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 dark:text-neutral-400'
+              }`}
+            >
+              Challan List ({filteredChallans.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileTab('receipt')}
+              className={`flex-1 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                mobileTab === 'receipt'
+                  ? 'bg-white dark:bg-[#202020] text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 dark:text-neutral-400'
+              }`}
+            >
+              View Receipt
+            </button>
+          </div>
+        </div>
+
         {/* Content Layout: Left Selector, Right Viewer */}
         <div className="flex-1 overflow-y-auto p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* List of Receipts (4 cols on lg) */}
-          <div className="lg:col-span-4 space-y-3">
+          <div className={`lg:col-span-4 space-y-3 ${mobileTab === 'receipt' ? 'hidden lg:block' : 'block'}`}>
             <div className="flex items-center justify-between text-xs px-1">
               <span className="font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
                 Filtered Receipts ({filteredChallans.length})
@@ -206,7 +236,10 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
                 return (
                   <button
                     key={challan.id}
-                    onClick={() => setSelectedChallanId(challan.id)}
+                    onClick={() => {
+                      setSelectedChallanId(challan.id);
+                      setMobileTab('receipt');
+                    }}
                     className={`w-full text-left p-4 rounded-2xl border transition-all text-sm flex flex-col gap-1.5 cursor-pointer ${
                       isSelected
                         ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 shadow-sm ring-1 ring-blue-500/20'
@@ -245,7 +278,14 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
           </div>
 
           {/* Detailed Receipt View (8 cols on lg) */}
-          <div className="lg:col-span-8">
+          <div className={`lg:col-span-8 ${mobileTab === 'list' ? 'hidden lg:block' : 'block'}`}>
+            <button
+              type="button"
+              onClick={() => setMobileTab('list')}
+              className="lg:hidden mb-3 text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5 cursor-pointer py-1"
+            >
+              ← Back to all challans
+            </button>
             {currentChallan ? (
               <ChallanReceipt challan={currentChallan} />
             ) : (

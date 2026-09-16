@@ -100,10 +100,10 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="flex items-center gap-2">
             <div className="inline-flex items-baseline gap-1.5 whitespace-nowrap">
-              <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
+              <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
                 KarSetu
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-slate-400 dark:text-neutral-500">
+              <span className="hidden sm:inline text-xs sm:text-sm font-semibold text-slate-400 dark:text-neutral-500">
                 (करसेतु)
               </span>
             </div>
@@ -143,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({
               title="Tools & Utilities"
             >
               <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>Tools</span>
+              <span className="hidden sm:inline">Tools</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
                   isToolsMenuOpen ? 'rotate-180 text-blue-600 dark:text-blue-400' : ''
@@ -286,6 +286,30 @@ export const Header: React.FC<HeaderProps> = ({
                     type="button"
                     onClick={() => {
                       setIsToolsMenuOpen(false);
+                      onOpenLanguageSelector();
+                    }}
+                    className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                      <Globe2 className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-slate-900 dark:text-white">Language / भाषा</span>
+                        <span className="px-1.5 py-0.2 rounded bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 text-[9px] font-black">
+                          {currentLangMeta.nativeName}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                        Available in 9 Indian languages
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsToolsMenuOpen(false);
                       onOpenSettings();
                     }}
                     className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
@@ -305,11 +329,11 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </div>
 
-          {/* 3. Language Selector */}
+          {/* 3. Language Selector (Visible on sm+ screens) */}
           <button
             type="button"
             onClick={onOpenLanguageSelector}
-            className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-800 dark:text-neutral-200 text-xs font-bold border border-slate-200/80 dark:border-white/[0.08] transition-all active:scale-95 cursor-pointer shadow-2xs"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-800 dark:text-neutral-200 text-xs font-bold border border-slate-200/80 dark:border-white/[0.08] transition-all active:scale-95 cursor-pointer shadow-2xs"
             title="Choose Language"
           >
             <Globe2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
