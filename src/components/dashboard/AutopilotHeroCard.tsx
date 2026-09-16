@@ -37,17 +37,17 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
   const displayDesc = isAdvanceTax ? t.heroDesc : (lang === 'hinglish' ? nextTax.easyDesc.hinglish : nextTax.easyDesc.en);
 
   return (
-    <div className="relative overflow-hidden rounded-4xl bg-gradient-to-br from-[#0B57D0] via-[#0842A0] to-[#041E49] dark:from-[#081126] dark:via-[#040813] dark:to-[#000000] text-white p-6 sm:p-8 shadow-m3-3 dark:border dark:border-blue-500/30 dark:shadow-[0_0_50px_-15px_rgba(37,99,235,0.35)] transition-all duration-300">
+    <div className="relative overflow-hidden rounded-3xl sm:rounded-4xl bg-gradient-to-br from-[#0B57D0] via-[#0842A0] to-[#041E49] dark:from-[#081126] dark:via-[#040813] dark:to-[#000000] text-white p-4 sm:p-8 shadow-m3-3 dark:border dark:border-blue-500/30 dark:shadow-[0_0_50px_-15px_rgba(37,99,235,0.35)] transition-all duration-300">
       {/* Background Decorative Circles */}
       <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-blue-400/15 dark:bg-blue-500/10 blur-3xl pointer-events-none" />
       <div className="absolute -left-10 -top-10 w-64 h-64 rounded-full bg-emerald-400/15 dark:bg-emerald-500/10 blur-2xl pointer-events-none" />
 
-      <div className="relative z-10 space-y-6">
+      <div className="relative z-10 space-y-5 sm:space-y-6">
         {/* Top Badges */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
             <span
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+              className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold ${
                 isMandateActive
                   ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
                   : 'bg-rose-500/20 text-rose-300 border border-rose-400/30'
@@ -61,7 +61,7 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
               {isMandateActive ? t.autopayActive : t.autopayPaused}
             </span>
 
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-blue-100 border border-white/10 backdrop-blur-sm">
+            <span className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-white/10 text-blue-100 border border-white/10 backdrop-blur-sm">
               <Zap className="w-3.5 h-3.5 text-amber-300" />
               {user.mandate.mode === 'direct_sweep' ? t.directSweep : t.taxStash}
             </span>
@@ -70,7 +70,7 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onToggleMandatePause}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-white/15 hover:bg-white/25 text-white transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-white/15 hover:bg-white/25 text-white transition-colors cursor-pointer active:scale-95"
             >
               {isMandateActive ? (
                 <>

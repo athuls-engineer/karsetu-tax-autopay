@@ -458,7 +458,7 @@ export function App() {
           </div>
 
           {/* Quick Actions (Calculator, UPI Hub & Audit Log) */}
-          <div className="flex items-center gap-2 shrink-0 self-start xl:self-auto">
+          <div className="flex items-center gap-2 max-w-full overflow-x-auto pb-1 self-start xl:self-auto scrollbar-none">
             <button
               onClick={() => setIsUpiModalOpen(true)}
               className="sm:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-[#071328] text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 text-xs font-bold"
