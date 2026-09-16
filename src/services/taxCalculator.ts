@@ -88,21 +88,27 @@ export function calculateAdvanceTaxInstallments(
   penaltiesPrevented: number;
 } {
   const isSalaried = user.profileType === 'salaried';
-  const totalIncome =
-    user.grossIncome +
-    user.otherIncome +
-    user.capitalGains.stcg * 0.20 + // STCG at 20%
-    user.capitalGains.ltcg * 0.125; // LTCG at 12.5%
+  const normalIncome = user.grossIncome + user.otherIncome;
 
-  const totalCalculatedTax =
+  // Normal income tax under chosen regime (includes 4% cess)
+  const normalTax =
     user.regime === 'new'
-      ? calculateNewRegimeTax(totalIncome, isSalaried)
-      : calculateOldRegimeTax(totalIncome, {
+      ? calculateNewRegimeTax(normalIncome, isSalaried)
+      : calculateOldRegimeTax(normalIncome, {
           stdDeduction: isSalaried ? 50000 : 0,
           sec80C: 150000,
           sec80D: 25000,
           homeLoan24b: 0,
         });
+
+  // Special Rate Taxes under Budget 2024 (with 4% cess):
+  // Section 111A: Short-Term Capital Gains taxed at flat 20%
+  const stcgTax = Math.round(user.capitalGains.stcg * 0.20 * 1.04);
+  // Section 112A: Long-Term Capital Gains taxed at 12.5% above ₹1,25,000 exemption
+  const taxableLtcg = Math.max(0, user.capitalGains.ltcg - 125000);
+  const ltcgTax = Math.round(taxableLtcg * 0.125 * 1.04);
+
+  const totalCalculatedTax = normalTax + stcgTax + ltcgTax;
 
   // Net advance tax payable after employer TDS
   const netAdvanceTaxDue = Math.max(0, totalCalculatedTax - user.salaryTds);

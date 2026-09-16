@@ -51,16 +51,23 @@ export const TaxPlaygroundModal: React.FC<TaxPlaygroundModalProps> = ({
     },
   };
 
-  const totalIncome = grossSalary + freelanceIncome + stcg * 0.20 + ltcg * 0.125;
+  const normalIncome = grossSalary + freelanceIncome;
   const isSalaried = currentUser.profileType === 'salaried';
 
-  const newTax = calculateNewRegimeTax(totalIncome, isSalaried);
-  const oldTax = calculateOldRegimeTax(totalIncome, {
-    stdDeduction: isSalaried ? 50000 : 0,
-    sec80C,
-    sec80D,
-    homeLoan24b,
-  });
+  // Budget 2024 Special Rate Capital Gains:
+  const stcgTax = Math.round(stcg * 0.20 * 1.04);
+  const taxableLtcg = Math.max(0, ltcg - 125000);
+  const ltcgTax = Math.round(taxableLtcg * 0.125 * 1.04);
+  const totalGainsTax = stcgTax + ltcgTax;
+
+  const newTax = calculateNewRegimeTax(normalIncome, isSalaried) + totalGainsTax;
+  const oldTax =
+    calculateOldRegimeTax(normalIncome, {
+      stdDeduction: isSalaried ? 50000 : 0,
+      sec80C,
+      sec80D,
+      homeLoan24b,
+    }) + totalGainsTax;
 
   const advanceData = calculateAdvanceTaxInstallments(previewUser);
   const recommendedRegime = newTax <= oldTax ? 'new' : 'old';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { LanguageMode, UserProfile } from '../../types/tax';
 import { mockUsers } from '../../data/mockData';
 import { supportedLanguages, translations } from '../../data/translations';
@@ -44,6 +44,19 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGlossary,
   onOpenSecurity,
 }) => {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const t = translations[lang] || translations.en;
   const currentLangMeta = supportedLanguages.find((l) => l.code === lang) || supportedLanguages[0];
 
@@ -155,8 +168,12 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {/* Profile Switcher */}
-          <div className="relative group">
-            <div className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pr-3 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] cursor-pointer transition-colors border border-slate-200/70 dark:border-white/[0.08]">
+          <div className="relative" ref={userMenuRef}>
+            <button
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pr-3 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] cursor-pointer transition-colors border border-slate-200/70 dark:border-white/[0.08]"
+              title="Click to switch taxpayer persona or setup new profile"
+            >
               <img
                 src={user.avatar}
                 alt={user.name}
@@ -165,42 +182,50 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="text-xs font-bold text-slate-800 dark:text-neutral-200 hidden md:inline">
                 {user.name.split(' ')[0]}
               </span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-            </div>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-500 shrink-0 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
 
             {/* Dropdown to switch persona */}
-            <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-white dark:bg-[#0A0A0A] rounded-2xl shadow-m3-3 border border-slate-200 dark:border-white/[0.08] hidden group-hover:block z-50 animate-in fade-in">
-              <div className="px-3 py-2 text-[11px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider">
-                {t.switchPersonaLabel || 'Switch Test Persona:'}
-              </div>
-              {mockUsers.map((u) => (
-                <button
-                  key={u.id}
-                  onClick={() => onSelectUser(u)}
-                  className={`w-full flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-colors ${
-                    u.id === user.id
-                      ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 font-bold'
-                      : 'hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-700 dark:text-neutral-300'
-                  }`}
-                >
-                  <img src={u.avatar} className="w-6 h-6 rounded-full object-cover" />
-                  <div className="flex-1 min-w-0">
-                    <p className="truncate">{u.name}</p>
-                    <p className="text-[10px] text-slate-500 capitalize">{u.profileType}</p>
-                  </div>
-                </button>
-              ))}
+            {isUserMenuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-white dark:bg-[#0A0A0A] rounded-2xl shadow-m3-3 border border-slate-200 dark:border-white/[0.08] z-50 animate-in fade-in slide-in-from-top-2">
+                <div className="px-3 py-2 text-[11px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider">
+                  {t.switchPersonaLabel || 'Switch Test Persona:'}
+                </div>
+                {mockUsers.map((u) => (
+                  <button
+                    key={u.id}
+                    onClick={() => {
+                      onSelectUser(u);
+                      setIsUserMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-colors cursor-pointer ${
+                      u.id === user.id
+                        ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 font-bold'
+                        : 'hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-700 dark:text-neutral-300'
+                    }`}
+                  >
+                    <img src={u.avatar} className="w-6 h-6 rounded-full object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <p className="truncate font-semibold">{u.name}</p>
+                      <p className="text-[10px] text-slate-500 capitalize">{u.profileType}</p>
+                    </div>
+                  </button>
+                ))}
 
-              <div className="pt-2 mt-2 border-t border-slate-100 dark:border-white/[0.08]">
-                <button
-                  onClick={onOpenSetup}
-                  className="w-full flex items-center justify-center gap-1.5 p-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-                >
-                  <PlusCircle className="w-3.5 h-3.5" />
-                  <span>{t.setupNewBtn}</span>
-                </button>
+                <div className="pt-2 mt-2 border-t border-slate-100 dark:border-white/[0.08]">
+                  <button
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      onOpenSetup();
+                    }}
+                    className="w-full flex items-center justify-center gap-1.5 p-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
+                  >
+                    <PlusCircle className="w-3.5 h-3.5" />
+                    <span>{t.setupNewBtn}</span>
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

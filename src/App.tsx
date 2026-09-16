@@ -211,8 +211,19 @@ export function App() {
         paidOn: `${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}, ${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} IST`,
         cin: `0210045091811409202600${taxItem.amount}`,
       };
-      // Mark Q2 as paid in installment milestones
-      setPaidQuarters((prev) => Array.from(new Set([...prev, 'Q2'])));
+      // Dynamically detect which advance tax quarter was paid
+      let paidQuarter = 'Q2';
+      if (taxItem.title.includes('Q3') || taxItem.id.includes('q3')) {
+        paidQuarter = 'Q3';
+      } else if (taxItem.title.includes('Q4') || taxItem.id.includes('q4')) {
+        paidQuarter = 'Q4';
+      } else if (taxItem.title.includes('Q1') || taxItem.id.includes('q1')) {
+        paidQuarter = 'Q1';
+      } else {
+        const nextUnpaid = ['Q1', 'Q2', 'Q3', 'Q4'].find((q) => !paidQuarters.includes(q)) || 'Q2';
+        paidQuarter = nextUnpaid;
+      }
+      setPaidQuarters((prev) => Array.from(new Set([...prev, paidQuarter])));
     }
 
     setChallans([newChallan, ...challans]);
@@ -259,6 +270,30 @@ export function App() {
   const triggerPreDebitForTax = (taxItem: TaxDueItem) => {
     setSelectedPreDebitTax(taxItem);
     setIsPreDebitAlertOpen(true);
+  };
+
+  // Trigger pre-debit for a specific advance tax quarterly installment
+  const handleTriggerInstallmentPayment = (inst: { quarter: string; installmentDue: number; deadline: string }) => {
+    const targetTax: TaxDueItem = {
+      id: `due_advance_${inst.quarter.toLowerCase()}`,
+      title: `${inst.quarter} Advance Tax Installment (${inst.quarter === 'Q3' ? '75%' : inst.quarter === 'Q4' ? '100%' : '45%'} Target)`,
+      category: 'advance_tax',
+      dueDate: inst.deadline,
+      daysRemaining: inst.quarter === 'Q3' ? 90 : inst.quarter === 'Q4' ? 180 : 1,
+      amount: inst.installmentDue,
+      status: 'autopay_ready',
+      tag: 'TIN 2.0 Direct',
+      easyDesc: {
+        en: `Direct tax deposit for ${inst.quarter} quarterly cycle. Avoids Section 234C 1% interest penalty.`,
+        hinglish: `${inst.quarter} cycle ka advance income tax. Section 234C byaaj penalty se bachat.`,
+      },
+      bureaucraticTerm: 'Section 208 read with Section 211 of Income Tax Act 1961',
+      savings: {
+        label: 'Section 234C Penalty Prevented',
+        amount: 1750,
+      },
+    };
+    triggerPreDebitForTax(targetTax);
   };
 
   // Toggle master mandate pause
@@ -477,8 +512,7 @@ export function App() {
                   setSelectedVaultChallanId(inst.challanId);
                   setIsVaultOpen(true);
                 } else if (inst.status === 'scheduled') {
-                  const targetTax = upcomingTaxes.find((t) => t.category === 'advance_tax') || upcomingTaxes[0];
-                  if (targetTax) triggerPreDebitForTax(targetTax);
+                  handleTriggerInstallmentPayment(inst);
                 }
               }}
               onOpenVaultWithId={(id) => {
@@ -570,9 +604,8 @@ export function App() {
               setSelectedVaultChallanId(id);
               setIsVaultOpen(true);
             }}
-            onTriggerAutopay={() => {
-              const targetTax = upcomingTaxes.find((t) => t.category === 'advance_tax') || upcomingTaxes[0];
-              if (targetTax) triggerPreDebitForTax(targetTax);
+            onTriggerAutopay={(inst) => {
+              handleTriggerInstallmentPayment(inst);
             }}
           />
         )}

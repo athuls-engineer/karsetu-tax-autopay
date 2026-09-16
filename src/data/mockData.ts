@@ -15,7 +15,7 @@ export const mockUsers: UserProfile[] = [
     },
     regime: 'new',
     grossIncome: 2400000, // 24 LPA
-    salaryTds: 280000,   // deducted by employer
+    salaryTds: 414500,   // deducted by employer on salary, leaving capital gains & other income for Advance Tax
     capitalGains: {
       stcg: 180000,      // equity swings
       ltcg: 220000,
@@ -244,6 +244,24 @@ export const mockChallans: ChallanReceipt[] = [
     bankRef: 'UPI/507419824101/HDFC',
     paidOn: '14 Mar 2026, 04:18 PM IST',
     cin: '021004508129140320260028500',
+  },
+  {
+    id: 'GSTN-PMT06-2918',
+    crn: 'GSTN-CPIN-26082500142',
+    bsrCode: '0210045 (HDFC GST RAILS)',
+    challanNo: 'PMT06-4419',
+    panMasked: '27BPYPP9871M1Z5',
+    taxpayerName: 'RAHUL SHARMA',
+    assessmentYear: '2026-27',
+    financialYear: '2026-27',
+    majorHead: 'GOODS AND SERVICES TAX (GSTN)',
+    minorHead: 'ELECTRONIC CASH LEDGER (FORM PMT-06)',
+    taxType: 'GST Monthly Cash Challan (PMT-06)',
+    amount: 7800,
+    paymentMode: 'GSTN E-Payment via UPI AutoPay',
+    bankRef: 'GSTN/UTR/9981240912',
+    paidOn: '25 Aug 2026, 02:45 PM IST',
+    cin: 'GSTNPMT0626082500007800',
   },
 ];
 

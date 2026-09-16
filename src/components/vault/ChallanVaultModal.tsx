@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChallanReceipt as ChallanReceiptType } from '../../types/tax';
 import { ChallanReceipt } from './ChallanReceipt';
 import { formatINR } from '../../services/taxCalculator';
@@ -20,6 +20,14 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
   const [selectedChallanId, setSelectedChallanId] = useState<string>(
     activeChallanId || (challans[0]?.id ?? '')
   );
+
+  useEffect(() => {
+    if (activeChallanId) {
+      setSelectedChallanId(activeChallanId);
+    } else if (challans.length > 0 && !challans.some((c) => c.id === selectedChallanId)) {
+      setSelectedChallanId(challans[0].id);
+    }
+  }, [activeChallanId, isOpen, challans]);
 
   if (!isOpen) return null;
 

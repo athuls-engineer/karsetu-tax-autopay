@@ -10,7 +10,7 @@ interface AdvanceTaxViewProps {
   installments: QuarterlyInstallment[];
   lang: LanguageMode;
   onOpenVaultWithId: (challanId: string) => void;
-  onTriggerAutopay: () => void;
+  onTriggerAutopay: (inst: QuarterlyInstallment) => void;
 }
 
 export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
@@ -158,8 +158,8 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
                   </button>
                 ) : isScheduled ? (
                   <button
-                    onClick={onTriggerAutopay}
-                    className="font-bold text-blue-700 dark:text-blue-400 hover:underline flex items-center gap-1"
+                    onClick={() => onTriggerAutopay(inst)}
+                    className="font-bold text-blue-700 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     {actionLabels.payNow} <ArrowRight className="w-3.5 h-3.5" />
                   </button>
