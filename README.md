@@ -1,13 +1,14 @@
-﻿# KarSetu (करसेतु) — India''s 1-Click Sovereign Tax Autopilot
+# KarSetu (करसेतु) — India''s 1-Click Sovereign Tax Autopilot
 
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![NPCI BBPS](https://img.shields.io/badge/NPCI-BBPS_Certified-146C2E)](https://www.npci.org.in/)
-[![CBDT TIN 2.0](https://img.shields.io/badge/CBDT-TIN_2.0_Direct-0B57D0)](https://eportal.incometax.gov.in/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online-brightgreen?logo=githubpages)](https://athuls-engineer.github.io/karsetu-tax-autopay/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+> 🌐 **Live Website**: **[https://athuls-engineer.github.io/karsetu-tax-autopay/](https://athuls-engineer.github.io/karsetu-tax-autopay/)**
+>
 > **KarSetu (करसेतु)** is a non-custodial, institutional tax orchestration platform engineered to automate Advance Tax installments, Municipal Property Taxes, Capital Gains liabilities, and GST/TDS settlements in India with **zero intermediary wallet float**, full RBI e-Mandate compliance, and instant cryptographic verification.
 
 ---
