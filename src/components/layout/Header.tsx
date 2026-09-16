@@ -15,7 +15,8 @@ import {
   ShieldCheck,
   Calendar,
   FileSpreadsheet,
-  Menu,
+  Layers,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -54,21 +55,34 @@ export const Header: React.FC<HeaderProps> = ({
   onOpen26As,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const toolsMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setIsUserMenuOpen(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
-        setIsMobileMenuOpen(false);
+      if (toolsMenuRef.current && !toolsMenuRef.current.contains(target)) {
+        setIsToolsMenuOpen(false);
       }
     };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsUserMenuOpen(false);
+        setIsToolsMenuOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const t = translations[lang] || translations.en;
@@ -76,139 +90,238 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#000000]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-        {/* Logo & Slogan */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-4">
+        {/* Brand Logo & Status Pill */}
         <div className="flex items-center gap-3 shrink-0 min-w-0">
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-m3-2 relative overflow-hidden shrink-0">
-            <span className="font-extrabold text-lg sm:text-xl tracking-tighter">KS</span>
-            <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-black" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-m3-1 relative overflow-hidden shrink-0">
+            <span className="font-black text-base sm:text-lg tracking-tighter">KS</span>
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white dark:border-black" />
           </div>
 
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <div className="inline-flex items-baseline gap-1.5 whitespace-nowrap">
-                <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
-                  KarSetu
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-400 dark:text-neutral-500">
-                  (करसेतु)
-                </span>
-              </div>
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-[#04160A] text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 whitespace-nowrap shrink-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse shrink-0" />
-                <span>Autopilot Active</span>
+          <div className="flex items-center gap-2">
+            <div className="inline-flex items-baseline gap-1.5 whitespace-nowrap">
+              <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
+                KarSetu
+              </span>
+              <span className="text-xs sm:text-sm font-semibold text-slate-400 dark:text-neutral-500">
+                (करसेतु)
               </span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 font-medium hidden lg:block whitespace-nowrap truncate max-w-xs xl:max-w-md">
-              {t.tagline}
-            </p>
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-[#04160A] text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 whitespace-nowrap shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse shrink-0" />
+              <span>Autopilot Active</span>
+            </span>
           </div>
         </div>
 
-        {/* Action Controls & Navigation Pills */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Desktop Utilities (Hidden on Mobile, Visible on lg+) */}
-          <div className="hidden lg:flex items-center gap-2">
-            {/* Challan Receipts Vault */}
+        {/* Clean, Cohesive Navigation Controls (Zero Clutter) */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* 1. Official Challan Vault Button */}
+          <button
+            type="button"
+            onClick={onOpenVault}
+            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-800 dark:text-neutral-200 text-xs font-bold border border-slate-200/80 dark:border-white/[0.08] transition-all active:scale-95 cursor-pointer shadow-2xs"
+            title="Official Challan Vault"
+          >
+            <FileCheck2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span className="hidden sm:inline">Challans</span>
+            <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[10px] font-black leading-none">
+              {challansCount}
+            </span>
+          </button>
+
+          {/* 2. Unified Tools & Utilities Dropdown */}
+          <div className="relative" ref={toolsMenuRef}>
             <button
               type="button"
-              onClick={onOpenVault}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-m3-surface-container dark:bg-[#0A0A0A] hover:bg-m3-surface-container-high dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] transition-colors cursor-pointer"
-              title="Official Challan Vault"
+              onClick={() => setIsToolsMenuOpen(!isToolsMenuOpen)}
+              className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-xs font-bold border transition-all active:scale-95 cursor-pointer shadow-2xs ${
+                isToolsMenuOpen
+                  ? 'bg-blue-50 text-blue-900 border-blue-300 dark:bg-blue-950/50 dark:text-blue-200 dark:border-blue-700/60'
+                  : 'bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-800 dark:text-neutral-200 border-slate-200/80 dark:border-white/[0.08]'
+              }`}
+              title="Tools & Utilities"
             >
-              <FileCheck2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-              <span>{t.challanVaultBtn}</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[10px] font-black">
-                {challansCount}
-              </span>
+              <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+              <span>Tools</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                  isToolsMenuOpen ? 'rotate-180 text-blue-600 dark:text-blue-400' : ''
+                }`}
+              />
             </button>
 
-            {/* Tax Deadlines Calendar */}
-            {onOpenCalendar && (
-              <button
-                type="button"
-                onClick={onOpenCalendar}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-xs font-bold text-slate-700 dark:text-neutral-300 border border-slate-200/70 dark:border-white/[0.08] transition-colors cursor-pointer"
-                title="Statutory Tax Deadlines & iCal Export"
-              >
-                <Calendar className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>Deadlines</span>
-              </button>
+            {/* Tools Dropdown Menu */}
+            {isToolsMenuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 p-2.5 bg-white dark:bg-[#0A0A0A] rounded-3xl shadow-m3-4 border border-slate-200 dark:border-white/[0.08] z-50 animate-in fade-in slide-in-from-top-2 text-xs">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider flex items-center justify-between">
+                  <span>Compliance & Sync</span>
+                  <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-extrabold">CBDT TIN 2.0</span>
+                </div>
+
+                <div className="space-y-1">
+                  {onOpenCalendar && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsToolsMenuOpen(false);
+                        onOpenCalendar();
+                      }}
+                      className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                        <Calendar className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-slate-900 dark:text-white">Tax Deadlines (.ICS)</span>
+                          <span className="px-1.5 py-0.2 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[9px] font-black">
+                            iCal
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                          Advance tax dates & 72h calendar reminders
+                        </p>
+                      </div>
+                    </button>
+                  )}
+
+                  {onOpen26As && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsToolsMenuOpen(false);
+                        onOpen26As();
+                      }}
+                      className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                        <FileSpreadsheet className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-slate-900 dark:text-white">Form 26AS & AIS Sync</span>
+                          <span className="px-1.5 py-0.2 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 text-[9px] font-black">
+                            TRACES
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                          Reconcile salary & bank TDS tax credits
+                        </p>
+                      </div>
+                    </button>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsToolsMenuOpen(false);
+                      onOpenSecurity?.();
+                    }}
+                    className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-slate-900 dark:text-white">Safety & Money Trail</span>
+                        <span className="px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[9px] font-black">
+                          Art 266
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                        Direct RBI Treasury flow & zero float audit
+                      </p>
+                    </div>
+                  </button>
+                </div>
+
+                <div className="my-2 border-t border-slate-100 dark:border-white/[0.08]" />
+
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider">
+                  Platform Utilities
+                </div>
+
+                <div className="space-y-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsToolsMenuOpen(false);
+                      onOpenUpiManager();
+                    }}
+                    className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                      <CreditCard className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="font-bold text-slate-900 dark:text-white block">UPI AutoPay Mandates</span>
+                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                        Linked bank accounts & debit caps
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsToolsMenuOpen(false);
+                      onOpenGlossary();
+                    }}
+                    className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                      <HelpCircle className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="font-bold text-slate-900 dark:text-white block">Tax Jargon-Buster</span>
+                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                        Plain-language explanations of Indian tax laws
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsToolsMenuOpen(false);
+                      onOpenSettings();
+                    }}
+                    className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-neutral-800 text-slate-700 dark:text-neutral-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                      <SlidersHorizontal className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="font-bold text-slate-900 dark:text-white block">Autopilot Settings</span>
+                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5">
+                        WhatsApp alert threshold & sweep mode
+                      </p>
+                    </div>
+                  </button>
+                </div>
+              </div>
             )}
-
-            {/* 26AS / AIS Reconciler */}
-            {onOpen26As && (
-              <button
-                type="button"
-                onClick={onOpen26As}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-blue-50/80 dark:bg-[#071328] hover:bg-blue-100 dark:hover:bg-[#0D1E3D] text-xs font-bold text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 transition-colors cursor-pointer"
-                title="Form 26AS & AIS Tax Credit Sync"
-              >
-                <FileSpreadsheet className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400 shrink-0" />
-                <span>26AS / AIS</span>
-              </button>
-            )}
-
-            {/* Trust, Security & Safety Shield */}
-            <button
-              type="button"
-              onClick={onOpenSecurity}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-emerald-50 dark:bg-[#07190F] hover:bg-emerald-100 dark:hover:bg-[#0E2818] text-xs font-bold text-emerald-900 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-500/25 transition-colors cursor-pointer"
-              title="KarSetu Trust, Security & Fraud Defense Shield"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-              <span>Safety Shield</span>
-            </button>
-
-            {/* Zero-Jargon Glossary */}
-            <button
-              type="button"
-              onClick={onOpenGlossary}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-amber-50 dark:bg-[#171004] hover:bg-amber-100 dark:hover:bg-[#261A07] text-xs font-bold text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/25 transition-colors cursor-pointer"
-              title="Tax Jargon-Buster"
-            >
-              <HelpCircle className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 shrink-0" />
-              <span>Jargon-Buster</span>
-            </button>
-
-            {/* UPI Accounts Hub */}
-            <button
-              type="button"
-              onClick={onOpenUpiManager}
-              className="p-2 rounded-2xl bg-blue-50 dark:bg-[#071328] hover:bg-blue-100 dark:hover:bg-[#0D1E3D] text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 transition-colors cursor-pointer"
-              title="UPI Accounts Hub"
-            >
-              <CreditCard className="w-4 h-4 text-blue-700 dark:text-blue-400" />
-            </button>
-
-            {/* Language Selector */}
-            <button
-              type="button"
-              onClick={onOpenLanguageSelector}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 transition-colors border border-slate-200/70 dark:border-white/[0.08] cursor-pointer"
-              title="Choose Language"
-            >
-              <Globe2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>{currentLangMeta.nativeName}</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
-            </button>
-
-            {/* Autopilot Settings */}
-            <button
-              type="button"
-              onClick={onOpenSettings}
-              className="p-2 rounded-2xl bg-m3-surface-container dark:bg-[#0A0A0A] hover:bg-m3-surface-container-high dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] transition-colors cursor-pointer"
-              title="Autopilot Settings"
-            >
-              <SlidersHorizontal className="w-4 h-4 text-blue-700 dark:text-blue-400" />
-            </button>
           </div>
 
-          {/* Theme Toggle (Always Visible) */}
+          {/* 3. Language Selector */}
+          <button
+            type="button"
+            onClick={onOpenLanguageSelector}
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-800 dark:text-neutral-200 text-xs font-bold border border-slate-200/80 dark:border-white/[0.08] transition-all active:scale-95 cursor-pointer shadow-2xs"
+            title="Choose Language"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+            <span className="hidden md:inline">{currentLangMeta.nativeName}</span>
+            <ChevronDown className="w-3 h-3 text-slate-400 hidden md:inline" />
+          </button>
+
+          {/* 4. Theme Toggle (Sun / Moon) */}
           <button
             type="button"
             onClick={onToggleTheme}
-            className="p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-slate-700 dark:text-amber-300 border border-slate-200/70 dark:border-white/[0.08] transition-colors flex items-center justify-center text-xs font-bold cursor-pointer"
+            className="p-2 sm:p-2.5 rounded-full bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-700 dark:text-amber-300 border border-slate-200/80 dark:border-white/[0.08] transition-all active:scale-95 flex items-center justify-center cursor-pointer shadow-2xs"
             title={`Switch to ${theme === 'dark' ? 'Light Mode' : 'Dark Mode'}`}
           >
             {theme === 'dark' ? (
@@ -218,135 +331,12 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Mobile Vault Button (Visible on < lg) */}
-          <button
-            type="button"
-            onClick={onOpenVault}
-            className="lg:hidden relative p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] cursor-pointer"
-            title="Challan Vault"
-          >
-            <FileCheck2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            {challansCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-600 text-white text-[9px] font-black flex items-center justify-center">
-                {challansCount}
-              </span>
-            )}
-          </button>
-
-          {/* Mobile Quick Menu Dropdown (Visible on < lg) */}
-          <div className="relative lg:hidden" ref={mobileMenuRef}>
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] cursor-pointer"
-              title="More Tools & Menu"
-            >
-              <Menu className="w-4 h-4" />
-            </button>
-
-            {isMobileMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-white dark:bg-[#0A0A0A] rounded-2xl shadow-m3-3 border border-slate-200 dark:border-white/[0.08] z-50 animate-in fade-in slide-in-from-top-2 text-xs font-semibold">
-                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider">
-                  Quick Navigation
-                </div>
-
-                {onOpenCalendar && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      onOpenCalendar();
-                    }}
-                    className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                  >
-                    <Calendar className="w-4 h-4 text-blue-600" />
-                    <span>Statutory Tax Deadlines (.ICS)</span>
-                  </button>
-                )}
-
-                {onOpen26As && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      onOpen26As();
-                    }}
-                    className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                  >
-                    <FileSpreadsheet className="w-4 h-4 text-blue-600" />
-                    <span>Form 26AS & AIS Tax Sync</span>
-                  </button>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenUpiManager();
-                  }}
-                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                >
-                  <CreditCard className="w-4 h-4 text-blue-600" />
-                  <span>UPI AutoPay Mandates</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenSecurity?.();
-                  }}
-                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                >
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span>Trust & Safety Shield</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenGlossary();
-                  }}
-                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                >
-                  <HelpCircle className="w-4 h-4 text-amber-600" />
-                  <span>Tax Jargon-Buster</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenLanguageSelector();
-                  }}
-                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                >
-                  <Globe2 className="w-4 h-4 text-blue-600" />
-                  <span>Language ({currentLangMeta.nativeName})</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenSettings();
-                  }}
-                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
-                >
-                  <SlidersHorizontal className="w-4 h-4 text-slate-600" />
-                  <span>Autopilot Mandate Settings</span>
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Profile Switcher */}
+          {/* 5. User Profile Switcher */}
           <div className="relative" ref={userMenuRef}>
             <button
               type="button"
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pr-3 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] cursor-pointer transition-colors border border-slate-200/70 dark:border-white/[0.08]"
+              className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pr-3 rounded-full bg-slate-100 hover:bg-slate-200/80 dark:bg-neutral-900 dark:hover:bg-neutral-800 cursor-pointer transition-all active:scale-95 border border-slate-200/80 dark:border-white/[0.08] shadow-2xs"
               title="Click to switch taxpayer persona or setup new profile"
             >
               <img
@@ -357,14 +347,18 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="text-xs font-bold text-slate-800 dark:text-neutral-200 hidden md:inline">
                 {user.name.split(' ')[0]}
               </span>
-              <ChevronDown className={`w-3.5 h-3.5 text-slate-500 shrink-0 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-500 shrink-0 transition-transform duration-200 ${
+                  isUserMenuOpen ? 'rotate-180' : ''
+                }`}
+              />
             </button>
 
-            {/* Dropdown to switch persona */}
+            {/* Persona Switcher Dropdown */}
             {isUserMenuOpen && (
               <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-white dark:bg-[#0A0A0A] rounded-2xl shadow-m3-3 border border-slate-200 dark:border-white/[0.08] z-50 animate-in fade-in slide-in-from-top-2">
                 <div className="px-3 py-2 text-[11px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider">
-                  {t.switchPersonaLabel || 'Switch Test Persona:'}
+                  {t.switchPersonaLabel || 'Switch Taxpayer Persona:'}
                 </div>
                 {mockUsers.map((u) => (
                   <button
@@ -385,6 +379,9 @@ export const Header: React.FC<HeaderProps> = ({
                       <p className="truncate font-semibold">{u.name}</p>
                       <p className="text-[10px] text-slate-500 capitalize">{u.profileType}</p>
                     </div>
+                    {u.id === user.id && (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+                    )}
                   </button>
                 ))}
 
@@ -409,4 +406,3 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
-
