@@ -17,6 +17,7 @@ interface TaxRadarTimelineProps {
   lang: LanguageMode;
   onSelectInstallment: (inst: QuarterlyInstallment) => void;
   onOpenVaultWithId: (challanId: string) => void;
+  onOpenCalendar?: () => void;
 }
 
 export const TaxRadarTimeline: React.FC<TaxRadarTimelineProps> = ({
@@ -26,6 +27,7 @@ export const TaxRadarTimeline: React.FC<TaxRadarTimelineProps> = ({
   lang,
   onSelectInstallment,
   onOpenVaultWithId,
+  onOpenCalendar,
 }) => {
   const t = translations[lang] || translations.en;
 
@@ -43,7 +45,7 @@ export const TaxRadarTimeline: React.FC<TaxRadarTimelineProps> = ({
 
   return (
     <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 space-y-6 transition-colors duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
@@ -62,10 +64,21 @@ export const TaxRadarTimeline: React.FC<TaxRadarTimelineProps> = ({
           </p>
         </div>
 
-        <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-[#04160A] px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-500/30 self-start sm:self-auto flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
-          {t.penaltyShieldActive}
-        </span>
+        <div className="flex items-center gap-2 flex-wrap self-start sm:self-auto">
+          {onOpenCalendar && (
+            <button
+              onClick={onOpenCalendar}
+              className="text-xs font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 px-3 py-1.5 rounded-full border border-blue-200 dark:border-blue-800/50 flex items-center gap-1.5 transition-colors cursor-pointer active:scale-95 shadow-2xs"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Deadlines & iCal</span>
+            </button>
+          )}
+          <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-[#04160A] px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-500/30 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
+            {t.penaltyShieldActive}
+          </span>
+        </div>
       </div>
 
       {/* Visual Step Timeline */}

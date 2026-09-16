@@ -107,3 +107,37 @@
 .radar-live {
   animation: radar-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
+
+/* Authentic Government Challan Print Styling */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  header,
+  footer,
+  nav,
+  .print\:hidden,
+  button,
+  .fixed.inset-0.bg-black\/80,
+  .fixed.inset-0.bg-black\/75 {
+    display: none !important;
+  }
+
+  /* Make sure modal container shows cleanly on printed paper */
+  .print-receipt-surface {
+    box-shadow: none !important;
+    border: 1.5px solid #000000 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+}

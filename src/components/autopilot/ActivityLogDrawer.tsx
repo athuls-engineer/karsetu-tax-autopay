@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Activity, ShieldCheck, Landmark, Smartphone, FileCheck2, Filter, RefreshCw, CheckCircle2 } from 'lucide-react';
 
 export interface ActivityLogItem {
@@ -83,6 +83,16 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
   const [filter, setFilter] = useState<'all' | 'bank_aa' | 'engine' | 'alert' | 'challan'>('all');
   const [isSyncing, setIsSyncing] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const filteredLogs = filter === 'all' ? logs : logs.filter((l) => l.category === filter);
@@ -105,10 +115,15 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404]">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center border border-emerald-200 dark:border-emerald-800/40">
               <Activity className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
@@ -125,25 +140,28 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
 
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={handleSimulateSync}
               disabled={isSyncing}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-xs font-bold transition-colors border border-blue-200/60 dark:border-blue-800/40"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-xs font-bold transition-colors border border-blue-200/60 dark:border-blue-800/40 cursor-pointer active:scale-95"
               title="Test a live sync check"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
               <span>{isSyncing ? 'Syncing...' : 'Simulate Sync'}</span>
             </button>
             <button
+              type="button"
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+              aria-label="Close audit ledger"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Filter Bar */}
-        <div className="p-4 border-b border-slate-100 dark:border-white/[0.08] flex items-center gap-2 overflow-x-auto text-xs font-semibold">
+        <div className="p-4 border-b border-slate-100 dark:border-white/[0.08] flex items-center gap-2 overflow-x-auto text-xs font-semibold shrink-0">
           {[
             { id: 'all', label: 'All Events' },
             { id: 'alert', label: '72h Alerts' },

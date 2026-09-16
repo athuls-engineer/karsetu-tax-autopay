@@ -19,7 +19,7 @@ export const ChallanReceipt: React.FC<ChallanReceiptProps> = ({ challan }) => {
   const isGST = challan.majorHead.includes('GST');
 
   return (
-    <div className="bg-white dark:bg-[#0A0A0A] rounded-3xl border border-slate-200 dark:border-white/[0.08] overflow-hidden shadow-m3-3 print:shadow-none print:border-none transition-colors">
+    <div className="print-receipt-surface bg-white dark:bg-[#0A0A0A] rounded-3xl border border-slate-200 dark:border-white/[0.08] overflow-hidden shadow-m3-3 print:shadow-none print:border-none transition-colors">
       {/* Top Banner */}
       <div
         className={`text-white p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${

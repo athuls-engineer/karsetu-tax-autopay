@@ -11,6 +11,7 @@ interface AdvanceTaxViewProps {
   lang: LanguageMode;
   onOpenVaultWithId: (challanId: string) => void;
   onTriggerAutopay: (inst: QuarterlyInstallment) => void;
+  onOpen26As?: () => void;
 }
 
 export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
@@ -19,6 +20,7 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
   lang,
   onOpenVaultWithId,
   onTriggerAutopay,
+  onOpen26As,
 }) => {
   const t = translations[lang] || translations.en;
 
@@ -79,10 +81,30 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
             </p>
           </div>
 
-          <div className="p-4 rounded-3xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 text-right shrink-0">
-            <span className="text-xs text-blue-800 dark:text-blue-300 font-semibold block">Employer TDS Already Paid</span>
-            <span className="text-xl font-black text-blue-950 dark:text-blue-100">{formatINR(user.salaryTds)}</span>
-            <span className="text-[11px] text-blue-700 dark:text-blue-400 block mt-0.5">Credited in Form 26AS</span>
+          <div
+            onClick={onOpen26As}
+            className={`p-4 rounded-3xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 text-right shrink-0 transition-all ${
+              onOpen26As
+                ? 'cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:scale-[1.02] active:scale-95 shadow-2xs group'
+                : ''
+            }`}
+          >
+            <div className="flex items-center justify-end gap-1.5">
+              <span className="text-xs text-blue-800 dark:text-blue-300 font-semibold block">
+                Employer TDS Already Paid
+              </span>
+              {onOpen26As && (
+                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 opacity-80 group-hover:opacity-100">
+                  ↗
+                </span>
+              )}
+            </div>
+            <span className="text-xl font-black text-blue-950 dark:text-blue-100">
+              {formatINR(user.salaryTds)}
+            </span>
+            <span className="text-[11px] text-blue-700 dark:text-blue-400 block mt-0.5 group-hover:underline">
+              {onOpen26As ? 'View Form 26AS & AIS Sync →' : 'Credited in Form 26AS'}
+            </span>
           </div>
         </div>
       </div>

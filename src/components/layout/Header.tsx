@@ -13,6 +13,9 @@ import {
   Sun,
   Moon,
   ShieldCheck,
+  Calendar,
+  FileSpreadsheet,
+  Menu,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -28,6 +31,9 @@ interface HeaderProps {
   onOpenSetup: () => void;
   onOpenGlossary: () => void;
   onOpenSecurity?: () => void;
+  challansCount?: number;
+  onOpenCalendar?: () => void;
+  onOpen26As?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -43,14 +49,22 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSetup,
   onOpenGlossary,
   onOpenSecurity,
+  challansCount = 5,
+  onOpenCalendar,
+  onOpen26As,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
         setIsUserMenuOpen(false);
+      }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -93,22 +107,108 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls & Navigation Pills */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Pan-Indian Language Selector Button */}
-          <button
-            onClick={onOpenLanguageSelector}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 transition-colors border border-slate-200/70 dark:border-white/[0.08]"
-            title="Choose Language (10 Indian Languages)"
-          >
-            <Globe2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-            <span className="hidden sm:inline">{currentLangMeta.nativeName}</span>
-            <span className="sm:hidden uppercase text-[11px]">{lang}</span>
-            <ChevronDown className="w-3 h-3 text-slate-400" />
-          </button>
+          {/* Desktop Utilities (Hidden on Mobile, Visible on lg+) */}
+          <div className="hidden lg:flex items-center gap-2">
+            {/* Challan Receipts Vault */}
+            <button
+              type="button"
+              onClick={onOpenVault}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-m3-surface-container dark:bg-[#0A0A0A] hover:bg-m3-surface-container-high dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] transition-colors cursor-pointer"
+              title="Official Challan Vault"
+            >
+              <FileCheck2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span>{t.challanVaultBtn}</span>
+              <span className="px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[10px] font-black">
+                {challansCount}
+              </span>
+            </button>
 
-          {/* Theme Toggle Button */}
+            {/* Tax Deadlines Calendar */}
+            {onOpenCalendar && (
+              <button
+                type="button"
+                onClick={onOpenCalendar}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-xs font-bold text-slate-700 dark:text-neutral-300 border border-slate-200/70 dark:border-white/[0.08] transition-colors cursor-pointer"
+                title="Statutory Tax Deadlines & iCal Export"
+              >
+                <Calendar className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+                <span>Deadlines</span>
+              </button>
+            )}
+
+            {/* 26AS / AIS Reconciler */}
+            {onOpen26As && (
+              <button
+                type="button"
+                onClick={onOpen26As}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-blue-50/80 dark:bg-[#071328] hover:bg-blue-100 dark:hover:bg-[#0D1E3D] text-xs font-bold text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 transition-colors cursor-pointer"
+                title="Form 26AS & AIS Tax Credit Sync"
+              >
+                <FileSpreadsheet className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400 shrink-0" />
+                <span>26AS / AIS</span>
+              </button>
+            )}
+
+            {/* Trust, Security & Safety Shield */}
+            <button
+              type="button"
+              onClick={onOpenSecurity}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-emerald-50 dark:bg-[#07190F] hover:bg-emerald-100 dark:hover:bg-[#0E2818] text-xs font-bold text-emerald-900 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-500/25 transition-colors cursor-pointer"
+              title="KarSetu Trust, Security & Fraud Defense Shield"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span>Safety Shield</span>
+            </button>
+
+            {/* Zero-Jargon Glossary */}
+            <button
+              type="button"
+              onClick={onOpenGlossary}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-amber-50 dark:bg-[#171004] hover:bg-amber-100 dark:hover:bg-[#261A07] text-xs font-bold text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/25 transition-colors cursor-pointer"
+              title="Tax Jargon-Buster"
+            >
+              <HelpCircle className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 shrink-0" />
+              <span>Jargon-Buster</span>
+            </button>
+
+            {/* UPI Accounts Hub */}
+            <button
+              type="button"
+              onClick={onOpenUpiManager}
+              className="p-2 rounded-2xl bg-blue-50 dark:bg-[#071328] hover:bg-blue-100 dark:hover:bg-[#0D1E3D] text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 transition-colors cursor-pointer"
+              title="UPI Accounts Hub"
+            >
+              <CreditCard className="w-4 h-4 text-blue-700 dark:text-blue-400" />
+            </button>
+
+            {/* Language Selector */}
+            <button
+              type="button"
+              onClick={onOpenLanguageSelector}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 transition-colors border border-slate-200/70 dark:border-white/[0.08] cursor-pointer"
+              title="Choose Language"
+            >
+              <Globe2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+              <span>{currentLangMeta.nativeName}</span>
+              <ChevronDown className="w-3 h-3 text-slate-400" />
+            </button>
+
+            {/* Autopilot Settings */}
+            <button
+              type="button"
+              onClick={onOpenSettings}
+              className="p-2 rounded-2xl bg-m3-surface-container dark:bg-[#0A0A0A] hover:bg-m3-surface-container-high dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] transition-colors cursor-pointer"
+              title="Autopilot Settings"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-blue-700 dark:text-blue-400" />
+            </button>
+          </div>
+
+          {/* Theme Toggle (Always Visible) */}
           <button
+            type="button"
             onClick={onToggleTheme}
-            className="p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-slate-700 dark:text-amber-300 border border-slate-200/70 dark:border-white/[0.08] transition-colors flex items-center justify-center text-xs font-bold"
+            className="p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-slate-700 dark:text-amber-300 border border-slate-200/70 dark:border-white/[0.08] transition-colors flex items-center justify-center text-xs font-bold cursor-pointer"
             title={`Switch to ${theme === 'dark' ? 'Light Mode' : 'Dark Mode'}`}
           >
             {theme === 'dark' ? (
@@ -118,58 +218,133 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* UPI Accounts Hub Button */}
+          {/* Mobile Vault Button (Visible on < lg) */}
           <button
-            onClick={onOpenUpiManager}
-            className="flex items-center gap-1.5 p-2 xl:px-3 xl:py-1.5 rounded-2xl bg-blue-50/80 dark:bg-[#071328] hover:bg-blue-100 dark:hover:bg-[#0D1E3D] text-xs font-bold text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 transition-colors"
-            title="Manage UPI AutoPay Accounts & Live Stats"
-          >
-            <CreditCard className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400 shrink-0" />
-            <span className="hidden xl:inline">{t.upiAccountsBtn}</span>
-          </button>
-
-          {/* Zero-Jargon Glossary Button */}
-          <button
-            onClick={onOpenGlossary}
-            className="hidden sm:flex items-center gap-1.5 p-2 xl:px-3 xl:py-1.5 rounded-full bg-amber-50 dark:bg-[#171004] hover:bg-amber-100 dark:hover:bg-[#261A07] text-xs font-bold text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/25 transition-colors"
-            title="Tax Glossary"
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 shrink-0" />
-            <span className="hidden xl:inline">{t.glossaryBtn}</span>
-          </button>
-
-          {/* Trust, Security & Safety Shield */}
-          <button
-            onClick={onOpenSecurity}
-            className="flex items-center gap-1.5 p-2 xl:px-3 xl:py-1.5 rounded-full bg-emerald-50 dark:bg-[#07190F] hover:bg-emerald-100 dark:hover:bg-[#0E2818] text-xs font-bold text-emerald-900 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-500/25 transition-colors"
-            title="KarSetu Trust, Security & Fraud Defense Shield"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span className="hidden xl:inline">Safety Shield</span>
-          </button>
-
-          {/* Challan Receipts Vault Button */}
-          <button
+            type="button"
             onClick={onOpenVault}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-2xl bg-m3-surface-container dark:bg-[#0A0A0A] hover:bg-m3-surface-container-high dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 border border-transparent dark:border-white/[0.08] transition-colors"
-            title="Official Challan Vault"
+            className="lg:hidden relative p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] cursor-pointer"
+            title="Challan Vault"
           >
-            <FileCheck2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
-            <span className="hidden md:inline">{t.challanVaultBtn}</span>
+            <FileCheck2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            {challansCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-600 text-white text-[9px] font-black flex items-center justify-center">
+                {challansCount}
+              </span>
+            )}
           </button>
 
-          {/* Autopilot Settings */}
-          <button
-            onClick={onOpenSettings}
-            className="p-2 sm:px-2.5 sm:py-2 rounded-2xl bg-m3-surface-container dark:bg-[#0A0A0A] hover:bg-m3-surface-container-high dark:hover:bg-[#141414] text-xs font-bold text-slate-800 dark:text-neutral-200 border border-transparent dark:border-white/[0.08] flex items-center justify-center transition-colors"
-            title="Autopilot Mandate Settings"
-          >
-            <SlidersHorizontal className="w-4 h-4 text-blue-700 dark:text-blue-400" />
-          </button>
+          {/* Mobile Quick Menu Dropdown (Visible on < lg) */}
+          <div className="relative lg:hidden" ref={mobileMenuRef}>
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 border border-slate-200/70 dark:border-white/[0.08] cursor-pointer"
+              title="More Tools & Menu"
+            >
+              <Menu className="w-4 h-4" />
+            </button>
+
+            {isMobileMenuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-white dark:bg-[#0A0A0A] rounded-2xl shadow-m3-3 border border-slate-200 dark:border-white/[0.08] z-50 animate-in fade-in slide-in-from-top-2 text-xs font-semibold">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider">
+                  Quick Navigation
+                </div>
+
+                {onOpenCalendar && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onOpenCalendar();
+                    }}
+                    className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                  >
+                    <Calendar className="w-4 h-4 text-blue-600" />
+                    <span>Statutory Tax Deadlines (.ICS)</span>
+                  </button>
+                )}
+
+                {onOpen26As && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onOpen26As();
+                    }}
+                    className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                  >
+                    <FileSpreadsheet className="w-4 h-4 text-blue-600" />
+                    <span>Form 26AS & AIS Tax Sync</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenUpiManager();
+                  }}
+                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                >
+                  <CreditCard className="w-4 h-4 text-blue-600" />
+                  <span>UPI AutoPay Mandates</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenSecurity?.();
+                  }}
+                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                >
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>Trust & Safety Shield</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenGlossary();
+                  }}
+                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                >
+                  <HelpCircle className="w-4 h-4 text-amber-600" />
+                  <span>Tax Jargon-Buster</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenLanguageSelector();
+                  }}
+                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                >
+                  <Globe2 className="w-4 h-4 text-blue-600" />
+                  <span>Language ({currentLangMeta.nativeName})</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenSettings();
+                  }}
+                  className="w-full flex items-center gap-2.5 p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-[#141414] text-slate-800 dark:text-neutral-200 cursor-pointer"
+                >
+                  <SlidersHorizontal className="w-4 h-4 text-slate-600" />
+                  <span>Autopilot Mandate Settings</span>
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Profile Switcher */}
           <div className="relative" ref={userMenuRef}>
             <button
+              type="button"
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
               className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pr-3 rounded-full bg-slate-100 dark:bg-[#0A0A0A] hover:bg-slate-200 dark:hover:bg-[#141414] cursor-pointer transition-colors border border-slate-200/70 dark:border-white/[0.08]"
               title="Click to switch taxpayer persona or setup new profile"
@@ -194,6 +369,7 @@ export const Header: React.FC<HeaderProps> = ({
                 {mockUsers.map((u) => (
                   <button
                     key={u.id}
+                    type="button"
                     onClick={() => {
                       onSelectUser(u);
                       setIsUserMenuOpen(false);
@@ -214,6 +390,7 @@ export const Header: React.FC<HeaderProps> = ({
 
                 <div className="pt-2 mt-2 border-t border-slate-100 dark:border-white/[0.08]">
                   <button
+                    type="button"
                     onClick={() => {
                       setIsUserMenuOpen(false);
                       onOpenSetup();
@@ -232,3 +409,4 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+

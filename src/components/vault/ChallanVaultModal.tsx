@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChallanReceipt as ChallanReceiptType } from '../../types/tax';
 import { ChallanReceipt } from './ChallanReceipt';
 import { formatINR } from '../../services/taxCalculator';
-import { X, ShieldCheck, FileText, ArrowRight } from 'lucide-react';
+import { X, ShieldCheck, FileText, ArrowRight, Search, Download, Sparkles } from 'lucide-react';
 
 interface ChallanVaultModalProps {
   isOpen: boolean;
@@ -20,6 +20,32 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
   const [selectedChallanId, setSelectedChallanId] = useState<string>(
     activeChallanId || (challans[0]?.id ?? '')
   );
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'advance' | 'property' | 'gst'>('all');
+
+  const handleExportCsv = () => {
+    const headers = ['Receipt ID', 'Tax Type', 'Major Head', 'Minor Head', 'PAN / GSTIN', 'Amount (INR)', 'Paid On', 'CIN', 'BSR Code', 'Bank Ref'];
+    const rows = challans.map((c) => [
+      c.id,
+      `"${c.taxType}"`,
+      `"${c.majorHead}"`,
+      `"${c.minorHead}"`,
+      c.panMasked,
+      c.amount,
+      `"${c.paidOn}"`,
+      c.cin,
+      c.bsrCode || '',
+      c.bankRef,
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `KarSetu_Tax_Challans_${new Date().getFullYear()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     if (activeChallanId) {
@@ -41,7 +67,31 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
 
   if (!isOpen) return null;
 
-  const currentChallan = challans.find((c) => c.id === selectedChallanId) || challans[0];
+  const filteredChallans = challans.filter((c) => {
+    const matchesCategory =
+      selectedCategory === 'all'
+        ? true
+        : selectedCategory === 'advance'
+        ? c.minorHead.includes('ADVANCE') || c.id.includes('CH-280')
+        : selectedCategory === 'property'
+        ? !!c.bbpsRef || c.majorHead.includes('MUNICIPAL')
+        : c.majorHead.includes('GST');
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return matchesCategory;
+    const matchesQuery =
+      c.taxType.toLowerCase().includes(q) ||
+      c.cin.toLowerCase().includes(q) ||
+      c.crn.toLowerCase().includes(q) ||
+      (c.bsrCode && c.bsrCode.toLowerCase().includes(q)) ||
+      c.amount.toString().includes(q);
+    return matchesCategory && matchesQuery;
+  });
+
+  const currentChallan =
+    filteredChallans.find((c) => c.id === selectedChallanId) ||
+    challans.find((c) => c.id === selectedChallanId) ||
+    filteredChallans[0] ||
+    challans[0];
 
   return (
     <div
@@ -58,61 +108,130 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
               <ShieldCheck className="w-6 h-6 text-m3-primary dark:text-emerald-400" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Government Challan & Receipt Vault</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Government Challan & Receipt Vault</h2>
+                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                  CIN & BSR Verified
+                </span>
+              </div>
               <p className="text-xs text-slate-600 dark:text-neutral-400">
                 100% Tax Department & BBPS verified receipts stored with permanent BSR verification
               </p>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
-            aria-label="Close vault"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleExportCsv}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-neutral-200 text-xs font-bold transition-colors cursor-pointer"
+              title="Download CSV statement of all paid tax challans"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Export CSV</span>
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+              aria-label="Close vault"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Search & Filter Toolbar */}
+        <div className="px-5 py-3 border-b border-slate-100 dark:border-white/[0.08] bg-slate-50/70 dark:bg-[#070707] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto text-xs font-bold">
+            {[
+              { id: 'all', label: `All (${challans.length})` },
+              { id: 'advance', label: 'Advance Tax' },
+              { id: 'property', label: 'Property Tax' },
+              { id: 'gst', label: 'GST PMT-06' },
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setSelectedCategory(cat.id as any)}
+                className={`px-3 py-1.5 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                  selectedCategory === cat.id
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white dark:bg-[#141414] text-slate-600 dark:text-neutral-400 hover:bg-slate-100 dark:hover:bg-[#202020] border border-slate-200/80 dark:border-white/[0.06]'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-full sm:w-64">
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search CIN, BSR, or tax..."
+              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/[0.1] bg-white dark:bg-[#0E0E0E] text-xs font-medium text-slate-800 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+            />
+          </div>
         </div>
 
         {/* Content Layout: Left Selector, Right Viewer */}
-        <div className="flex-1 overflow-y-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* List of Receipts (4 cols on lg) */}
           <div className="lg:col-span-4 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500 block px-1">
-              Your Tax Payments ({challans.length})
-            </span>
+            <div className="flex items-center justify-between text-xs px-1">
+              <span className="font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
+                Filtered Receipts ({filteredChallans.length})
+              </span>
+              <button
+                type="button"
+                onClick={handleExportCsv}
+                className="sm:hidden text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1 cursor-pointer"
+              >
+                <Download className="w-3 h-3" /> Export CSV
+              </button>
+            </div>
 
-            {challans.map((challan) => {
-              const isSelected = challan.id === currentChallan?.id;
-              return (
-                <button
-                  key={challan.id}
-                  onClick={() => setSelectedChallanId(challan.id)}
-                  className={`w-full text-left p-4 rounded-2xl border transition-all text-sm flex flex-col gap-1.5 ${
-                    isSelected
-                      ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 shadow-sm'
-                      : 'bg-white dark:bg-[#0E0E0E] border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-[#141414]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-slate-500 dark:text-neutral-400">
-                      {challan.bsrCode ? `BSR: ${challan.bsrCode}` : 'BBPS'}
-                    </span>
-                    <span className="font-extrabold text-slate-900 dark:text-white">{formatINR(challan.amount)}</span>
-                  </div>
+            {filteredChallans.length === 0 ? (
+              <div className="p-6 text-center text-xs text-slate-400 rounded-2xl border border-dashed border-slate-200 dark:border-white/10">
+                No receipts match your search or filter.
+              </div>
+            ) : (
+              filteredChallans.map((challan) => {
+                const isSelected = challan.id === currentChallan?.id;
+                return (
+                  <button
+                    key={challan.id}
+                    onClick={() => setSelectedChallanId(challan.id)}
+                    className={`w-full text-left p-4 rounded-2xl border transition-all text-sm flex flex-col gap-1.5 cursor-pointer ${
+                      isSelected
+                        ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 shadow-sm ring-1 ring-blue-500/20'
+                        : 'bg-white dark:bg-[#0E0E0E] border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-[#141414]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-slate-500 dark:text-neutral-400">
+                        {challan.bsrCode ? `BSR: ${challan.bsrCode}` : 'BBPS'}
+                      </span>
+                      <span className="font-extrabold text-slate-900 dark:text-white">{formatINR(challan.amount)}</span>
+                    </div>
 
-                  <p className="font-semibold text-slate-900 dark:text-slate-200 text-xs line-clamp-1">{challan.taxType}</p>
+                    <p className="font-semibold text-slate-900 dark:text-slate-200 text-xs line-clamp-1">{challan.taxType}</p>
 
-                  <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-neutral-400 pt-1 border-t border-slate-100 dark:border-white/[0.08]">
-                    <span>{challan.paidOn.split(',')[0]}</span>
-                    <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
-                      Verified <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-neutral-400 pt-1 border-t border-slate-100 dark:border-white/[0.08]">
+                      <span>{challan.paidOn.split(',')[0]}</span>
+                      <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
+                        Verified <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </button>
+                );
+              })
+            )}
 
             <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200">
               <div className="flex items-center gap-2 font-bold mb-1">

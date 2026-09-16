@@ -34,6 +34,8 @@ import { ActivityLogDrawer, ActivityLogItem, initialLogs } from './components/au
 import { LanguageSelectorModal } from './components/common/LanguageSelectorModal';
 import { UpiManagerModal } from './components/autopilot/UpiManagerModal';
 import { SecuritySafetyModal } from './components/common/SecuritySafetyModal';
+import { Form26AsModal } from './components/taxes/Form26AsModal';
+import { CalendarExportModal } from './components/common/CalendarExportModal';
 
 // Icons
 import {
@@ -82,6 +84,8 @@ export function App() {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [isUpiModalOpen, setIsUpiModalOpen] = useState(false);
   const [isSecurityModalOpen, setIsSecurityModalOpen] = useState(false);
+  const [is26AsModalOpen, setIs26AsModalOpen] = useState(false);
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
   // Notifications toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -414,6 +418,9 @@ export function App() {
         onOpenSetup={() => setIsSetupOpen(true)}
         onOpenGlossary={() => setIsGlossaryOpen(true)}
         onOpenSecurity={() => setIsSecurityModalOpen(true)}
+        challansCount={challans.length}
+        onOpenCalendar={() => setIsCalendarModalOpen(true)}
+        onOpen26As={() => setIs26AsModalOpen(true)}
       />
 
       {/* Main Body */}
@@ -519,6 +526,7 @@ export function App() {
                 setSelectedVaultChallanId(id);
                 setIsVaultOpen(true);
               }}
+              onOpenCalendar={() => setIsCalendarModalOpen(true)}
             />
 
             {/* Regime Battleground Card */}
@@ -607,6 +615,7 @@ export function App() {
             onTriggerAutopay={(inst) => {
               handleTriggerInstallmentPayment(inst);
             }}
+            onOpen26As={() => setIs26AsModalOpen(true)}
           />
         )}
 
@@ -767,6 +776,21 @@ export function App() {
       <SecuritySafetyModal
         isOpen={isSecurityModalOpen}
         onClose={() => setIsSecurityModalOpen(false)}
+      />
+
+      {/* Form 26AS & AIS Tax Credit Reconciler Modal */}
+      <Form26AsModal
+        isOpen={is26AsModalOpen}
+        onClose={() => setIs26AsModalOpen(false)}
+        user={currentUser}
+        lang={lang}
+      />
+
+      {/* Statutory Tax Deadlines Calendar & .ics Export Modal */}
+      <CalendarExportModal
+        isOpen={isCalendarModalOpen}
+        onClose={() => setIsCalendarModalOpen(false)}
+        lang={lang}
       />
     </div>
   );
