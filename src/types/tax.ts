@@ -86,12 +86,22 @@ export interface ChallanReceipt {
   bbpsRef?: string;
 }
 
+export interface NotificationSettings {
+  whatsappEnabled: boolean;
+  smsEnabled: boolean;
+  emailEnabled: boolean;
+  preNoticeHours: number; // 24 | 48 | 72
+  verified: boolean;
+}
+
 export interface UserProfile {
   id: string;
   name: string;
   avatar: string;
   profileType: ProfileType;
   pan: string;
+  phone: string;
+  notifications?: NotificationSettings;
   linkedBank: {
     bankName: string;
     accountNoMasked: string;

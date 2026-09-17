@@ -36,6 +36,7 @@ import { UpiManagerModal } from './components/autopilot/UpiManagerModal';
 import { SecuritySafetyModal } from './components/common/SecuritySafetyModal';
 import { Form26AsModal } from './components/taxes/Form26AsModal';
 import { CalendarExportModal } from './components/common/CalendarExportModal';
+import { PhoneNotificationBanner, PhoneAlertNotification } from './components/common/PhoneNotificationBanner';
 
 // Icons
 import {
@@ -87,9 +88,30 @@ export function App() {
   const [activityLogs, setActivityLogs] = useState<ActivityLogItem[]>(initialLogs);
 
   // Modals state
-  const [isPreDebitAlertOpen, setIsPreDebitAlertOpen] = useState(false);
-  const [selectedPreDebitTax, setSelectedPreDebitTax] = useState<TaxDueItem | null>(null);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isPreDebitAlertOpen, setIsPreDebitAlertOpen] = useState(() => {
+    try {
+      return window.location.hash === '#predebit' || window.location.search.includes('modal=predebit');
+    } catch {
+      return false;
+    }
+  });
+  const [selectedPreDebitTax, setSelectedPreDebitTax] = useState<TaxDueItem | null>(() => {
+    try {
+      if (window.location.hash === '#predebit' || window.location.search.includes('modal=predebit')) {
+        return mockUpcomingTaxes[0];
+      }
+    } catch {
+      // fallback
+    }
+    return null;
+  });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(() => {
+    try {
+      return window.location.hash === '#settings' || window.location.search.includes('modal=settings');
+    } catch {
+      return false;
+    }
+  });
   const [isVaultOpen, setIsVaultOpen] = useState(() => {
     try {
       return window.location.hash === '#vault' || window.location.search.includes('modal=vault');
@@ -114,6 +136,22 @@ export function App() {
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
+  };
+
+  // Real-time Simulated Phone Lockscreen Notification Banner
+  const [phoneNotification, setPhoneNotification] = useState<PhoneAlertNotification | null>(null);
+
+  const triggerPhoneAlert = (channel: 'whatsapp' | 'sms' = 'whatsapp', targetTax?: TaxDueItem) => {
+    const tax = targetTax || selectedPreDebitTax || upcomingTaxes[0] || mockUpcomingTaxes[0];
+    setPhoneNotification({
+      id: `alert-${Date.now()}`,
+      channel,
+      recipientPhone: currentUser.phone || '9876543210',
+      taxTitle: tax.title,
+      amountFormatted: formatINR(tax.amount),
+      dueDate: tax.dueDate,
+      taxpayerName: currentUser.name,
+    });
   };
 
   const t = translations[lang] || translations.en;
@@ -710,6 +748,7 @@ export function App() {
           taxItem={selectedPreDebitTax}
           user={currentUser}
           onConfirmAutoPay={handleConfirmAutoPay}
+          onTriggerSimulatedAlert={(channel) => triggerPhoneAlert(channel, selectedPreDebitTax || upcomingTaxes[0])}
         />
       )}
 
@@ -720,9 +759,14 @@ export function App() {
         theme={theme}
         onToggleTheme={handleToggleTheme}
         onUpdateMandate={(mandate) => {
-          setCurrentUser({ ...currentUser, mandate });
+          setCurrentUser((prev) => ({ ...prev, mandate }));
           showToast('Mandate settings successfully updated!');
         }}
+        onUpdateUser={(updated) => {
+          setCurrentUser((prev) => ({ ...prev, ...updated }));
+          showToast('Alert phone number & notification channels saved!');
+        }}
+        onTriggerTestAlert={(channel) => triggerPhoneAlert(channel)}
       />
 
       <ChallanVaultModal
@@ -812,6 +856,16 @@ export function App() {
         isOpen={isCalendarModalOpen}
         onClose={() => setIsCalendarModalOpen(false)}
         lang={lang}
+      />
+
+      {/* Real-time Phone Alert Banner (Lockscreen Simulation) */}
+      <PhoneNotificationBanner
+        notification={phoneNotification}
+        onDismiss={() => setPhoneNotification(null)}
+        onOpenPreDebit={() => {
+          setSelectedPreDebitTax(upcomingTaxes[0] || mockUpcomingTaxes[0]);
+          setIsPreDebitAlertOpen(true);
+        }}
       />
     </div>
   );

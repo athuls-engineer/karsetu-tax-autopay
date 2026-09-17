@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AutopayMode, UserProfile } from '../../types/tax';
 import { formatINR } from '../../services/taxCalculator';
+import { dispatchWhatsAppMessage, sanitizeIndianPhone } from '../../services/notificationService';
+import { mockUpcomingTaxes } from '../../data/mockData';
 import {
   X,
   Shield,
@@ -11,6 +13,9 @@ import {
   Sun,
   Moon,
   Sparkles,
+  Smartphone,
+  MessageSquare,
+  Bell,
 } from 'lucide-react';
 
 interface MandateManagerModalProps {
@@ -20,6 +25,8 @@ interface MandateManagerModalProps {
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
   onUpdateMandate: (updatedMandate: UserProfile['mandate']) => void;
+  onUpdateUser?: (updated: Partial<UserProfile>) => void;
+  onTriggerTestAlert?: (channel: 'whatsapp' | 'sms') => void;
 }
 
 export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
@@ -29,11 +36,16 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
   theme,
   onToggleTheme,
   onUpdateMandate,
+  onUpdateUser,
+  onTriggerTestAlert,
 }) => {
   const [mode, setMode] = useState<AutopayMode>(user.mandate.mode);
   const [maxLimit, setMaxLimit] = useState<number>(user.mandate.maxSingleLimit);
   const [preNoticeHours, setPreNoticeHours] = useState<number>(user.mandate.preNoticeHours);
   const [isActive, setIsActive] = useState<boolean>(user.mandate.isActive);
+  const [phone, setPhone] = useState<string>(user.phone || '9876543210');
+  const [whatsappEnabled, setWhatsappEnabled] = useState<boolean>(user.notifications?.whatsappEnabled ?? true);
+  const [smsEnabled, setSmsEnabled] = useState<boolean>(user.notifications?.smsEnabled ?? true);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
@@ -42,9 +54,12 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
     };
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
+      setPhone(user.phone || '9876543210');
+      setWhatsappEnabled(user.notifications?.whatsappEnabled ?? true);
+      setSmsEnabled(user.notifications?.smsEnabled ?? true);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, user]);
 
   if (!isOpen) return null;
 
@@ -55,6 +70,16 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
       maxSingleLimit: maxLimit,
       preNoticeHours,
       isActive,
+    });
+    onUpdateUser?.({
+      phone: sanitizeIndianPhone(phone),
+      notifications: {
+        whatsappEnabled,
+        smsEnabled,
+        emailEnabled: user.notifications?.emailEnabled ?? false,
+        preNoticeHours,
+        verified: true,
+      },
     });
     setIsSaved(true);
     setTimeout(() => {
@@ -140,6 +165,135 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
               >
                 <Moon className="w-4 h-4 text-blue-400" />
                 <span>Midnight Slate (Dark)</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Registered Mobile & Alert Channels */}
+          <div className="p-4 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-3.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
+                  <Smartphone className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="font-bold text-slate-900 dark:text-white text-sm block leading-tight">
+                    Registered Mobile & Alert Channels
+                  </span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Mandatory 72h notice sent before any money leaves your bank
+                  </span>
+                </div>
+              </div>
+              <span className="px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold">
+                RBI 2023 Safe
+              </span>
+            </div>
+
+            {/* Mobile Number Input */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                <span>Aadhaar / PAN Linked Mobile (+91)</span>
+                <span className="text-[10px] font-normal text-slate-400">Used for WhatsApp & SMS notices</span>
+              </label>
+              <div className="flex items-center gap-2">
+                <div className="px-3 py-2.5 rounded-xl bg-slate-200/80 dark:bg-[#0F172A] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 select-none">
+                  🇮🇳 +91
+                </div>
+                <input
+                  type="tel"
+                  maxLength={10}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                  placeholder="9876543210"
+                  className="flex-1 p-2.5 rounded-xl border border-slate-300 dark:border-slate-700/80 bg-white dark:bg-[#0F172A] text-slate-900 dark:text-white font-mono text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                />
+              </div>
+              {phone.length === 10 ? (
+                <div className="flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 pt-0.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Valid 10-digit Indian Mobile Number</span>
+                </div>
+              ) : (
+                <p className="text-[10px] text-amber-600 dark:text-amber-400">
+                  Please enter all 10 digits of your mobile number
+                </p>
+              )}
+            </div>
+
+            {/* Delivery Channels Selectors */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <label className={`p-2.5 rounded-2xl border text-left cursor-pointer transition-all flex items-start gap-2.5 ${
+                whatsappEnabled
+                  ? 'bg-emerald-50/70 dark:bg-[#062417] border-emerald-500/60 dark:border-emerald-500/50'
+                  : 'bg-white dark:bg-[#0F172A] border-slate-200 dark:border-slate-700 opacity-60'
+              }`}>
+                <input
+                  type="checkbox"
+                  checked={whatsappEnabled}
+                  onChange={(e) => setWhatsappEnabled(e.target.checked)}
+                  className="mt-0.5 accent-emerald-600 cursor-pointer"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-bold text-slate-900 dark:text-white">WhatsApp Bot</span>
+                    <span className="px-1 py-0.2 rounded bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300 text-[9px] font-extrabold">
+                      Primary
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 leading-tight">
+                    Instant rich receipt preview with 1-tap pause button
+                  </p>
+                </div>
+              </label>
+
+              <label className={`p-2.5 rounded-2xl border text-left cursor-pointer transition-all flex items-start gap-2.5 ${
+                smsEnabled
+                  ? 'bg-blue-50/70 dark:bg-[#0C1E3D] border-blue-500/60 dark:border-blue-400/50'
+                  : 'bg-white dark:bg-[#0F172A] border-slate-200 dark:border-slate-700 opacity-60'
+              }`}>
+                <input
+                  type="checkbox"
+                  checked={smsEnabled}
+                  onChange={(e) => setSmsEnabled(e.target.checked)}
+                  className="mt-0.5 accent-blue-600 cursor-pointer"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-bold text-slate-900 dark:text-white">SMS / Messages</span>
+                    <span className="px-1 py-0.2 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[9px] font-extrabold">
+                      DLT Backup
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 leading-tight">
+                    TRAI registered official header [KARSETU]
+                  </p>
+                </div>
+              </label>
+            </div>
+
+            {/* Test Notification Actions */}
+            <div className="pt-2 border-t border-slate-200/80 dark:border-slate-700/80 flex flex-col sm:flex-row items-stretch gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const sampleTax = mockUpcomingTaxes[0];
+                  dispatchWhatsAppMessage(phone, user, sampleTax);
+                }}
+                disabled={phone.length !== 10}
+                className="flex-1 py-2 px-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
+              >
+                <span>💬</span>
+                <span>Send Live WhatsApp Notice</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => onTriggerTestAlert?.('whatsapp')}
+                className="py-2 px-3 rounded-xl bg-slate-200/80 hover:bg-slate-300/80 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Bell className="w-3.5 h-3.5 text-amber-500" />
+                <span>Simulate Phone Ping</span>
               </button>
             </div>
           </div>

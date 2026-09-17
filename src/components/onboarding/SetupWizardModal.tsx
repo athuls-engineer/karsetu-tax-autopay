@@ -71,6 +71,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
   const [hasProperty, setHasProperty] = useState(true);
   const [autopayMode, setAutopayMode] = useState<AutopayMode>('direct_sweep');
   const [upiId, setUpiId] = useState('rahul@okhdfcbank');
+  const [phone, setPhone] = useState('9876543210');
   const [isVerifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
@@ -110,6 +111,14 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
         onCompleteSetup({
           profileType,
           pan,
+          phone: phone.replace(/\D/g, '').slice(-10),
+          notifications: {
+            whatsappEnabled: true,
+            smsEnabled: true,
+            emailEnabled: false,
+            preNoticeHours: 72,
+            verified: true,
+          },
           linkedBank: {
             bankName: selectedBank,
             accountNoMasked: '•••8902',
@@ -428,6 +437,35 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 placeholder="yourname@okhdfcbank"
                 className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-slate-800 dark:text-white font-mono text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
+            </div>
+
+            {/* Mobile Number for WhatsApp & SMS Pre-Debit Notices */}
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Mobile Number for Mandatory 72h Pre-Debit Notices
+                </label>
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3" />
+                  RBI Required
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="px-3 py-3 rounded-xl bg-slate-100 dark:bg-[#0B1325] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 select-none">
+                  🇮🇳 +91
+                </div>
+                <input
+                  type="tel"
+                  maxLength={10}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                  placeholder="9876543210"
+                  className="flex-1 p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-slate-800 dark:text-white font-mono text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                />
+              </div>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+                Under RBI e-Mandate Circular 2023, you receive an automated WhatsApp & SMS alert 72 hours before any debit with an instant 1-tap pause button.
+              </p>
             </div>
 
             {/* Safety Guarantee Banner */}

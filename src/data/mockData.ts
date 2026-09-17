@@ -7,6 +7,14 @@ export const mockUsers: UserProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     profileType: 'salaried',
     pan: 'ABCPS1234F',
+    phone: '9876543210',
+    notifications: {
+      whatsappEnabled: true,
+      smsEnabled: true,
+      emailEnabled: false,
+      preNoticeHours: 72,
+      verified: true,
+    },
     linkedBank: {
       bankName: 'HDFC Bank',
       accountNoMasked: '•••4092',
@@ -50,6 +58,14 @@ export const mockUsers: UserProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
     profileType: 'freelancer',
     pan: 'BPYPP9871M',
+    phone: '9820194820',
+    notifications: {
+      whatsappEnabled: true,
+      smsEnabled: true,
+      emailEnabled: true,
+      preNoticeHours: 48,
+      verified: true,
+    },
     linkedBank: {
       bankName: 'ICICI Bank',
       accountNoMasked: '•••8124',
@@ -94,6 +110,14 @@ export const mockUsers: UserProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     profileType: 'investor',
     pan: 'AXCPS5421K',
+    phone: '9988776655',
+    notifications: {
+      whatsappEnabled: true,
+      smsEnabled: false,
+      emailEnabled: false,
+      preNoticeHours: 72,
+      verified: true,
+    },
     linkedBank: {
       bankName: 'Kotak Mahindra Bank',
       accountNoMasked: '•••1903',
