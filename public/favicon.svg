@@ -1,49 +1,22 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Vibrant Royal Blue Squircle Base -->
-    <linearGradient id="ks_fav_bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#2563EB" />
-      <stop offset="60%" stopColor="#1D4ED8" />
-      <stop offset="100%" stopColor="#1E3A8A" />
-    </linearGradient>
+  <!-- 1. Vibrant Royal Blue Squircle Base (Solid #1D4ED8 with #60A5FA border) -->
+  <rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="#1D4ED8" stroke="#60A5FA" stroke-width="1.5" />
 
-    <!-- Ascending Bridge Arch (Electric Sky Blue) -->
-    <linearGradient id="ks_fav_upper" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#60A5FA" />
-      <stop offset="100%" stopColor="#38BDF8" />
-    </linearGradient>
-
-    <!-- Foundation Bridge Arch (Vivid Emerald Green) -->
-    <linearGradient id="ks_fav_lower" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#34D399" />
-      <stop offset="100%" stopColor="#10B981" />
-    </linearGradient>
-
-    <!-- Subtle Luminous Rim -->
-    <linearGradient id="ks_fav_rim" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="rgba(255, 255, 255, 0.6)" />
-      <stop offset="100%" stopColor="rgba(147, 197, 253, 0.4)" />
-    </linearGradient>
-  </defs>
-
-  <!-- 1. Vibrant Squircle Container (Pops in both dark & light browser tabs) -->
-  <rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="url(#ks_fav_bg)" stroke="url(#ks_fav_rim)" stroke-width="1.5" />
-
-  <!-- 2. Solid Anchor Pylon (White Mast) -->
+  <!-- 2. Solid Anchor Pylon (Vertical White Mast) -->
   <rect x="9" y="9" width="7.5" height="30" rx="3.75" fill="#FFFFFF" />
 
-  <!-- 3. Ascending Bridge Arch -->
-  <path d="M19 24 C22 24 26 21 31 15 L38 9.5 C39.8 8 42 9.8 40.8 11.8 L31.5 24.5 C29.5 27 25.5 28.5 22 28.5 Z" fill="url(#ks_fav_upper)" />
+  <!-- 3. Ascending Bridge Arch (Electric Sky Blue #38BDF8) -->
+  <path d="M19 24 C22 24 26 21 31 15 L38 9.5 C39.8 8 42 9.8 40.8 11.8 L31.5 24.5 C29.5 27 25.5 28.5 22 28.5 Z" fill="#38BDF8" />
 
-  <!-- 4. Foundation Bridge Arch -->
-  <path d="M19 25.5 C22 25.5 26 28.5 30 33.5 L38.5 40.5 C40.2 42 38.5 44.5 36.5 44 L29 41 C24 38.5 21 33 19 27.5 Z" fill="url(#ks_fav_lower)" />
+  <!-- 4. Foundation Bridge Arch (Vivid Emerald Green #10B981) -->
+  <path d="M19 25.5 C22 25.5 26 28.5 30 33.5 L38.5 40.5 C40.2 42 38.5 44.5 36.5 44 L29 41 C24 38.5 21 33 19 27.5 Z" fill="#10B981" />
 
-  <!-- 5. Central High-Speed Clearance Span -->
-  <path d="M13 25 H39" stroke="rgba(255, 255, 255, 0.65)" stroke-width="2" stroke-linecap="round" />
+  <!-- 5. Central High-Speed Clearance Span (Pure White #FFFFFF) -->
+  <path d="M13 25 H39" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
 
-  <!-- 6. Golden Clearance Keystone Node -->
+  <!-- 6. Golden Clearance Keystone Node (Amber Gold #F59E0B with White Rim) -->
   <circle cx="39" cy="11" r="3.5" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5" />
 
-  <!-- 7. Emerald Settlement Node -->
+  <!-- 7. Emerald Settlement Node (Emerald Green #10B981 with White Rim) -->
   <circle cx="38" cy="42" r="3" fill="#10B981" stroke="#FFFFFF" stroke-width="1.5" />
 </svg>
