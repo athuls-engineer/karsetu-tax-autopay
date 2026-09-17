@@ -92,6 +92,8 @@ export interface NotificationSettings {
   emailEnabled: boolean;
   preNoticeHours: number; // 24 | 48 | 72
   verified: boolean;
+  callmebotApiKey?: string;
+  devicePushEnabled?: boolean;
 }
 
 export interface UserProfile {

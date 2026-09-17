@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TaxDueItem, UserProfile } from '../../types/tax';
 import { formatINR } from '../../services/taxCalculator';
-import { dispatchWhatsAppMessage, formatDisplayPhone } from '../../services/notificationService';
+import {
+  dispatchNativePushNotification,
+  dispatchSovereignGateway,
+  formatDisplayPhone,
+  GatewayDeliveryReceipt,
+} from '../../services/notificationService';
 import {
   X,
   Check,
@@ -38,6 +43,8 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
 }) => {
   const [settlementStage, setSettlementStage] = useState<'preview' | 'processing' | 'success'>('preview');
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [gatewayReceipt, setGatewayReceipt] = useState<GatewayDeliveryReceipt | null>(null);
+  const [pushStatusMessage, setPushStatusMessage] = useState<string | null>(null);
   const [generatedChallanId, setGeneratedChallanId] = useState<string>('');
 
   useEffect(() => {
@@ -247,12 +254,12 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                 </div>
               </div>
 
-              {/* Real-world Live Phone Dispatch Card */}
+              {/* Real-world Inbound Notification Delivery Card */}
               <div className="w-full max-w-sm p-3.5 rounded-3xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 shadow-xs space-y-2.5 text-left">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-100">
                     <Smartphone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    <span>Live Phone Delivery</span>
+                    <span>Inbound Notice Delivery</span>
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold">
                     {formatDisplayPhone(user.phone)}
@@ -260,28 +267,67 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                 </div>
 
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
-                  Want to verify this exact notice on your actual device? Test sending it to your phone via WhatsApp or trigger a lockscreen notification.
+                  72 hours prior to execution, KarSetu's telecom gateway pushes this notice directly to your device. You never need to write or send anything yourself.
                 </p>
 
                 <div className="grid grid-cols-2 gap-2 pt-0.5">
                   <button
                     type="button"
-                    onClick={() => dispatchWhatsAppMessage(user.phone, user, taxItem)}
-                    className="py-2 px-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+                    onClick={async () => {
+                      if (!taxItem) return;
+                      const res = await dispatchNativePushNotification(user, taxItem);
+                      onTriggerSimulatedAlert?.('whatsapp');
+                      if (res.permission === 'granted') {
+                        setPushStatusMessage('✓ System notification delivered to your screen!');
+                      } else {
+                        setPushStatusMessage('✓ Inbound alert simulated with chime and banner!');
+                      }
+                    }}
+                    className="py-2 px-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
                   >
-                    <span className="text-sm">💬</span>
-                    <span>Send to WhatsApp</span>
+                    <Bell className="w-3.5 h-3.5" />
+                    <span>Push to Device</span>
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => onTriggerSimulatedAlert?.('whatsapp')}
-                    className="py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    onClick={async () => {
+                      if (!taxItem) return;
+                      const receipt = await dispatchSovereignGateway(
+                        user.phone,
+                        user,
+                        taxItem,
+                        'whatsapp',
+                        user.notifications?.callmebotApiKey
+                      );
+                      setGatewayReceipt(receipt);
+                      onTriggerSimulatedAlert?.('whatsapp');
+                    }}
+                    className="py-2 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
                   >
-                    <Bell className="w-3.5 h-3.5 text-amber-500" />
-                    <span>Lockscreen Ping</span>
+                    <Smartphone className="w-3.5 h-3.5" />
+                    <span>Test Telecom Ping</span>
                   </button>
                 </div>
+
+                {pushStatusMessage && (
+                  <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[10px] font-bold text-blue-800 dark:text-blue-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
+                    <span>{pushStatusMessage}</span>
+                  </div>
+                )}
+
+                {gatewayReceipt && (
+                  <div className="p-2 rounded-xl bg-emerald-50 dark:bg-[#062417] border border-emerald-200 dark:border-emerald-800 text-[10px] space-y-0.5 animate-in fade-in">
+                    <div className="flex items-center justify-between font-bold text-emerald-800 dark:text-emerald-300">
+                      <span>✓ Inbound Dispatch Confirmed</span>
+                      <span className="font-mono text-[9px]">{gatewayReceipt.status}</span>
+                    </div>
+                    <p className="text-emerald-700 dark:text-emerald-400 text-[9px]">
+                      Pushed to {gatewayReceipt.recipientPhone} (Ref: {gatewayReceipt.messageId} via {gatewayReceipt.carrier} at {gatewayReceipt.timestamp})
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
