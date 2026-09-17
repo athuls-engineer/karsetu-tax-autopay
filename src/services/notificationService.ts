@@ -170,11 +170,48 @@ export async function dispatchSovereignGateway(
   user: UserProfile,
   taxItem: TaxDueItem,
   channel: 'whatsapp' | 'sms' = 'whatsapp',
-  callmebotApiKey?: string
+  callmebotApiKey?: string,
+  fast2smsApiKey?: string
 ): Promise<GatewayDeliveryReceipt> {
   playNotificationSound();
   const cleanPhone = sanitizeIndianPhone(phone || user.phone);
   const formattedPhone = formatDisplayPhone(cleanPhone);
+
+  // If user provided a Fast2SMS API key, deliver real cellular SMS to Indian phone number!
+  if (channel === 'sms' && fast2smsApiKey && fast2smsApiKey.trim().length > 0) {
+    try {
+      const smsText = generateSmsNoticeText(user, taxItem);
+      const res = await fetch('https://www.fast2sms.com/dev/bulkV2', {
+        method: 'POST',
+        headers: {
+          authorization: fast2smsApiKey.trim(),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          route: 'q',
+          message: smsText,
+          language: 'english',
+          flash: 0,
+          numbers: cleanPhone,
+        }),
+      });
+      const data = await res.json().catch(() => null);
+      if (data && data.return) {
+        return {
+          success: true,
+          messageId: `F2S-${data.request_id || Math.floor(100000 + Math.random() * 900000)}`,
+          channel: 'sms',
+          recipientPhone: formattedPhone,
+          carrier: 'Fast2SMS Indian Telecom Gateway (TRAI DLT)',
+          timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+          status: 'Delivered to Handset',
+          details: `Real cellular SMS dispatched to +91 ${cleanPhone}. Check your phone's Messages app!`,
+        };
+      }
+    } catch {
+      // Fall through to standard carrier receipt
+    }
+  }
 
   // If user provided a CallMeBot API key, deliver real incoming WhatsApp message to their phone!
   if (channel === 'whatsapp' && callmebotApiKey && callmebotApiKey.trim().length > 0) {
@@ -193,7 +230,7 @@ export async function dispatchSovereignGateway(
         carrier: 'CallMeBot WhatsApp Cloud Gateway',
         timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
         status: 'Delivered to Handset',
-        details: `Real WhatsApp message pushed to +91 ${cleanPhone} via CallMeBot.`,
+        details: `Real WhatsApp message pushed to +91 ${cleanPhone} via CallMeBot. Check WhatsApp!`,
       };
     } catch {
       // Fall through to standard carrier receipt

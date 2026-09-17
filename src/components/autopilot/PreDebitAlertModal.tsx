@@ -298,7 +298,8 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                         user,
                         taxItem,
                         'whatsapp',
-                        user.notifications?.callmebotApiKey
+                        user.notifications?.callmebotApiKey,
+                        user.notifications?.fast2smsApiKey
                       );
                       setGatewayReceipt(receipt);
                       onTriggerSimulatedAlert?.('whatsapp');

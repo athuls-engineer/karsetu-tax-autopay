@@ -55,6 +55,7 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
   const [isSaved, setIsSaved] = useState(false);
   const [gatewayReceipt, setGatewayReceipt] = useState<GatewayDeliveryReceipt | null>(null);
   const [callmebotKey, setCallmebotKey] = useState<string>(user.notifications?.callmebotApiKey || '');
+  const [fast2smsKey, setFast2smsKey] = useState<string>(user.notifications?.fast2smsApiKey || '');
   const [showAdvancedGateway, setShowAdvancedGateway] = useState<boolean>(false);
   const [isDispatching, setIsDispatching] = useState<boolean>(false);
   const [pushStatusMessage, setPushStatusMessage] = useState<string | null>(null);
@@ -69,6 +70,7 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
       setWhatsappEnabled(user.notifications?.whatsappEnabled ?? true);
       setSmsEnabled(user.notifications?.smsEnabled ?? true);
       setCallmebotKey(user.notifications?.callmebotApiKey || '');
+      setFast2smsKey(user.notifications?.fast2smsApiKey || '');
       setGatewayReceipt(null);
       setPushStatusMessage(null);
     }
@@ -97,7 +99,7 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
     setIsDispatching(true);
     const sampleTax = mockUpcomingTaxes[0];
     const channel = whatsappEnabled ? 'whatsapp' : 'sms';
-    const receipt = await dispatchSovereignGateway(phone, user, sampleTax, channel, callmebotKey);
+    const receipt = await dispatchSovereignGateway(phone, user, sampleTax, channel, callmebotKey, fast2smsKey);
     setGatewayReceipt(receipt);
     onTriggerTestAlert?.(channel);
     setIsDispatching(false);
@@ -120,6 +122,7 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
         preNoticeHours,
         verified: true,
         callmebotApiKey: callmebotKey.trim() || undefined,
+        fast2smsApiKey: fast2smsKey.trim() || undefined,
       },
     });
     setIsSaved(true);
@@ -361,38 +364,87 @@ export const MandateManagerModal: React.FC<MandateManagerModalProps> = ({
                 </div>
               )}
 
-              {/* Optional CallMeBot WhatsApp API Key Toggle */}
+              {/* Real Phone Delivery Guide & Gateway Connectors */}
               <div className="pt-1">
                 <button
                   type="button"
                   onClick={() => setShowAdvancedGateway(!showAdvancedGateway)}
                   className="text-[11px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  <span>{showAdvancedGateway ? '▾' : '▸'} Want real incoming WhatsApp messages on your phone? (Optional API)</span>
+                  <span>{showAdvancedGateway ? '▾' : '▸'} How to receive REAL SMS & WhatsApp on your physical phone? (Click to view)</span>
                 </button>
                 {showAdvancedGateway && (
-                  <div className="mt-2 p-3 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700/80 space-y-2 text-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-slate-800 dark:text-slate-200">CallMeBot WhatsApp Delivery Key</span>
-                      <a
-                        href="https://www.callmebot.com/blog/free-api-whatsapp-messages/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-[10px] text-blue-600 dark:text-blue-400 underline font-semibold"
-                      >
-                        Get Free Key in 10s ↗
-                      </a>
+                  <div className="mt-2 p-3.5 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700/80 space-y-3 text-xs">
+                    <div className="space-y-1 text-slate-600 dark:text-slate-300">
+                      <p className="font-bold text-slate-900 dark:text-white">
+                        ℹ️ Why static websites cannot send free cellular SMS without a gateway:
+                      </p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Under Indian telecom law (TRAI DLT), cellular SMS incurs carrier charges and requires registered enterprise headers (like <code className="text-blue-500">[KARSETU]</code>). Meta also strictly restricts WhatsApp to verified business numbers to prevent spam. Below are 3 ways you can receive real alerts right now:
+                      </p>
                     </div>
-                    <input
-                      type="password"
-                      value={callmebotKey}
-                      onChange={(e) => setCallmebotKey(e.target.value)}
-                      placeholder="Enter your CallMeBot API key..."
-                      className="w-full p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#1E293B] text-xs font-mono"
-                    />
-                    <p className="text-[10px] text-slate-400">
-                      When entered, testing the telecom ping makes an actual API call to deliver an incoming WhatsApp message to your phone from CallMeBot.
-                    </p>
+
+                    {/* Method 1: Real Mobile Push on Smartphone */}
+                    <div className="p-2.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-900/50 space-y-1">
+                      <div className="flex items-center gap-1.5 font-bold text-blue-900 dark:text-blue-300 text-xs">
+                        <Smartphone className="w-3.5 h-3.5" />
+                        <span>Method 1: Open KarSetu on your Smartphone (Zero Setup)</span>
+                      </div>
+                      <p className="text-[11px] text-slate-600 dark:text-slate-300">
+                        Open <span className="font-mono font-bold text-blue-600 dark:text-blue-400">athuls-engineer.github.io/karsetu-tax-autopay</span> in Chrome on your phone, click <strong>"Receive Real Alert"</strong> and tap Allow. Your actual phone will ring and vibrate with the incoming alert!
+                      </p>
+                    </div>
+
+                    {/* Method 2: Real WhatsApp via CallMeBot */}
+                    <div className="space-y-1.5 pt-1 border-t border-slate-200 dark:border-slate-700/80">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-slate-800 dark:text-slate-200">
+                          Method 2: Real WhatsApp Inbound Bot (CallMeBot)
+                        </span>
+                        <a
+                          href="https://www.callmebot.com/blog/free-api-whatsapp-messages/"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[10px] text-blue-600 dark:text-blue-400 underline font-semibold"
+                        >
+                          Get Free Key in 10s ↗
+                        </a>
+                      </div>
+                      <p className="text-[10px] text-slate-400">
+                        Send <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">I allow callmebot to send me messages</code> to CallMeBot on WhatsApp to get a key, then paste below:
+                      </p>
+                      <input
+                        type="password"
+                        value={callmebotKey}
+                        onChange={(e) => setCallmebotKey(e.target.value)}
+                        placeholder="Enter CallMeBot API key..."
+                        className="w-full p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#1E293B] text-xs font-mono"
+                      />
+                    </div>
+
+                    {/* Method 3: Real Cellular SMS via Fast2SMS */}
+                    <div className="space-y-1.5 pt-1 border-t border-slate-200 dark:border-slate-700/80">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-slate-800 dark:text-slate-200">
+                          Method 3: Real Cellular SMS (Fast2SMS India)
+                        </span>
+                        <a
+                          href="https://www.fast2sms.com"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[10px] text-blue-600 dark:text-blue-400 underline font-semibold"
+                        >
+                          Fast2SMS Portal ↗
+                        </a>
+                      </div>
+                      <input
+                        type="password"
+                        value={fast2smsKey}
+                        onChange={(e) => setFast2smsKey(e.target.value)}
+                        placeholder="Enter Fast2SMS API key..."
+                        className="w-full p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#1E293B] text-xs font-mono"
+                      />
+                    </div>
                   </div>
                 )}
               </div>

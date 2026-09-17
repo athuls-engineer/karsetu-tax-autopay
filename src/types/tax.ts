@@ -93,6 +93,7 @@ export interface NotificationSettings {
   preNoticeHours: number; // 24 | 48 | 72
   verified: boolean;
   callmebotApiKey?: string;
+  fast2smsApiKey?: string;
   devicePushEnabled?: boolean;
 }
 
