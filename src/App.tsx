@@ -16,6 +16,9 @@ import { Header } from './components/layout/Header';
 import { AutopilotHeroCard } from './components/dashboard/AutopilotHeroCard';
 import { TaxRadarTimeline } from './components/dashboard/TaxRadarTimeline';
 import { RegimeBattleCard } from './components/dashboard/RegimeBattleCard';
+import { ArchitecturePipelineSection } from './components/dashboard/ArchitecturePipelineSection';
+import { FailureSimulationCard } from './components/dashboard/FailureSimulationCard';
+import { TrustSecuritySection } from './components/dashboard/TrustSecuritySection';
 
 // Tax Hub Components
 import { AdvanceTaxView } from './components/taxes/AdvanceTaxView';
@@ -37,6 +40,7 @@ import { SecuritySafetyModal } from './components/common/SecuritySafetyModal';
 import { Form26AsModal } from './components/taxes/Form26AsModal';
 import { CalendarExportModal } from './components/common/CalendarExportModal';
 import { PhoneNotificationBanner, PhoneAlertNotification } from './components/common/PhoneNotificationBanner';
+import { SandboxInfoModal } from './components/common/SandboxInfoModal';
 
 // Icons
 import {
@@ -129,6 +133,7 @@ export function App() {
   const [isSecurityModalOpen, setIsSecurityModalOpen] = useState(false);
   const [is26AsModalOpen, setIs26AsModalOpen] = useState(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  const [isSandboxModalOpen, setIsSandboxModalOpen] = useState(false);
 
   // Notifications toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -480,6 +485,7 @@ export function App() {
         challansCount={challans.length}
         onOpenCalendar={() => setIsCalendarModalOpen(true)}
         onOpen26As={() => setIs26AsModalOpen(true)}
+        onOpenSandboxInfo={() => setIsSandboxModalOpen(true)}
       />
 
       {/* Main Body */}
@@ -658,6 +664,15 @@ export function App() {
                 <ArrowRight className="w-4 h-4 text-blue-200 dark:text-slate-500 shrink-0" />
               </button>
             </div>
+
+            {/* Technical Architecture & Sovereign Pipeline Flow */}
+            <ArchitecturePipelineSection />
+
+            {/* Edge Cases & Failure Recovery Simulator */}
+            <FailureSimulationCard />
+
+            {/* Comprehensive Trust, Custody & Security FAQ */}
+            <TrustSecuritySection onOpenSecurityModal={() => setIsSecurityModalOpen(true)} />
           </div>
         )}
 
@@ -856,6 +871,17 @@ export function App() {
         isOpen={isCalendarModalOpen}
         onClose={() => setIsCalendarModalOpen(false)}
         lang={lang}
+      />
+
+      {/* CBDT TIN 2.0 & RBI Regulatory Sandbox Information Modal */}
+      <SandboxInfoModal
+        isOpen={isSandboxModalOpen}
+        onClose={() => setIsSandboxModalOpen(false)}
+        currentUser={currentUser}
+        onSelectUser={(u) => {
+          setCurrentUser(u);
+          showToast(`Switched profile to ${u.name} (${u.profileType})`);
+        }}
       />
 
       {/* Real-time Phone Alert Banner (Lockscreen Simulation) */}

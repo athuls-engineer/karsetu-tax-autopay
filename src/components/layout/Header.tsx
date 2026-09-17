@@ -17,6 +17,7 @@ import {
   FileSpreadsheet,
   Layers,
   CheckCircle2,
+  Server,
 } from 'lucide-react';
 import { KarSetuLogo } from '../common/KarSetuLogo';
 
@@ -36,6 +37,7 @@ interface HeaderProps {
   challansCount?: number;
   onOpenCalendar?: () => void;
   onOpen26As?: () => void;
+  onOpenSandboxInfo?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -54,6 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
   challansCount = 5,
   onOpenCalendar,
   onOpen26As,
+  onOpenSandboxInfo,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
@@ -107,6 +110,17 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse shrink-0" />
               <span>Autopilot Active</span>
             </span>
+            {onOpenSandboxInfo && (
+              <button
+                type="button"
+                onClick={onOpenSandboxInfo}
+                className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-700/50 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors cursor-pointer whitespace-nowrap shrink-0 shadow-2xs"
+                title="CBDT TIN 2.0 & RBI Sandbox Simulation Info"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                <span>CBDT Sandbox</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -231,6 +245,32 @@ export const Header: React.FC<HeaderProps> = ({
                       </p>
                     </div>
                   </button>
+
+                  {onOpenSandboxInfo && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsToolsMenuOpen(false);
+                        onOpenSandboxInfo();
+                      }}
+                      className="w-full flex items-start gap-3 p-2.5 rounded-2xl text-left hover:bg-slate-50 dark:hover:bg-[#1E293B] text-slate-800 dark:text-slate-200 cursor-pointer transition-colors group"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                        <Server className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-slate-900 dark:text-white">CBDT Sandbox Testnet</span>
+                          <span className="px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-black">
+                            SIMULATED
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                          Production specs vs regulatory sandbox details
+                        </p>
+                      </div>
+                    </button>
+                  )}
                 </div>
 
                 <div className="my-2 border-t border-slate-100 dark:border-white/[0.08]" />
