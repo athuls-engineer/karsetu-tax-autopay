@@ -14,21 +14,21 @@
       (function() {
         try {
           var saved = localStorage.getItem('karsetu_theme');
-          if (saved === 'dark') {
+          if (saved !== 'light') {
             document.documentElement.classList.add('dark');
           } else {
             document.documentElement.classList.remove('dark');
           }
         } catch(e) {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('dark');
         }
       })();
     </script>
-    <script type="module" crossorigin src="./assets/index-CHWb1zu1.js"></script>
+    <script type="module" crossorigin src="./assets/index-Cpn4X_tf.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/vendor-icons-BC_oOxsg.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-react-B9M4yVxN.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-utils-Dunm7VNe.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-D9yR2wKd.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CevFmlBw.css">
   </head>
   <body class="bg-[#F8F9FA] text-[#1F1F1F] antialiased selection:bg-m3-primary-container selection:text-m3-on-primary-container">
     <div id="root"></div>
