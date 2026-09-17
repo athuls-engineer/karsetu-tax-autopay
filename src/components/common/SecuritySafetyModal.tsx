@@ -59,9 +59,9 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
@@ -75,7 +75,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                   RBI & TIN 2.0 Direct
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Proof of zero middleman float, direct RBI Treasury settlement, and zero tax wastage
               </p>
             </div>
@@ -84,7 +84,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
             aria-label="Close security modal"
           >
             <X className="w-5 h-5" />
@@ -92,14 +92,14 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
         </div>
 
         {/* Tab Navigation (Responsive Segmented Control - Zero Spillage) */}
-        <div className="px-4 sm:px-6 pt-3 pb-2.5 bg-slate-50/70 dark:bg-[#070707] border-b border-slate-100 dark:border-white/[0.08] shrink-0">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-slate-200/70 dark:bg-[#141414] rounded-2xl text-xs font-bold">
+        <div className="px-4 sm:px-6 pt-3 pb-2.5 bg-slate-50/70 dark:bg-[#090D16] border-b border-slate-100 dark:border-slate-800 shrink-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-slate-200/70 dark:bg-[#1E293B] rounded-2xl text-xs font-bold">
             <button
               onClick={() => setActiveTab('trail')}
               className={`py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer ${
                 activeTab === 'trail'
-                  ? 'bg-white dark:bg-[#222222] text-emerald-700 dark:text-emerald-400 shadow-xs'
-                  : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-[#0F172A] text-emerald-700 dark:text-emerald-400 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <Landmark className="w-3.5 h-3.5 shrink-0" />
@@ -110,8 +110,8 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
               onClick={() => setActiveTab('architecture')}
               className={`py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer ${
                 activeTab === 'architecture'
-                  ? 'bg-white dark:bg-[#222222] text-emerald-700 dark:text-emerald-400 shadow-xs'
-                  : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-[#0F172A] text-emerald-700 dark:text-emerald-400 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <Lock className="w-3.5 h-3.5 shrink-0" />
@@ -122,8 +122,8 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
               onClick={() => setActiveTab('simulator')}
               className={`py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer ${
                 activeTab === 'simulator'
-                  ? 'bg-white dark:bg-[#222222] text-emerald-700 dark:text-emerald-400 shadow-xs'
-                  : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-[#0F172A] text-emerald-700 dark:text-emerald-400 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
@@ -134,8 +134,8 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
               onClick={() => setActiveTab('faq')}
               className={`py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer ${
                 activeTab === 'faq'
-                  ? 'bg-white dark:bg-[#222222] text-emerald-700 dark:text-emerald-400 shadow-xs'
-                  : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-[#0F172A] text-emerald-700 dark:text-emerald-400 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <EyeOff className="w-3.5 h-3.5 shrink-0" />
@@ -150,7 +150,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
           {activeTab === 'trail' && (
             <div className="space-y-6">
               {/* Sovereign Settlement Banner */}
-              <div className="p-5 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] shadow-2xs space-y-2.5 transition-colors">
+              <div className="p-5 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 shadow-2xs space-y-2.5 transition-colors">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50 text-[10px] font-bold uppercase tracking-wider">
                     Zero Intermediary Float
@@ -162,15 +162,15 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                 <h4 className="text-base font-extrabold text-slate-900 dark:text-white">
                   How Does Your Money Actually Reach the Government?
                 </h4>
-                <p className="text-slate-600 dark:text-neutral-400 leading-relaxed text-xs">
-                  KarSetu is <strong className="text-slate-900 dark:text-neutral-200">non-custodial</strong>. We do not operate an e-wallet, pool account, or intermediary escrow. Every rupee moves directly from your bank to the <strong className="text-slate-900 dark:text-neutral-200">Consolidated Fund of India</strong> at the Reserve Bank of India or your local Municipal Corporation via NPCI BBPS.
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-xs">
+                  KarSetu is <strong className="text-slate-900 dark:text-white">non-custodial</strong>. We do not operate an e-wallet, pool account, or intermediary escrow. Every rupee moves directly from your bank to the <strong className="text-slate-900 dark:text-white">Consolidated Fund of India</strong> at the Reserve Bank of India or your local Municipal Corporation via NPCI BBPS.
                 </p>
               </div>
 
               {/* 4-Step Visual Settlement Pipeline */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-extrabold uppercase tracking-wider text-[11px] text-slate-500 dark:text-neutral-400">
+                  <span className="font-extrabold uppercase tracking-wider text-[11px] text-slate-500 dark:text-slate-400">
                     Direct Settlement Pipeline (Zero Escrow)
                   </span>
                   <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
@@ -180,7 +180,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                   {/* Step 1 */}
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex flex-col justify-between space-y-2 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex flex-col justify-between space-y-2 shadow-2xs">
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 font-black text-xs flex items-center justify-center">
@@ -191,17 +191,17 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         </span>
                       </div>
                       <h5 className="font-bold text-slate-900 dark:text-white mt-2 text-xs">UPI AutoPay Debit</h5>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1 leading-relaxed">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                         Debited under your RBI mandate cap. You get a mandatory 72h WhatsApp alert with 1-tap cancel before debit.
                       </p>
                     </div>
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/[0.06] text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                       ✓ No Middleman Wallet
                     </div>
                   </div>
 
                   {/* Step 2 */}
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex flex-col justify-between space-y-2 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex flex-col justify-between space-y-2 shadow-2xs">
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-black text-xs flex items-center justify-center">
@@ -212,17 +212,17 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         </span>
                       </div>
                       <h5 className="font-bold text-slate-900 dark:text-white mt-2 text-xs">TIN 2.0 / BBPS Rail</h5>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1 leading-relaxed">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                         Routed directly into the Income Tax Department's TIN 2.0 gateway or NPCI BBPS Municipal clearing house.
                       </p>
                     </div>
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/[0.06] text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                       ✓ Zero Escrow Float
                     </div>
                   </div>
 
                   {/* Step 3 */}
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex flex-col justify-between space-y-2 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex flex-col justify-between space-y-2 shadow-2xs">
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 font-black text-xs flex items-center justify-center">
@@ -233,17 +233,17 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         </span>
                       </div>
                       <h5 className="font-bold text-slate-900 dark:text-white mt-2 text-xs">Consolidated Fund</h5>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1 leading-relaxed">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                         Funds credit immediately to CBDT Major Head 0021 / Minor Head 100 at the Reserve Bank of India.
                       </p>
                     </div>
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/[0.06] text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                       ✓ Sovereign Settlement
                     </div>
                   </div>
 
                   {/* Step 4 */}
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex flex-col justify-between space-y-2 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex flex-col justify-between space-y-2 shadow-2xs">
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-black text-xs flex items-center justify-center">
@@ -254,11 +254,11 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         </span>
                       </div>
                       <h5 className="font-bold text-slate-900 dark:text-white mt-2 text-xs">CIN & BSR Generated</h5>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1 leading-relaxed">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                         Official Challan Identification Number (CIN) with 7-digit BSR code mirrors in Form 26AS & AIS.
                       </p>
                     </div>
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/[0.06] text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-700/60 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                       ✓ Verifiable on IT Portal
                     </div>
                   </div>
@@ -267,13 +267,13 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
 
               {/* ZERO WASTAGE ARCHITECTURE */}
               <div className="space-y-3">
-                <span className="font-extrabold uppercase tracking-wider text-[11px] text-slate-500 dark:text-neutral-400 block">
+                <span className="font-extrabold uppercase tracking-wider text-[11px] text-slate-500 dark:text-slate-400 block">
                   How KarSetu Prevents Tax Wastage & Double Payments
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Wastage Defense 1 */}
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
                         <TrendingDown className="w-4 h-4" />
@@ -282,13 +282,13 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         Zero 234B & 234C Penalties (Save ₹5,000–₹50,000)
                       </h5>
                     </div>
-                    <p className="text-[11px] text-slate-600 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                       If you miss quarterly deadlines, the Income Tax Department charges a <strong>1% compound monthly interest fine</strong>. KarSetu calculates exact 15%, 45%, 75%, and 100% installments so zero late fees ever occur.
                     </p>
                   </div>
 
                   {/* Wastage Defense 2 */}
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center shrink-0">
                         <Coins className="w-4 h-4" />
@@ -297,13 +297,13 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         Form 26AS / AIS Reconciler (No Double-Dipping)
                       </h5>
                     </div>
-                    <p className="text-[11px] text-slate-600 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                       If clients or employers already deducted TDS (Sec 192 / 194J), paying advance tax without deducting TDS is a huge waste of cash. KarSetu offsets all TDS recorded in 26AS so you <strong>never pay twice</strong>.
                     </p>
                   </div>
 
                   {/* Wastage Defense 3 */}
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center shrink-0">
                         <Percent className="w-4 h-4" />
@@ -312,13 +312,13 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         Tax Stash 6.75% Yield (No Premature Payments)
                       </h5>
                     </div>
-                    <p className="text-[11px] text-slate-600 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                       Paying 100% of your tax months in advance is an interest-free loan to the government. KarSetu lets you keep your tax funds in overnight liquid funds earning <strong>6.75% annualized returns</strong> until the exact statutory due date.
                     </p>
                   </div>
 
                   {/* Wastage Defense 4 */}
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0">
                         <Sparkles className="w-4 h-4" />
@@ -327,7 +327,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                         5% Early Bird Municipal Discount Auto-Capture
                       </h5>
                     </div>
-                    <p className="text-[11px] text-slate-600 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                       Municipal bodies (BBMP, MCGM, MCD) offer 5% to 10% rebates for early property tax payment and charge 2% monthly fines for delays. KarSetu fetches bills on Day 1 to lock in the discount automatically.
                     </p>
                   </div>
@@ -352,53 +352,53 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
               {/* Grid of Protections */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {/* Protection 1 */}
-                <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-1.5 shadow-2xs">
+                <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold">
                     <div className="w-7 h-7 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center">
                       <Landmark className="w-4 h-4" />
                     </div>
                     <span>Nodal Govt Account Lock</span>
                   </div>
-                  <p className="text-slate-600 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
                     Autopay sweeps are hardcoded <strong>strictly to CBDT & CBIC government treasury nodes</strong> (Minor Head 100/300, Major Head 0021, and GSTN PMT-06). Funds can <strong>never</strong> be diverted to any private or fraudulent UPI address.
                   </p>
                 </div>
 
                 {/* Protection 2 */}
-                <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-1.5 shadow-2xs">
+                <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold">
                     <div className="w-7 h-7 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center">
                       <Bell className="w-4 h-4" />
                     </div>
                     <span>72-Hour Pre-Debit Notice</span>
                   </div>
-                  <p className="text-slate-600 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
                     Under the <strong>RBI e-Mandate Circular 2023</strong>, no silent debits can ever occur. You receive a mandatory WhatsApp, SMS, and push alert 72 hours prior with exact tax heads, amount, and an instant 1-tap pause/cancel option.
                   </p>
                 </div>
 
                 {/* Protection 3 */}
-                <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-1.5 shadow-2xs">
+                <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold">
                     <div className="w-7 h-7 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center">
                       <Scale className="w-4 h-4" />
                     </div>
                     <span>Mandate Hard Ceiling</span>
                   </div>
-                  <p className="text-slate-600 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
                     Your bank enforces your explicit mandate limit (e.g. ₹50,000 or ₹1,00,000). Even in the theoretical case of a software bug, your bank's core banking system will reject any debit exceeding your cap.
                   </p>
                 </div>
 
                 {/* Protection 4 */}
-                <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-1.5 shadow-2xs">
+                <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-1.5 shadow-2xs">
                   <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold">
                     <div className="w-7 h-7 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
                       <FileCheck2 className="w-4 h-4" />
                     </div>
                     <span>Official CIN/BSR Cryptography</span>
                   </div>
-                  <p className="text-slate-600 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
                     Every transaction generates a legitimate Challan Identification Number (CIN) and 7-digit BSR Code verifiable instantly on the Income Tax Department's official portal (<code>eportal.incometax.gov.in</code>).
                   </p>
                 </div>
@@ -409,21 +409,21 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
           {/* TAB 3: Fraud Intercept Simulator */}
           {activeTab === 'simulator' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                 <h4 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
                   <ShieldAlert className="w-4 h-4 text-amber-500" />
                   Simulate Fraudulent Divert Attempt
                 </h4>
-                <p className="text-slate-600 dark:text-neutral-400 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   Experience how KarSetu's cryptographic routing engine immediately intercepts and shuts down any attempt to divert autopay funds to a fraudulent scammer address.
                 </p>
 
-                <div className="p-3 rounded-xl bg-white dark:bg-[#141414] border border-slate-200 dark:border-white/[0.08] space-y-2 font-mono text-[11px]">
-                  <div className="flex justify-between text-slate-500">
+                <div className="p-3 rounded-xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700/80 space-y-2 font-mono text-[11px]">
+                  <div className="flex justify-between text-slate-500 dark:text-slate-400">
                     <span>Simulated Malicious Payload:</span>
                     <span className="text-red-500 font-bold">ATTACK VECTOR: PAYEE_SPOOF</span>
                   </div>
-                  <div className="text-slate-800 dark:text-neutral-300 bg-slate-100 dark:bg-[#0A0A0A] p-2 rounded-lg break-all">
+                  <div className="text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-[#090D16] p-2 rounded-lg break-all">
                     Attempting auto-debit of ₹15,000 to spoofed handle: <code>scammer99@fakebank</code>
                   </div>
                 </div>
@@ -455,15 +455,15 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
           {/* TAB 4: Why UPI Protects Balances */}
           {activeTab === 'faq' && (
             <div className="space-y-3">
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                 <h4 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
                   <EyeOff className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Why doesn't a UPI ID reveal bank balance automatically?
                 </h4>
-                <p className="text-slate-600 dark:text-neutral-300 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   In India, a UPI ID / VPA (e.g. <code>athuls2580@okhdfcbank</code>) is a <strong>public payment handle</strong>—like an email address.
                 </p>
-                <div className="p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40 text-blue-950 dark:text-blue-200 space-y-1">
+                <div className="p-3 rounded-xl bg-blue-50/60 dark:bg-[#0C1E3D] border border-blue-200 dark:border-blue-700/60 text-blue-950 dark:text-blue-200 space-y-1">
                   <span className="font-bold block">NPCI & RBI Privacy Rule:</span>
                   <p className="text-[11px] leading-relaxed">
                     If any website could see your bank balance or account number just by typing a UPI handle, <strong>anyone who knows your phone number could see how much money you have in the bank!</strong> To prevent financial stalking, cyber-blackmail, and scam targeting, NPCI explicitly blocks all balance queries through open UPI handles.
@@ -471,15 +471,15 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2">
                 <h4 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   How do real apps (CRED, Jupiter, KarSetu) automate balance fetching?
                 </h4>
-                <p className="text-slate-600 dark:text-neutral-300 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   Real apps use the <strong>RBI Account Aggregator (AA) Framework</strong> (licensed entities like Setu AA, Finvu, Sahamati).
                 </p>
-                <p className="text-slate-600 dark:text-neutral-300 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   With your explicit, OTP-authenticated consent, the Account Aggregator connects directly to your bank's Core Banking Server to pull verified balances and account digits through end-to-end encrypted tunnels, compliant with the <strong>Digital Personal Data Protection (DPDP) Act 2023</strong>.
                 </p>
               </div>
@@ -488,7 +488,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 flex-wrap gap-2 shrink-0">
+        <div className="p-4 bg-slate-50 dark:bg-[#0B1325] border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 flex-wrap gap-2 shrink-0">
           <span className="flex items-center gap-1.5 font-medium">
             <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>256-Bit SSL/TLS Encryption • DPDP Act 2023 Compliant</span>
@@ -496,7 +496,7 @@ export const SecuritySafetyModal: React.FC<SecuritySafetyModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold hover:bg-slate-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer active:scale-95"
+            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-[#1E293B] text-white dark:text-slate-100 font-bold hover:bg-slate-800 dark:hover:bg-slate-700 border border-transparent dark:border-slate-700 transition-colors cursor-pointer active:scale-95"
           >
             I Understand & Feel Safe
           </button>

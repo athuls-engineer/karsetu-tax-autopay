@@ -14,13 +14,13 @@
       (function() {
         try {
           var saved = localStorage.getItem('karsetu_theme');
-          if (saved === 'dark') {
+          if (saved !== 'light') {
             document.documentElement.classList.add('dark');
           } else {
             document.documentElement.classList.remove('dark');
           }
         } catch(e) {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('dark');
         }
       })();
     </script>

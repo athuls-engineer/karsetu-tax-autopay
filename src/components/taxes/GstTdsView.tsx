@@ -101,7 +101,7 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in">
       {/* Overview Banner */}
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 transition-colors">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-m3-1 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
@@ -119,12 +119,12 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-2">
               {labels.title}
             </h3>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-1 max-w-xl">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-1 max-w-xl">
               {labels.sub}
             </p>
           </div>
 
-          <div className="p-4 rounded-3xl bg-purple-50/80 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 text-right shrink-0">
+          <div className="p-4 rounded-3xl bg-purple-50/80 dark:bg-[#1E293B] border border-purple-200 dark:border-purple-500/30 text-right shrink-0">
             <span className="text-xs text-purple-900 dark:text-purple-300 font-semibold block">{labels.activeGstin}</span>
             <span className="text-base font-mono font-black text-purple-950 dark:text-purple-100">{gstin}</span>
             <span className="text-[11px] text-purple-700 dark:text-purple-400 block mt-0.5">{labels.qrmp}</span>
@@ -135,12 +135,12 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
       {/* Grid of GST and TDS cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Next GST Challan */}
-        <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 space-y-4 transition-colors">
+        <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 border border-slate-200 dark:border-slate-800 shadow-m3-1 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
               Form GST PMT-06
             </span>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border dark:border-emerald-500/30">
               AutoPay Ready
             </span>
           </div>
@@ -148,11 +148,11 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
           <div>
             <h4 className="text-base font-bold text-slate-900 dark:text-white">{labels.gstCardTitle}</h4>
             <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatINR(7800)}</div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">{labels.gstCardSub}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">{labels.gstCardSub}</p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex justify-between items-center text-xs">
-            <span className="text-slate-600 dark:text-neutral-400 font-medium">{t.dueLabel} 25 Sep 2026</span>
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex justify-between items-center text-xs">
+            <span className="text-slate-600 dark:text-slate-300 font-medium">{t.dueLabel} 25 Sep 2026</span>
             <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
               <CheckCircle2 className="w-3.5 h-3.5" /> {labels.mandateLinked}
             </span>
@@ -161,7 +161,7 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
           <div className="pt-2 flex items-center justify-between">
             <button
               onClick={() => onOpenVaultWithId('GSTN-PMT06-2918')}
-              className="text-xs font-bold text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-slate-200 underline"
+              className="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 underline"
             >
               {labels.pastReceipt}
             </button>
@@ -176,9 +176,9 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
         </div>
 
         {/* 26AS / AIS Sync */}
-        <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 space-y-4 transition-colors">
+        <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 border border-slate-200 dark:border-slate-800 shadow-m3-1 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
               Form 26AS & AIS Sync
             </span>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300">
@@ -189,13 +189,13 @@ export const GstTdsView: React.FC<GstTdsViewProps> = ({
           <div>
             <h4 className="text-base font-bold text-slate-900 dark:text-white">{labels.tdsTitle}</h4>
             <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatINR(user.salaryTds)}</div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
               {labels.tdsSub}
             </p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex justify-between items-center text-xs">
-            <span className="text-slate-600 dark:text-neutral-400 font-medium">Zero Unmatched Entries</span>
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex justify-between items-center text-xs">
+            <span className="text-slate-600 dark:text-slate-300 font-medium">Zero Unmatched Entries</span>
             <span className="text-blue-700 dark:text-blue-400 font-bold">{labels.matched}</span>
           </div>
         </div>

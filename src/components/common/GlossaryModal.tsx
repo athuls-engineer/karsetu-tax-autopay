@@ -33,9 +33,9 @@ export const GlossaryModal: React.FC<GlossaryModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-3xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-3xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/50 text-amber-900 dark:text-amber-300 flex items-center justify-center border border-amber-200 dark:border-amber-800/40">
               <Sparkles className="w-5 h-5 text-amber-700 dark:text-amber-400" />
@@ -44,7 +44,7 @@ export const GlossaryModal: React.FC<GlossaryModalProps> = ({
               <h3 className="font-bold text-slate-900 dark:text-white text-base">
                 Tax Jargon-Buster (Zero-Confusion Dictionary)
               </h3>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Government terms translated into everyday human language
               </p>
             </div>
@@ -52,7 +52,7 @@ export const GlossaryModal: React.FC<GlossaryModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
             aria-label="Close glossary"
           >
             <X className="w-5 h-5" />
@@ -64,16 +64,16 @@ export const GlossaryModal: React.FC<GlossaryModalProps> = ({
           {taxGlossary.map((item) => (
             <div
               key={item.term}
-              className="p-4 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2.5 text-xs hover:border-blue-300 dark:hover:border-blue-500/50 transition-colors"
+              className="p-4 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2.5 text-xs hover:border-blue-300 dark:hover:border-blue-500/50 transition-colors"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <span className="text-sm font-black text-slate-900 dark:text-white">{item.term}</span>
-                <span className="text-[11px] font-mono text-slate-400 dark:text-neutral-500 italic">
+                <span className="text-[11px] font-mono text-slate-400 dark:text-slate-400 italic">
                   Govt: {item.bureaucraticName}
                 </span>
               </div>
 
-              <div className="p-3 rounded-2xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+              <div className="p-3 rounded-2xl bg-blue-50/70 dark:bg-[#0C1E3D] border border-blue-100 dark:border-blue-700/60 text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
                 <span className="font-bold text-blue-900 dark:text-blue-300 block text-[11px] mb-0.5">
                   In Plain Words:
                 </span>

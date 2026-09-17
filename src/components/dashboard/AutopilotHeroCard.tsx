@@ -37,7 +37,7 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
   const displayDesc = isAdvanceTax ? t.heroDesc : (lang === 'hinglish' ? nextTax.easyDesc.hinglish : nextTax.easyDesc.en);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl sm:rounded-4xl bg-gradient-to-br from-[#0B57D0] via-[#0842A0] to-[#041E49] dark:from-[#081126] dark:via-[#040813] dark:to-[#000000] text-white p-4 sm:p-8 shadow-m3-3 dark:border dark:border-blue-500/30 dark:shadow-[0_0_50px_-15px_rgba(37,99,235,0.35)] transition-all duration-300">
+    <div className="relative overflow-hidden rounded-3xl sm:rounded-4xl bg-gradient-to-br from-[#0B57D0] via-[#0842A0] to-[#041E49] dark:from-[#0F2347] dark:via-[#0A162D] dark:to-[#081021] text-white p-4 sm:p-8 shadow-m3-3 dark:border dark:border-blue-500/30 dark:shadow-[0_0_50px_-15px_rgba(37,99,235,0.35)] transition-all duration-300">
       {/* Background Decorative Circles */}
       <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-blue-400/15 dark:bg-blue-500/10 blur-3xl pointer-events-none" />
       <div className="absolute -left-10 -top-10 w-64 h-64 rounded-full bg-emerald-400/15 dark:bg-emerald-500/10 blur-2xl pointer-events-none" />
@@ -119,7 +119,7 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
           </div>
 
           {/* Amount & Direct Action */}
-          <div className="lg:col-span-4 bg-white/10 dark:bg-[#070707]/90 backdrop-blur-md rounded-3xl p-5 border border-white/15 dark:border-white/[0.12] text-center flex flex-col items-center justify-center gap-3 shadow-lg">
+          <div className="lg:col-span-4 bg-white/10 dark:bg-[#0B1325]/90 backdrop-blur-md rounded-3xl p-5 border border-white/15 dark:border-blue-500/30 text-center flex flex-col items-center justify-center gap-3 shadow-lg">
             <div>
               <span className="text-xs uppercase font-bold text-blue-200 dark:text-blue-300/90 tracking-wider block">
                 {t.calculatedLiability}
@@ -127,18 +127,18 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
               <div className="text-3xl sm:text-4xl font-black text-white mt-1 tracking-tight">
                 {formatINR(nextTax.amount)}
               </div>
-              <span className="text-[11px] text-blue-200/80 dark:text-neutral-400 block mt-0.5 font-medium whitespace-nowrap">
+              <span className="text-[11px] text-blue-200/80 dark:text-slate-300 block mt-0.5 font-medium whitespace-nowrap">
                 {t.readyForChallan}
               </span>
             </div>
 
             <button
               onClick={onOpenPreDebitAlert}
-              className="w-full py-3 px-4 rounded-2xl bg-white hover:bg-blue-50 text-blue-900 dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-extrabold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-2xl bg-white hover:bg-blue-50 text-blue-900 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-extrabold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-2"
             >
               <Smartphone className="w-4 h-4 text-emerald-700 dark:text-emerald-600" />
               <span>{t.previewAlertBtn}</span>
-              <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-neutral-500" />
+              <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500" />
             </button>
           </div>
         </div>
@@ -146,28 +146,28 @@ export const AutopilotHeroCard: React.FC<AutopilotHeroCardProps> = ({
         {/* Bottom Stat Tickers */}
         <div className="pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
           <div>
-            <span className="text-blue-200/70 block text-[11px]">{t.penaltiesSaved}</span>
+            <span className="text-blue-200/70 dark:text-slate-300 block text-[11px]">{t.penaltiesSaved}</span>
             <span className="font-extrabold text-lg text-emerald-300 mt-0.5 block">
               {formatINR(user.stats.penaltiesSaved234)}
             </span>
           </div>
 
           <div>
-            <span className="text-blue-200/70 block text-[11px]">{t.taxesAutopaid}</span>
+            <span className="text-blue-200/70 dark:text-slate-300 block text-[11px]">{t.taxesAutopaid}</span>
             <span className="font-extrabold text-lg text-white mt-0.5 block">
               {user.stats.taxesAutopaidCount} {lang === 'en' ? 'Challans' : ''}
             </span>
           </div>
 
           <div>
-            <span className="text-blue-200/70 block text-[11px]">{t.totalCompliant}</span>
+            <span className="text-blue-200/70 dark:text-slate-300 block text-[11px]">{t.totalCompliant}</span>
             <span className="font-extrabold text-lg text-white mt-0.5 block">
               {formatINR(user.stats.totalAutopaidAmount)}
             </span>
           </div>
 
           <div>
-            <span className="text-blue-200/70 block text-[11px]">{t.zeroLateFees}</span>
+            <span className="text-blue-200/70 dark:text-slate-300 block text-[11px]">{t.zeroLateFees}</span>
             <span className="font-extrabold text-lg text-emerald-300 mt-0.5 block">
               {t.zeroEver}
             </span>

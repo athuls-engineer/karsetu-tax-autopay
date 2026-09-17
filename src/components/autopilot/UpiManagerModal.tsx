@@ -349,9 +349,9 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-m3-primary-container dark:bg-blue-950/60 text-m3-on-primary-container dark:text-blue-300 flex items-center justify-center">
               <CreditCard className="w-5 h-5 text-m3-primary dark:text-blue-400" />
@@ -360,7 +360,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
               <h3 className="font-bold text-slate-900 dark:text-white text-base">
                 UPI AutoPay & Bank Mandate Center
               </h3>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Link any UPI ID with real-time balance, mandate limits, and live health monitoring
               </p>
             </div>
@@ -380,7 +380,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
               aria-label="Close UPI manager"
             >
               <X className="w-5 h-5" />
@@ -392,7 +392,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
         <div className="p-6 space-y-5 overflow-y-auto flex-1">
           {/* Add New UPI Form Drawer */}
           {isAddingNew && (
-            <div className="p-5 rounded-3xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-3xl bg-blue-50/70 dark:bg-[#0C1E3D] border border-blue-200 dark:border-blue-700/60 space-y-4 animate-in fade-in">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-blue-900 dark:text-blue-300 uppercase tracking-wider flex items-center gap-1">
                   <Zap className="w-3.5 h-3.5 text-blue-600" />
@@ -400,7 +400,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                 </span>
                 <button
                   onClick={() => setIsAddingNew(false)}
-                  className="text-xs text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-neutral-200"
+                  className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
                 >
                   Cancel
                 </button>
@@ -409,7 +409,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
               {/* UPI ID Input with Auto-detection Indicator */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300">
+                  <label className="text-[11px] font-bold text-slate-700 dark:text-slate-200">
                     UPI ID / VPA Handle
                   </label>
                   {autoDetectedBadge && (
@@ -424,13 +424,13 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                   value={newVpa}
                   onChange={(e) => handleVpaChange(e.target.value)}
                   placeholder="e.g. rahul@oksbi, ananya@federal, or priya@barodampay"
-                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] font-mono text-xs font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0E0E0E] focus:ring-2 focus:ring-blue-600 focus:outline-none placeholder:font-sans placeholder:font-normal"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-mono text-xs font-bold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none placeholder:font-sans placeholder:font-normal"
                 />
               </div>
 
               {/* 1-Tap Quick Select Bank Pills */}
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-neutral-400 block mb-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1.5">
                   1-Tap Quick Bank Select
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -447,7 +447,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                         className={`px-2.5 py-1 rounded-lg text-[11px] transition-all font-medium ${
                           isSelected
                             ? 'bg-blue-600 text-white font-bold shadow-xs'
-                            : 'bg-white dark:bg-[#141414] border border-slate-200 dark:border-white/[0.1] text-slate-700 dark:text-neutral-300 hover:border-blue-400 dark:hover:border-blue-500'
+                            : 'bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-blue-400 dark:hover:border-blue-500'
                         }`}
                       >
                         {qBank}
@@ -491,14 +491,14 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                     value={bankSearch}
                     onChange={(e) => setBankSearch(e.target.value)}
                     placeholder="Search 70+ banks (e.g. Federal, BoB, Canara, Saraswat, AU, Gramin)..."
-                    className="w-full p-2 pl-8 pr-7 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs text-slate-900 dark:text-white bg-white dark:bg-[#0E0E0E] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full p-2 pl-8 pr-7 rounded-xl border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                   />
                   <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
                   {bankSearch && (
                     <button
                       type="button"
                       onClick={() => setBankSearch('')}
-                      className="absolute right-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                      className="absolute right-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-white"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -509,7 +509,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                 <select
                   value={selectedBank}
                   onChange={(e) => setSelectedBank(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-semibold text-slate-900 dark:text-white bg-white dark:bg-[#0E0E0E] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 >
                   {bankSearch ? (
                     filteredBanks.length > 0 ? (
@@ -605,7 +605,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       value={customBankName}
                       onChange={(e) => setCustomBankName(e.target.value)}
                       placeholder="e.g. Kerala Gramin Bank, TJSB Sahakari Bank, Kangra Co-op Bank..."
-                      className="w-full p-2.5 rounded-xl border border-amber-300 dark:border-amber-700 font-medium text-xs text-slate-900 dark:text-white bg-white dark:bg-[#0E0E0E] focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                      className="w-full p-2.5 rounded-xl border border-amber-300 dark:border-amber-700 font-medium text-xs text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-amber-500 focus:outline-none"
                     />
                     <p className="text-[10px] text-amber-800/80 dark:text-amber-400">
                       KarSetu supports all 100% NPCI & RBI registered banks via standard UPI 2.0 e-mandates.
@@ -626,7 +626,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       RBI Regulated
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-600 dark:text-neutral-300 mt-0.5">
+                  <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">
                     Pull your legal name, exact account number (last 4), and live balance directly from your bank via Setu/Finvu AA rails.
                   </p>
                 </div>
@@ -660,7 +660,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
               )}
 
               {/* Privacy Explanation Note */}
-              <div className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.06] text-[11px] text-slate-500 dark:text-neutral-400">
+              <div className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 text-[11px] text-slate-500 dark:text-slate-300">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <span>
                   <strong>Why doesn't UPI expose balance by default?</strong> Under RBI & NPCI security regulations, a UPI handle is a public address and cannot reveal your bank balance to third parties. The Account Aggregator (AA) framework is the only RBI-authorized, encrypted bridge to fetch your balance with your consent.
@@ -668,13 +668,13 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
               </div>
 
               {/* Exact Account Holder & Bank Details (Fully Editable by User) */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-blue-200/80 dark:border-white/[0.08] space-y-3 shadow-2xs">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-blue-200/80 dark:border-slate-700/80 space-y-3 shadow-2xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-800 dark:text-neutral-200 flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     Verify & Customize Account Details
                   </span>
-                  <span className="text-[10px] text-slate-400 dark:text-neutral-500">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-400">
                     You can edit any field to match your actual bank records
                   </span>
                 </div>
@@ -682,7 +682,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Account Holder Legal Name */}
                   <div>
-                    <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                    <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                       Account Holder Legal Name
                     </label>
                     <input
@@ -690,9 +690,9 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       value={holderNameInput}
                       onChange={(e) => setHolderNameInput(e.target.value)}
                       placeholder="e.g. ATHUL S (Your Legal Name)"
-                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#141414] focus:ring-2 focus:ring-blue-600 focus:outline-none uppercase"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#0F172A] focus:ring-2 focus:ring-blue-600 focus:outline-none uppercase"
                     />
-                    <span className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5 block">
+                    <span className="text-[10px] text-slate-400 dark:text-slate-400 mt-0.5 block">
                       As registered on your Bank Account / PAN
                     </span>
                   </div>
@@ -712,17 +712,17 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                         value={accountLast4Input}
                         onChange={(e) => setAccountLast4Input(e.target.value.replace(/\D/g, ''))}
                         placeholder="2580"
-                        className="w-full p-2.5 pl-8 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#141414] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                        className="w-full p-2.5 pl-8 rounded-xl border border-slate-300 dark:border-slate-700/80 text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                       />
                     </div>
-                    <span className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5 block">
+                    <span className="text-[10px] text-slate-400 dark:text-slate-400 mt-0.5 block">
                       Used to identify this account safely
                     </span>
                   </div>
 
                   {/* Available Bank Balance */}
                   <div>
-                    <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                    <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                       Available Balance (₹)
                     </label>
                     <input
@@ -730,16 +730,16 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       value={balanceInput}
                       onChange={(e) => setBalanceInput(e.target.value.replace(/\D/g, ''))}
                       placeholder="e.g. 75000"
-                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#141414] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700/80 text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                     />
-                    <span className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5 block">
+                    <span className="text-[10px] text-slate-400 dark:text-slate-400 mt-0.5 block">
                       Simulated AA live balance for auto-sweep checks
                     </span>
                   </div>
 
                   {/* Monthly Mandate Limit */}
                   <div>
-                    <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                    <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                       RBI Autopay Mandate Cap (₹)
                     </label>
                     <input
@@ -747,7 +747,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       value={mandateLimitInput}
                       onChange={(e) => setMandateLimitInput(e.target.value.replace(/\D/g, ''))}
                       placeholder="e.g. 100000"
-                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#141414] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700/80 text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                     />
                     <div className="flex gap-1.5 mt-1.5">
                       {[25000, 50000, 100000, 200000].map((val) => (
@@ -832,14 +832,14 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                   key={account.id}
                   className={`p-5 rounded-3xl border transition-all space-y-4 ${
                     account.isPrimary
-                      ? 'bg-blue-50/50 dark:bg-blue-950/30 border-blue-400 dark:border-blue-500/60 shadow-m3-1 ring-1 ring-blue-400/30'
-                      : 'bg-white dark:bg-[#0E0E0E] border-slate-200 dark:border-white/[0.1] hover:border-slate-300'
+                      ? 'bg-blue-50/50 dark:bg-[#0C1E3D] border-blue-400 dark:border-blue-500/60 shadow-m3-1 ring-1 ring-blue-400/30'
+                      : 'bg-white dark:bg-[#1E293B] border-slate-200 dark:border-slate-700/80 hover:border-slate-300'
                   }`}
                 >
                   {/* Top Row: VPA & Status & Actions */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/[0.1] shadow-2xs flex items-center justify-center shrink-0">
+                      <div className="w-11 h-11 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 shadow-2xs flex items-center justify-center shrink-0">
                         <Landmark className="w-5 h-5 text-blue-700 dark:text-blue-400" />
                       </div>
                       <div>
@@ -853,7 +853,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-neutral-300 font-medium">
+                        <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                           {account.bankName} ({account.accountMasked}) •{' '}
                           <span className="font-bold text-slate-900 dark:text-white">
                             {account.accountHolderName}
@@ -869,7 +869,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                           isEditing
                             ? 'bg-blue-600 text-white'
-                            : 'bg-slate-100 dark:bg-[#1A1A1A] hover:bg-slate-200 dark:hover:bg-[#252525] text-slate-700 dark:text-neutral-200 border border-slate-200 dark:border-white/[0.08]'
+                            : 'bg-slate-100 dark:bg-[#0F172A] hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700'
                         }`}
                         title="Edit Account Details"
                       >
@@ -881,7 +881,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       <button
                         onClick={() => handlePingHealth(account)}
                         disabled={pingingId === account.id}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-[#1A1A1A] text-[11px] font-semibold text-slate-700 dark:text-neutral-300 transition-colors"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[11px] font-semibold text-slate-700 dark:text-slate-300 transition-colors"
                         title="Ping NPCI Mandate Health"
                       >
                         <RefreshCw
@@ -929,7 +929,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                         </button>
                         <button
                           onClick={() => setConfirmDeleteId(null)}
-                          className="px-3 py-1 rounded-xl bg-white dark:bg-[#1A1A1A] text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-white/[0.1] font-semibold text-xs transition-colors"
+                          className="px-3 py-1 rounded-xl bg-white dark:bg-[#0F172A] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-semibold text-xs transition-colors"
                         >
                           Cancel
                         </button>
@@ -939,13 +939,13 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
 
                   {/* INLINE EDIT DRAWER (When user clicks Edit Details) */}
                   {isEditing && (
-                    <div className="p-4 rounded-2xl bg-blue-50/60 dark:bg-[#111111] border border-blue-300 dark:border-blue-800/50 space-y-4 animate-in fade-in">
-                      <div className="flex items-center justify-between border-b border-blue-100 dark:border-white/[0.08] pb-2">
+                    <div className="p-4 rounded-2xl bg-blue-50/60 dark:bg-[#0C1E3D] border border-blue-300 dark:border-blue-700/60 space-y-4 animate-in fade-in">
+                      <div className="flex items-center justify-between border-b border-blue-100 dark:border-slate-700/80 pb-2">
                         <span className="text-xs font-bold text-blue-900 dark:text-blue-300 flex items-center gap-1.5 uppercase tracking-wider">
                           <Pencil className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                           Edit Details for {account.vpa}
                         </span>
-                        <span className="text-[10px] text-slate-500 dark:text-neutral-400">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">
                           Changes take effect immediately
                         </span>
                       </div>
@@ -953,7 +953,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {/* Legal Account Holder Name */}
                         <div>
-                          <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                          <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                             Legal Account Holder Name
                           </label>
                           <input
@@ -963,13 +963,13 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                               setEditForm({ ...editForm, accountHolderName: e.target.value })
                             }
                             placeholder="e.g. ATHUL S"
-                            className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0A0A0A] focus:ring-2 focus:ring-blue-600 focus:outline-none uppercase"
+                            className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none uppercase"
                           />
                         </div>
 
                         {/* Account Number Last 4 Digits */}
                         <div>
-                          <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                          <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                             Account Number (Last 4 Digits)
                           </label>
                           <div className="relative">
@@ -982,19 +982,19 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                               value={editForm.accountLast4}
                               onChange={(e) =>
                                 setEditForm({
-                                  ...editForm,
+                                 ...editForm,
                                   accountLast4: e.target.value.replace(/\D/g, ''),
                                 })
                               }
                               placeholder="2580"
-                              className="w-full p-2.5 pl-8 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-mono font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0A0A0A] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                              className="w-full p-2.5 pl-8 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-mono font-bold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                             />
                           </div>
                         </div>
 
                         {/* Linked Bank */}
                         <div className="sm:col-span-2 space-y-1">
-                          <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block">
+                          <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">
                             Bank Name
                           </label>
                           <div className="relative">
@@ -1003,14 +1003,14 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                               value={editBankSearch}
                               onChange={(e) => setEditBankSearch(e.target.value)}
                               placeholder="Filter banks (e.g. HDFC, BoB, Federal)..."
-                              className="w-full p-2 pl-7 text-xs rounded-lg border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0A0A0A] text-slate-900 dark:text-white mb-1.5 focus:outline-none"
+                              className="w-full p-2 pl-7 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white mb-1.5 focus:outline-none"
                             />
                             <Search className="w-3 h-3 text-slate-400 absolute left-2.5 top-2.5" />
                           </div>
                           <select
                             value={editForm.bankName}
                             onChange={(e) => setEditForm({ ...editForm, bankName: e.target.value })}
-                            className="w-full p-2 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-semibold text-slate-900 dark:text-white bg-white dark:bg-[#0A0A0A] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                            className="w-full p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                           >
                             {editFilteredBanks.map((b) => (
                               <option key={b.id} value={b.name}>
@@ -1022,7 +1022,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
 
                         {/* Available Balance */}
                         <div>
-                          <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                          <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                             Available Balance (₹)
                           </label>
                           <input
@@ -1035,13 +1035,13 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                               })
                             }
                             placeholder="e.g. 62299"
-                            className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-mono font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0A0A0A] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                            className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-mono font-bold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                           />
                         </div>
 
                         {/* RBI Mandate Limit */}
                         <div>
-                          <label className="text-[11px] font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+                          <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
                             RBI Mandate Cap (₹)
                           </label>
                           <input
@@ -1054,16 +1054,16 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                               })
                             }
                             placeholder="e.g. 100000"
-                            className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] text-xs font-mono font-bold text-slate-900 dark:text-white bg-white dark:bg-[#0A0A0A] focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                            className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-mono font-bold text-slate-900 dark:text-white bg-white dark:bg-[#1E293B] focus:ring-2 focus:ring-blue-600 focus:outline-none"
                           />
                         </div>
                       </div>
 
                       {/* Save Changes or Cancel */}
-                      <div className="flex items-center justify-end gap-2 pt-2 border-t border-blue-100 dark:border-white/[0.08]">
+                      <div className="flex items-center justify-end gap-2 pt-2 border-t border-blue-100 dark:border-slate-700/80">
                         <button
                           onClick={() => setEditingAccountId(null)}
-                          className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-neutral-400 hover:bg-slate-200/60 dark:hover:bg-white/[0.05] transition-colors"
+                          className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
                         >
                           Cancel
                         </button>
@@ -1092,9 +1092,9 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                   )}
 
                   {/* Live Stats Row */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-100 dark:border-white/[0.08] text-xs">
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0A0A0A] border border-slate-100 dark:border-white/[0.08]">
-                      <span className="text-[10px] text-slate-400 dark:text-neutral-500 block font-semibold">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0F172A] border border-slate-100 dark:border-slate-800">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-400 block font-semibold">
                         Available Balance:
                       </span>
                       <span className="font-black text-slate-900 dark:text-white text-sm mt-0.5 block">
@@ -1102,8 +1102,8 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       </span>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0A0A0A] border border-slate-100 dark:border-white/[0.08]">
-                      <span className="text-[10px] text-slate-400 dark:text-neutral-500 block font-semibold">
+                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0F172A] border border-slate-100 dark:border-slate-800">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-400 block font-semibold">
                         RBI Mandate Cap:
                       </span>
                       <span className="font-black text-blue-900 dark:text-blue-300 text-sm mt-0.5 block">
@@ -1111,8 +1111,8 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
                       </span>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0A0A0A] border border-slate-100 dark:border-white/[0.08]">
-                      <span className="text-[10px] text-slate-400 dark:text-neutral-500 block font-semibold">
+                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0F172A] border border-slate-100 dark:border-slate-800">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-400 block font-semibold">
                         Cycle Utilization:
                       </span>
                       <span className="font-black text-slate-800 dark:text-slate-200 text-sm mt-0.5 block">
@@ -1132,7 +1132,7 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
 
                   {/* Utilization Progress Bar */}
                   <div className="space-y-1">
-                    <div className="flex justify-between text-[10px] text-slate-500 dark:text-neutral-400 font-medium">
+                    <div className="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 font-medium">
                       <span>Monthly Tax Mandate Capacity</span>
                       <span>
                         {((account.mandateUsed / account.mandateLimit) * 100).toFixed(0)}% Consumed
@@ -1152,14 +1152,14 @@ export const UpiManagerModal: React.FC<UpiManagerModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400">
+        <div className="p-4 bg-slate-50 dark:bg-[#0B1325] border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
           <span className="flex items-center gap-1.5 font-medium">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Complies with RBI e-Mandate Circular 2023 for Direct Tax Payments</span>
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/[0.1] text-slate-700 dark:text-neutral-300 font-bold hover:bg-slate-100 dark:hover:bg-[#1A1A1A] transition-colors"
+            className="px-4 py-2 rounded-xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             Close
           </button>

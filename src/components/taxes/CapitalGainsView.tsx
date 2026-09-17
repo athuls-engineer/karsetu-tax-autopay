@@ -68,7 +68,7 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in">
       {/* Overview Banner */}
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 transition-colors">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-m3-1 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
@@ -86,12 +86,12 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-2">
               {labels.title}
             </h3>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-1 max-w-xl">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-1 max-w-xl">
               {labels.sub}
             </p>
           </div>
 
-          <div className="p-4 rounded-3xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-right shrink-0">
+          <div className="p-4 rounded-3xl bg-emerald-50/80 dark:bg-[#1E293B] border border-emerald-200 dark:border-emerald-500/30 text-right shrink-0">
             <span className="text-xs text-emerald-900 dark:text-emerald-300 font-semibold block">Total Estimated Gains Tax</span>
             <span className="text-xl font-black text-emerald-950 dark:text-emerald-100">{formatINR(totalGainsTax)}</span>
             <span className="text-[11px] text-emerald-700 dark:text-emerald-400 block mt-0.5">Budget 2024 Slabs Applied</span>
@@ -102,9 +102,9 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
       {/* Slices Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Short Term Capital Gains */}
-        <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 space-y-4 transition-colors">
+        <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 border border-slate-200 dark:border-slate-800 shadow-m3-1 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
               Equity Held &lt; 12 Months
             </span>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300">
@@ -115,19 +115,19 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
           <div>
             <h4 className="text-base font-bold text-slate-900 dark:text-white">{labels.stcgTitle}</h4>
             <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatINR(stcg)}</div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">From Zerodha / Groww demat trades</p>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">From Zerodha / Groww demat trades</p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex justify-between items-center text-xs">
-            <span className="text-slate-600 dark:text-neutral-400 font-medium">{labels.autoAllocated}</span>
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex justify-between items-center text-xs">
+            <span className="text-slate-600 dark:text-slate-300 font-medium">{labels.autoAllocated}</span>
             <span className="font-extrabold text-blue-700 dark:text-blue-400">{formatINR(stcgTax)}</span>
           </div>
         </div>
 
         {/* Long Term Capital Gains */}
-        <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 space-y-4 transition-colors">
+        <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 border border-slate-200 dark:border-slate-800 shadow-m3-1 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
               Equity Held &gt; 12 Months
             </span>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">
@@ -138,18 +138,18 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
           <div>
             <h4 className="text-base font-bold text-slate-900 dark:text-white">{labels.ltcgTitle}</h4>
             <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatINR(ltcg)}</div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">₹1.25 Lakh zero-tax rebate applied</p>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">₹1.25 Lakh zero-tax rebate applied</p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex justify-between items-center text-xs">
-            <span className="text-slate-600 dark:text-neutral-400 font-medium">{labels.autoAllocated}</span>
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex justify-between items-center text-xs">
+            <span className="text-slate-600 dark:text-slate-300 font-medium">{labels.autoAllocated}</span>
             <span className="font-extrabold text-emerald-700 dark:text-emerald-400">{formatINR(ltcgTax)}</span>
           </div>
         </div>
       </div>
 
       {/* Tax Stash Promotion Banner */}
-      <div className="p-6 rounded-4xl bg-slate-50 dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs transition-colors">
+      <div className="p-6 rounded-4xl bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs transition-colors">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-200 dark:border-emerald-800/40">
             <Wallet className="w-6 h-6 text-emerald-700 dark:text-emerald-400" />
@@ -158,7 +158,7 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
             <h4 className="font-bold text-sm text-slate-900 dark:text-white">
               {labels.stashTitle}
             </h4>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
               {labels.stashSub}
             </p>
           </div>
@@ -166,7 +166,7 @@ export const CapitalGainsView: React.FC<CapitalGainsViewProps> = ({
 
         <button
           onClick={onOpenSettings}
-          className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shrink-0 transition-colors shadow-xs dark:bg-white dark:hover:bg-neutral-200 dark:text-slate-950 cursor-pointer"
+          className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shrink-0 transition-colors shadow-xs dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 cursor-pointer"
         >
           {labels.stashBtn}
         </button>

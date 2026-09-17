@@ -24,6 +24,37 @@ interface SetupWizardModalProps {
   onCompleteSetup: (newProfile: Partial<UserProfile>) => void;
 }
 
+const personas = [
+  {
+    id: 'salaried',
+    title: 'Salaried Employee',
+    sub: 'MNC / Startup techie with PF, TDS, ESOPs or mutual funds',
+    icon: Briefcase,
+    color: 'text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-950/60',
+  },
+  {
+    id: 'freelancer',
+    title: 'Freelancer / Creator',
+    sub: 'Remote consultant, design, dev or international client receipts',
+    icon: Laptop,
+    color: 'text-purple-700 bg-purple-50 dark:text-purple-400 dark:bg-purple-950/60',
+  },
+  {
+    id: 'investor',
+    title: 'Investor / Trader',
+    sub: 'Active stock trader, mutual fund swings, F&O and crypto',
+    icon: TrendingUp,
+    color: 'text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/60',
+  },
+  {
+    id: 'business',
+    title: 'Business / Landlord',
+    sub: 'Rental property owners, MSME firms, GST registered shops',
+    icon: Building,
+    color: 'text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-950/60',
+  },
+];
+
 export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
   isOpen,
   onClose,
@@ -114,9 +145,9 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-3xl max-w-xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-m3-4 border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-3xl max-w-xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-m3-4 border border-slate-100 dark:border-slate-800 flex flex-col transition-colors my-auto">
         {/* Progress Bar & Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <span className="w-8 h-8 rounded-full bg-m3-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
@@ -128,7 +159,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                   {step === 2 && 'Step 2: Connect Tax Sources (60s)'}
                   {step === 3 && 'Step 3: Activate 1-Click Autopilot'}
                 </h3>
-                <p className="text-[11px] text-slate-500 dark:text-neutral-400">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   {step === 1 && 'Pick your income type so we know which taxes apply to you'}
                   {step === 2 && '100% RBI Account Aggregator safe — zero netbanking passwords'}
                   {step === 3 && 'Set your safety limit and authorize UPI AutoPay'}
@@ -138,7 +169,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer shrink-0"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer shrink-0"
               title="Close Setup Wizard (Esc)"
             >
               <X className="w-5 h-5" />
@@ -158,77 +189,45 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
         <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
           {/* Step 1: Profile Type */}
           {step === 1 && (
-            <div className="space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
-              What best describes your income?
-            </span>
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {personas.map((item) => {
+                  const Icon = item.icon;
+                  const isSelected = profileType === item.id;
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                {
-                  id: 'salaried',
-                  title: 'Salaried Employee',
-                  sub: 'MNC / Startup techie with PF, TDS, ESOPs or mutual funds',
-                  icon: Briefcase,
-                  color: 'text-blue-700 bg-blue-50',
-                },
-                {
-                  id: 'freelancer',
-                  title: 'Freelancer / Creator',
-                  sub: 'Remote consultant, design, dev or international client receipts',
-                  icon: Laptop,
-                  color: 'text-purple-700 bg-purple-50',
-                },
-                {
-                  id: 'investor',
-                  title: 'Investor / Trader',
-                  sub: 'Active stock trader, mutual fund swings, F&O and crypto',
-                  icon: TrendingUp,
-                  color: 'text-emerald-700 bg-emerald-50',
-                },
-                {
-                  id: 'business',
-                  title: 'Business / Landlord',
-                  sub: 'Rental property owners, MSME firms, GST registered shops',
-                  icon: Building,
-                  color: 'text-amber-700 bg-amber-50',
-                },
-              ].map((item) => {
-                const Icon = item.icon;
-                const isSelected = profileType === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setProfileType(item.id as ProfileType)}
-                    className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                      isSelected
-                        ? 'border-blue-600 bg-blue-50/70 dark:bg-blue-950/40 shadow-sm ring-1 ring-blue-600'
-                        : 'border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-[#0E0E0E]'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className={`p-2 rounded-xl ${item.color}`}>
-                        <Icon className="w-5 h-5" />
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setProfileType(item.id as ProfileType)}
+                      className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                        isSelected
+                          ? 'border-blue-600 bg-blue-50/70 dark:bg-blue-950/40 shadow-sm ring-1 ring-blue-600'
+                          : 'border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-[#1E293B]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className={`p-2 rounded-xl ${item.color}`}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
                       </div>
-                      {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
-                    </div>
-                    <div>
-                      <p className="font-bold text-xs text-slate-900 dark:text-white">{item.title}</p>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5 leading-snug">{item.sub}</p>
-                    </div>
-                  </button>
-                );
-              })}
+                      <div>
+                        <p className="font-bold text-xs text-slate-900 dark:text-white">{item.title}</p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">{item.sub}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* Step 2: Connect Sources */}
         {step === 2 && (
           <div className="space-y-4">
             <div>
-              <label className="text-xs font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                 Permanent Account Number (PAN)
               </label>
               <input
@@ -236,21 +235,21 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 value={pan}
                 onChange={(e) => setPan(e.target.value.toUpperCase())}
                 placeholder="ABCPS1234F"
-                className="w-full p-3 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-[#0E0E0E] text-slate-800 dark:text-white font-mono font-bold text-sm tracking-widest focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-slate-800 dark:text-white font-mono font-bold text-sm tracking-widest focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
-              <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                 Used strictly to verify Form 26AS & calculate Advance Tax installments.
               </p>
             </div>
 
             {/* Account Aggregator Consent */}
-            <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 flex items-start gap-3">
+            <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-[#0C1E3D] border border-blue-200 dark:border-blue-700/60 flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-700 dark:text-blue-400 shrink-0 mt-0.5" />
               <div className="text-xs">
                 <span className="font-bold text-blue-900 dark:text-blue-300 block mb-0.5">
                   1-Click RBI Account Aggregator Connect
                 </span>
-                <p className="text-slate-600 dark:text-neutral-300 leading-relaxed text-[11px]">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
                   Silently fetches your bank interest & broker capital gains (Zerodha, Groww, INDmoney) via encrypted Sahamati rails.
                 </p>
                 <div className="mt-2 flex items-center gap-2">
@@ -265,11 +264,11 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
             </div>
 
             {/* Property Tax BBPS toggle */}
-            <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-white/[0.08] dark:bg-[#0E0E0E] space-y-3">
+            <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700/80 dark:bg-[#1E293B] space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-xs font-bold text-slate-900 dark:text-white block">Link Municipal Property Tax?</span>
-                  <span className="text-[11px] text-slate-500 dark:text-neutral-400">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
                     Connect via Bharat Bill Payment System (BBPS) for 5-10% early-bird rebate
                   </span>
                 </div>
@@ -298,7 +297,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                           setPropertyPid(m.samplePid);
                         }
                       }}
-                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-[#0A0A0A] text-slate-800 dark:text-white text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0F172A] text-slate-800 dark:text-white text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
                     >
                       <optgroup label="🌟 South India (Karnataka, Tamil Nadu, Kerala, AP, Telangana)">
                         {allMunicipalities.filter((m) => m.region === 'South').map((m) => (
@@ -333,7 +332,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
 
                   {selectedMunicipalityId === 'other' ? (
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
+                      <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                         Enter Municipal Body / Nagar Palika Name
                       </label>
                       <input
@@ -341,18 +340,18 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                         value={customMunicipalityName}
                         onChange={(e) => setCustomMunicipalityName(e.target.value)}
                         placeholder="e.g. Kozhikode Corporation / Shimla Municipal Corporation"
-                        className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-[#0A0A0A] text-slate-800 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0F172A] text-slate-800 dark:text-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-600"
                       />
                     </div>
                   ) : (
-                    <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/40 text-[11px] text-emerald-900 dark:text-emerald-300 font-medium">
+                    <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-[#062417] border border-emerald-200/80 dark:border-emerald-500/40 text-[11px] text-emerald-900 dark:text-emerald-300 font-medium">
                       <span>✓ BBPS Biller: {allMunicipalities.find((m) => m.id === selectedMunicipalityId)?.bbpsBillerId}</span>
                       <span className="font-bold">{allMunicipalities.find((m) => m.id === selectedMunicipalityId)?.rebateLabel || '5% Early Bird Rebate'}</span>
                     </div>
                   )}
 
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
+                    <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                       Property ID (PID) / Assessment Number
                     </label>
                     <input
@@ -360,7 +359,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                       value={propertyPid}
                       onChange={(e) => setPropertyPid(e.target.value)}
                       placeholder="e.g. BBMP-EST-2024-8841"
-                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-[#0A0A0A] text-slate-800 dark:text-white font-mono text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-600"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0F172A] text-slate-800 dark:text-white font-mono text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-600"
                     />
                   </div>
                 </div>
@@ -377,7 +376,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 <Sparkles className="w-6 h-6 text-emerald-700 dark:text-emerald-400" />
               </div>
               <h4 className="font-extrabold text-base text-slate-900 dark:text-white">Set Up Your Tax Shield Mandate</h4>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 You will always receive a WhatsApp alert 72 hours before any tax is debited.
               </p>
             </div>
@@ -389,15 +388,15 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 onClick={() => setAutopayMode('direct_sweep')}
                 className={`p-3 rounded-2xl border text-left transition-all ${
                   autopayMode === 'direct_sweep'
-                    ? 'border-blue-600 bg-blue-50/80 dark:bg-blue-950/40 ring-1 ring-blue-600'
-                    : 'border-slate-200 dark:border-white/[0.08] dark:bg-[#0E0E0E]'
+                    ? 'border-blue-500 bg-blue-50/80 dark:bg-[#0C1E3D] dark:border-blue-400/60 ring-1 ring-blue-500/50'
+                    : 'border-slate-200 dark:border-slate-700/80 dark:bg-[#1E293B]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900 dark:text-white mb-1">
                   <Landmark className="w-4 h-4 text-blue-700 dark:text-blue-400" />
                   <span>Direct Bank Sweep</span>
                 </div>
-                <p className="text-[10px] text-slate-500 dark:text-neutral-400">Pay directly from bank account via UPI</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Pay directly from bank account via UPI</p>
               </button>
 
               <button
@@ -405,21 +404,21 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 onClick={() => setAutopayMode('tax_stash')}
                 className={`p-3 rounded-2xl border text-left transition-all ${
                   autopayMode === 'tax_stash'
-                    ? 'border-emerald-600 bg-emerald-50/80 dark:bg-emerald-950/40 ring-1 ring-emerald-600'
-                    : 'border-slate-200 dark:border-white/[0.08] dark:bg-[#0E0E0E]'
+                    ? 'border-emerald-600 bg-emerald-50/80 dark:bg-[#062417] dark:border-emerald-500/50 ring-1 ring-emerald-500/50'
+                    : 'border-slate-200 dark:border-slate-700/80 dark:bg-[#1E293B]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900 dark:text-white mb-1">
                   <Wallet className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                   <span>Tax Stash (6.75%)</span>
                 </div>
-                <p className="text-[10px] text-slate-500 dark:text-neutral-400">Earn interest on tax money till due date</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Earn interest on tax money till due date</p>
               </button>
             </div>
 
             {/* UPI ID field */}
             <div>
-              <label className="text-xs font-bold text-slate-700 dark:text-neutral-300 block mb-1">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                 Your UPI ID for AutoPay Mandate
               </label>
               <input
@@ -427,12 +426,12 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
                 value={upiId}
                 onChange={(e) => setUpiId(e.target.value)}
                 placeholder="yourname@okhdfcbank"
-                className="w-full p-3 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-[#0E0E0E] text-slate-800 dark:text-white font-mono text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-slate-800 dark:text-white font-mono text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
             </div>
 
             {/* Safety Guarantee Banner */}
-            <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-[11px] text-emerald-900 dark:text-emerald-300 flex items-center gap-2.5">
+            <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-[#062417] border border-emerald-200 dark:border-emerald-500/40 text-[11px] text-emerald-900 dark:text-emerald-300 flex items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
               <span>
                 <strong>Zero Penalty Guarantee:</strong> If KarSetu ever delays an installment, we refund 100% of any government penalty.
@@ -443,20 +442,20 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
         </div>
 
         {/* Footer Navigation */}
-        <div className="p-4 sm:p-5 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-white dark:bg-[#040404] shrink-0">
+        <div className="p-4 sm:p-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-[#0B1325] shrink-0">
           {step > 1 ? (
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setStep((step - 1) as 1 | 2)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-[#141414] transition-colors cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 Back
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-2 text-xs font-medium text-slate-400 hover:text-slate-700 dark:hover:text-neutral-300 transition-colors cursor-pointer"
+                className="px-3 py-2 text-xs font-medium text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -465,7 +464,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-neutral-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-[#141414] transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             >
               Cancel & Close
             </button>

@@ -121,9 +121,9 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center border border-emerald-200 dark:border-emerald-800/40">
               <Activity className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
@@ -132,7 +132,7 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
               <h3 className="font-bold text-slate-900 dark:text-white text-base">
                 Silent Autopilot Activity & Audit Ledger
               </h3>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Cryptographically verifiable record of all background syncs and tax payments
               </p>
             </div>
@@ -152,7 +152,7 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
               aria-label="Close audit ledger"
             >
               <X className="w-5 h-5" />
@@ -161,7 +161,7 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
         </div>
 
         {/* Filter Bar */}
-        <div className="p-4 border-b border-slate-100 dark:border-white/[0.08] flex items-center gap-2 overflow-x-auto text-xs font-semibold shrink-0">
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-[#090D16] flex items-center gap-2 overflow-x-auto text-xs font-semibold shrink-0">
           {[
             { id: 'all', label: 'All Events' },
             { id: 'alert', label: '72h Alerts' },
@@ -175,7 +175,7 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
               className={`px-3 py-1.5 rounded-full transition-colors shrink-0 ${
                 filter === tab.id
                   ? 'bg-slate-900 dark:bg-blue-600 text-white font-bold shadow-xs'
-                  : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-[#1A1A1A] text-slate-600 dark:text-neutral-300'
+                  : 'bg-slate-100 dark:bg-[#1E293B] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
               }`}
             >
               {tab.label}
@@ -188,9 +188,9 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
           {filteredLogs.map((log) => (
             <div
               key={log.id}
-              className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200/80 dark:border-white/[0.08] flex items-start gap-3.5 text-xs hover:border-slate-300 dark:hover:border-slate-600 transition-colors"
+              className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200/80 dark:border-slate-700/80 flex items-start gap-3.5 text-xs hover:border-slate-300 dark:hover:border-slate-600 transition-colors"
             >
-              <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/[0.1] flex items-center justify-center shrink-0 mt-0.5 text-blue-600 shadow-2xs">
+              <div className="w-8 h-8 rounded-xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 mt-0.5 text-blue-600 shadow-2xs">
                 {log.category === 'alert' && <Smartphone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
                 {log.category === 'engine' && <Activity className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
                 {log.category === 'bank_aa' && <Landmark className="w-4 h-4 text-purple-600 dark:text-purple-400" />}
@@ -200,15 +200,15 @@ export const ActivityLogDrawer: React.FC<ActivityLogDrawerProps> = ({
               <div className="flex-1 min-w-0 space-y-1">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-bold text-slate-900 dark:text-white text-xs">{log.title}</span>
-                  <span className="text-[10px] text-slate-400 dark:text-neutral-500 font-mono shrink-0">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-400 font-mono shrink-0">
                     {log.timestamp}
                   </span>
                 </div>
 
-                <p className="text-slate-600 dark:text-neutral-300 leading-relaxed text-[11px]">{log.description}</p>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">{log.description}</p>
 
                 <div className="pt-1 flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-700 text-slate-700 dark:text-neutral-300 text-[10px] font-bold">
+                  <span className="px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold">
                     {log.badge}
                   </span>
                   <span className="text-emerald-700 dark:text-emerald-400 font-semibold text-[10px] flex items-center gap-0.5">

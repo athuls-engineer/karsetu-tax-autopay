@@ -57,12 +57,27 @@ export function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
       const saved = localStorage.getItem('karsetu_theme');
-      return saved === 'dark' ? 'dark' : 'light';
+      return saved === 'light' ? 'light' : 'dark';
     } catch {
-      return 'light';
+      return 'dark';
     }
   });
-  const [activeTab, setActiveTab] = useState<'overview' | 'advance' | 'property' | 'gains' | 'gst'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'advance' | 'property' | 'gains' | 'gst'>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam && ['overview', 'advance', 'property', 'gains', 'gst'].includes(tabParam)) {
+        return tabParam as any;
+      }
+      const hash = window.location.hash.replace('#', '');
+      if (['overview', 'advance', 'property', 'gains', 'gst'].includes(hash)) {
+        return hash as any;
+      }
+    } catch {
+      // fallback
+    }
+    return 'overview';
+  });
 
   // Interactive State
   const [upcomingTaxes, setUpcomingTaxes] = useState<TaxDueItem[]>(mockUpcomingTaxes);
@@ -75,7 +90,13 @@ export function App() {
   const [isPreDebitAlertOpen, setIsPreDebitAlertOpen] = useState(false);
   const [selectedPreDebitTax, setSelectedPreDebitTax] = useState<TaxDueItem | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isVaultOpen, setIsVaultOpen] = useState(false);
+  const [isVaultOpen, setIsVaultOpen] = useState(() => {
+    try {
+      return window.location.hash === '#vault' || window.location.search.includes('modal=vault');
+    } catch {
+      return false;
+    }
+  });
   const [selectedVaultChallanId, setSelectedVaultChallanId] = useState<string | undefined>();
   const [isSetupOpen, setIsSetupOpen] = useState(false);
   const [isGlossaryOpen, setIsGlossaryOpen] = useState(false);
@@ -389,7 +410,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans transition-colors duration-300 bg-[#F8F9FA] text-[#1F1F1F] dark:bg-[#000000] dark:text-[#F1F5F9]">
+    <div className="min-h-screen flex flex-col font-sans transition-colors duration-300 bg-[#F8F9FA] text-[#1F1F1F] dark:bg-[#090D16] dark:text-[#F8FAFC]">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-24 right-4 sm:right-8 z-50 p-4 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold shadow-m3-4 border border-slate-700/50 flex items-center gap-2.5 animate-in slide-in-from-top-4">
@@ -429,7 +450,7 @@ export function App() {
         <div className="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3 w-full">
           {/* Navigation Tabs (Material 3 Expressive Pill Bar) */}
           <div className="relative flex-1 min-w-0">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1.5 sm:pb-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1.5 sm:pb-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700 scrollbar-track-transparent">
               {[
                 { id: 'overview', label: t.tabOverview, icon: Shield },
                 { id: 'advance', label: t.tabAdvance, icon: CreditCard },
@@ -446,10 +467,10 @@ export function App() {
                     className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all shrink-0 active:scale-95 whitespace-nowrap ${
                       isActive
                         ? 'bg-m3-primary text-white shadow-m3-1 dark:bg-blue-600 dark:shadow-[0_0_20px_-3px_rgba(37,99,235,0.5)]'
-                        : 'bg-white dark:bg-[#0A0A0A] hover:bg-slate-100 dark:hover:bg-[#141414] text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-white/[0.08]'
+                        : 'bg-white dark:bg-[#0F172A] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-500 dark:text-neutral-400'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
                     <span>{tab.label}</span>
                   </button>
                 );
@@ -461,7 +482,7 @@ export function App() {
           <div className="flex items-center gap-2 max-w-full overflow-x-auto pb-1 self-start xl:self-auto scrollbar-none">
             <button
               onClick={() => setIsUpiModalOpen(true)}
-              className="sm:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-[#071328] text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-500/25 text-xs font-bold"
+              className="sm:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-xs font-bold"
             >
               <CreditCard className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
               <span>UPI</span>
@@ -469,7 +490,7 @@ export function App() {
 
             <button
               onClick={() => setIsPlaygroundOpen(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 dark:bg-[#071328] hover:bg-blue-100 dark:hover:bg-[#0D1E3D] text-xs font-bold text-blue-900 dark:text-blue-300 border border-blue-200/80 dark:border-blue-500/25 transition-colors shadow-2xs whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-xs font-bold text-blue-900 dark:text-blue-200 border border-blue-200/80 dark:border-blue-800/60 transition-colors shadow-2xs whitespace-nowrap"
             >
               <Calculator className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
               <span>{t.taxCalcBtn}</span>
@@ -477,7 +498,7 @@ export function App() {
 
             <button
               onClick={() => setIsActivityLogOpen(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-50 dark:bg-[#05170B] hover:bg-emerald-100 dark:hover:bg-[#092914] text-xs font-bold text-emerald-900 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-500/25 transition-colors shadow-2xs whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-xs font-bold text-emerald-900 dark:text-emerald-200 border border-emerald-200/80 dark:border-emerald-800/60 transition-colors shadow-2xs whitespace-nowrap"
             >
               <Activity className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 animate-pulse" />
               <span>{t.auditLogBtn} ({activityLogs.length})</span>
@@ -538,39 +559,39 @@ export function App() {
 
             {/* Why Autopay Works: 3 Safety Guarantees */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-5 rounded-3xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/[0.08] space-y-2 transition-colors">
-                <div className="w-9 h-9 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 flex items-center justify-center">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 space-y-2 transition-colors">
+                <div className="w-9 h-9 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-blue-700 dark:text-blue-400" />
                 </div>
                 <h4 className="font-bold text-sm text-slate-900 dark:text-white">{t.g1Title}</h4>
-                <p className="text-xs text-slate-500 dark:text-neutral-400 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   {t.g1Desc}
                 </p>
               </div>
 
-              <div className="p-5 rounded-3xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/[0.08] space-y-2 transition-colors">
-                <div className="w-9 h-9 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 space-y-2 transition-colors">
+                <div className="w-9 h-9 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700/50 flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
                 </div>
                 <h4 className="font-bold text-sm text-slate-900 dark:text-white">{t.g2Title}</h4>
-                <p className="text-xs text-slate-500 dark:text-neutral-400 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   {t.g2Desc}
                 </p>
               </div>
 
-              <div className="p-5 rounded-3xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/[0.08] space-y-2 transition-colors">
-                <div className="w-9 h-9 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 flex items-center justify-center">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 space-y-2 transition-colors">
+                <div className="w-9 h-9 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-700/50 flex items-center justify-center">
                   <Building className="w-5 h-5 text-amber-700 dark:text-amber-400" />
                 </div>
                 <h4 className="font-bold text-sm text-slate-900 dark:text-white">{t.g3Title}</h4>
-                <p className="text-xs text-slate-500 dark:text-neutral-400 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   {t.g3Desc}
                 </p>
               </div>
             </div>
 
             {/* Direct Sovereign Settlement & Zero Wastage Explainer Banner */}
-            <div className="p-6 rounded-4xl bg-slate-50 dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/[0.08] shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors">
+            <div className="p-6 rounded-4xl bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50 text-[10px] font-bold uppercase tracking-wider">
@@ -586,13 +607,13 @@ export function App() {
                 <h4 className="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-white">
                   How does money go directly to the Government—and not a single rupee wasted?
                 </h4>
-                <p className="text-xs text-slate-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
                   KarSetu never touches, pools, or routes your funds through private wallets. Payments clear directly to the Reserve Bank of India via TIN 2.0 & NPCI BBPS with verifiable BSR challans.
                 </p>
               </div>
               <button
                 onClick={() => setIsSecurityModalOpen(true)}
-                className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white dark:bg-white dark:hover:bg-neutral-200 dark:text-slate-950 font-bold text-xs shrink-0 shadow-xs transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
+                className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 font-bold text-xs shrink-0 shadow-xs transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-300 dark:text-emerald-600 shrink-0" />
                 <span>Inspect Money Trail & Zero Wastage</span>
@@ -667,12 +688,12 @@ export function App() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-12 border-t border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#040404] py-8 text-center text-xs text-slate-500 dark:text-neutral-400 transition-colors">
+      <footer className="mt-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#090D16] py-8 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors">
         <div className="max-w-7xl mx-auto px-4 space-y-2">
-          <p className="font-semibold text-slate-700 dark:text-neutral-300">
+          <p className="font-semibold text-slate-700 dark:text-slate-200">
             KarSetu (करसेतु) • {t.tagline}
           </p>
-          <p className="text-[11px] text-slate-400 dark:text-neutral-500">
+          <p className="text-[11px] text-slate-400 dark:text-slate-400">
             {t.footerText || 'Compliant with RBI E-Mandate Regulations, DPDP Act 2023, Income Tax Department TIN 2.0 & NPCI BBPS Rails.'}
           </p>
         </div>

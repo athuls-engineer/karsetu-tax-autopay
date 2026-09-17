@@ -55,10 +55,10 @@ export const RegimeBattleCard: React.FC<RegimeBattleCardProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 space-y-6 transition-colors duration-300">
+    <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-m3-1 space-y-6 transition-colors duration-300">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30 flex items-center justify-center">
             <Scale className="w-5 h-5 text-purple-700 dark:text-purple-400" />
           </div>
           <div>
@@ -73,13 +73,13 @@ export const RegimeBattleCard: React.FC<RegimeBattleCardProps> = ({
                 lang={lang}
               />
             </div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400">
+            <p className="text-xs text-slate-500 dark:text-slate-300">
               {t.regimeSubtitle}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 self-start sm:self-auto bg-emerald-50 dark:bg-[#04160A] text-emerald-800 dark:text-emerald-400 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200 dark:border-emerald-500/30">
+        <div className="flex items-center gap-1.5 self-start sm:self-auto bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200 dark:border-emerald-500/40">
           <TrendingDown className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>{getSavesLabel()}</span>
         </div>
@@ -92,8 +92,8 @@ export const RegimeBattleCard: React.FC<RegimeBattleCardProps> = ({
           onClick={() => onUpdateRegime('new')}
           className={`p-5 rounded-3xl border transition-all cursor-pointer relative flex flex-col justify-between ${
             user.regime === 'new'
-              ? 'bg-blue-50/80 dark:bg-[#061226] border-blue-600 dark:border-blue-500/50 ring-2 ring-blue-600/20 shadow-sm dark:shadow-[0_0_20px_-5px_rgba(37,99,235,0.3)]'
-              : 'bg-slate-50 dark:bg-[#0D0D0D] border-slate-200 dark:border-white/[0.06] hover:border-slate-300 dark:hover:border-white/[0.14]'
+              ? 'bg-blue-50/80 dark:bg-[#0C1E3D] border-blue-600 dark:border-blue-400/70 ring-2 ring-blue-600/20 shadow-sm dark:shadow-[0_0_20px_-5px_rgba(59,130,246,0.35)]'
+              : 'bg-slate-50 dark:bg-[#1E293B] border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600'
           }`}
         >
           {betterRegime === 'new' && (
@@ -111,17 +111,17 @@ export const RegimeBattleCard: React.FC<RegimeBattleCardProps> = ({
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mb-4">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mb-4">
               {t.newRegimeDesc}
             </p>
           </div>
 
-          <div className="pt-3 border-t border-slate-200/60 dark:border-white/[0.08] flex items-end justify-between">
+          <div className="pt-3 border-t border-slate-200/60 dark:border-slate-700/80 flex items-end justify-between">
             <div>
-              <span className="text-[11px] text-slate-500 dark:text-neutral-400 block">{t.totalAnnualTax}</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-300 block">{t.totalAnnualTax}</span>
               <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{formatINR(newTax)}</span>
             </div>
-            <span className="text-xs text-blue-700 dark:text-blue-400 font-bold hover:underline">
+            <span className="text-xs text-blue-700 dark:text-blue-300 font-bold hover:underline">
               {t.selectNew}
             </span>
           </div>
@@ -132,8 +132,8 @@ export const RegimeBattleCard: React.FC<RegimeBattleCardProps> = ({
           onClick={() => onUpdateRegime('old')}
           className={`p-5 rounded-3xl border transition-all cursor-pointer relative flex flex-col justify-between ${
             user.regime === 'old'
-              ? 'bg-blue-50/80 dark:bg-[#061226] border-blue-600 dark:border-blue-500/50 ring-2 ring-blue-600/20 shadow-sm dark:shadow-[0_0_20px_-5px_rgba(37,99,235,0.3)]'
-              : 'bg-slate-50 dark:bg-[#0D0D0D] border-slate-200 dark:border-white/[0.06] hover:border-slate-300 dark:hover:border-white/[0.14]'
+              ? 'bg-blue-50/80 dark:bg-[#0C1E3D] border-blue-600 dark:border-blue-400/70 ring-2 ring-blue-600/20 shadow-sm dark:shadow-[0_0_20px_-5px_rgba(59,130,246,0.35)]'
+              : 'bg-slate-50 dark:bg-[#1E293B] border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600'
           }`}
         >
           {betterRegime === 'old' && (
@@ -151,17 +151,17 @@ export const RegimeBattleCard: React.FC<RegimeBattleCardProps> = ({
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mb-4">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mb-4">
               {t.oldRegimeDesc}
             </p>
           </div>
 
-          <div className="pt-3 border-t border-slate-200/60 dark:border-white/[0.08] flex items-end justify-between">
+          <div className="pt-3 border-t border-slate-200/60 dark:border-slate-700/80 flex items-end justify-between">
             <div>
-              <span className="text-[11px] text-slate-500 dark:text-neutral-400 block">{t.totalAnnualTax}</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-300 block">{t.totalAnnualTax}</span>
               <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{formatINR(oldTax)}</span>
             </div>
-            <span className="text-xs text-blue-700 dark:text-blue-400 font-bold hover:underline">
+            <span className="text-xs text-blue-700 dark:text-blue-300 font-bold hover:underline">
               {t.selectOld}
             </span>
           </div>

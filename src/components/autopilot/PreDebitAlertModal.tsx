@@ -135,9 +135,9 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
         if (e.target === e.currentTarget && settlementStage !== 'processing') onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-lg w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-m3-4 border border-slate-100 dark:border-white/[0.08] flex flex-col transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-lg w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden shadow-m3-4 border border-slate-100 dark:border-slate-800 flex flex-col transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#090D16] shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center">
               <Smartphone className="w-5 h-5" />
@@ -150,7 +150,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                   ? 'Sovereign Settlement Confirmed'
                   : '72-Hour Express Pre-Debit Preview'}
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-neutral-400">
+              <p className="text-[11px] text-slate-500 dark:text-slate-300">
                 {settlementStage === 'processing'
                   ? 'Executing direct bank-to-government settlement'
                   : settlementStage === 'success'
@@ -163,7 +163,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
             type="button"
             onClick={onClose}
             disabled={settlementStage === 'processing'}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer shrink-0"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer shrink-0"
             title="Close Preview (Esc)"
           >
             <X className="w-5 h-5" />
@@ -175,7 +175,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
           {/* STAGE 1: WhatsApp Pre-Debit Notice Preview */}
           {settlementStage === 'preview' && (
           <>
-            <div className="p-5 bg-slate-100 dark:bg-[#050505] flex flex-col items-center transition-colors">
+            <div className="p-5 bg-slate-100 dark:bg-[#090D16] flex flex-col items-center transition-colors">
               <div className="w-full max-w-sm bg-[#EFEAE2] dark:bg-[#111B21] rounded-3xl p-4 shadow-sm border border-slate-300/60 dark:border-[#202C33] text-slate-800 dark:text-slate-200 text-xs space-y-3">
                 {/* WhatsApp Bubble Header */}
                 <div className="flex items-center justify-between pb-2 border-b border-[#075E54]/20 dark:border-[#202C33]">
@@ -187,7 +187,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                       <span className="font-bold text-[#075E54] dark:text-[#25D366] block leading-tight">
                         KarSetu Verified Bot
                       </span>
-                      <span className="text-[10px] text-slate-500 dark:text-neutral-400">Official AutoPay Channel</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400">Official AutoPay Channel</span>
                     </div>
                   </div>
                   <span className="text-[10px] text-slate-400">Today, 09:00 AM</span>
@@ -215,26 +215,26 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
 
                   <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#111B21] border border-slate-100 dark:border-[#2A3942] space-y-1 text-[11px]">
                     <div className="flex justify-between">
-                      <span className="text-slate-500 dark:text-neutral-400">Settlement Rail:</span>
+                      <span className="text-slate-500 dark:text-slate-400">Settlement Rail:</span>
                       <span className="font-mono font-bold text-blue-700 dark:text-blue-400">
                         {isBBPS ? 'NPCI BBPS Municipal' : isGST ? 'GSTN PMT-06' : 'TIN 2.0 ITNS 280'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500 dark:text-neutral-400">Benefit Protected:</span>
+                      <span className="text-slate-500 dark:text-slate-400">Benefit Protected:</span>
                       <span className="font-bold text-emerald-700 dark:text-emerald-400">
                         {isBBPS ? '5% Early-Bird Rebate Saved' : 'Saves ₹1,750 Sec 234C Fine'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500 dark:text-neutral-400">Account:</span>
-                      <span className="font-medium text-slate-700 dark:text-neutral-300">
+                      <span className="text-slate-500 dark:text-slate-400">Account:</span>
+                      <span className="font-medium text-slate-700 dark:text-slate-200">
                         {user.linkedBank.bankName} (••••{user.linkedBank.accountNoMasked.slice(-4)})
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-[11px] text-slate-500 dark:text-neutral-400 italic">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
                     *Zero float: Funds transfer directly into the Sovereign Government Treasury.
                   </p>
                 </div>
@@ -242,7 +242,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
             </div>
 
             {/* Action Controls */}
-            <div className="p-5 border-t border-slate-100 dark:border-white/[0.08] bg-white dark:bg-[#0A0A0A] space-y-3">
+            <div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0F172A] space-y-3">
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleStartRealPayment}
@@ -264,7 +264,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500 dark:text-neutral-400">
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-300">
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                 <span>72 hours pre-debit buffer active. You maintain 100% control until execution.</span>
               </div>
@@ -282,13 +282,13 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
               <h4 className="font-extrabold text-base text-slate-900 dark:text-white mt-2">
                 Processing Sovereign Tax Settlement
               </h4>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-300">
                 Executing {formatINR(taxItem.amount)} payment with zero middleman float
               </p>
             </div>
 
             {/* 4 Steps Timeline */}
-            <div className="space-y-3 p-4 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08]">
+            <div className="space-y-3 p-4 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80">
               {settlementSteps.map((step, idx) => {
                 const Icon = step.icon;
                 const isPassed = idx < currentStepIndex;
@@ -315,7 +315,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                               ? 'text-blue-600 dark:text-blue-400'
                               : isPassed
                               ? 'text-slate-900 dark:text-white'
-                              : 'text-slate-400 dark:text-neutral-500'
+                              : 'text-slate-400 dark:text-slate-400'
                           }`}
                         >
                           {step.title}
@@ -329,7 +329,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400 mt-0.5 leading-relaxed">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-300 mt-0.5 leading-relaxed">
                         {step.desc}
                       </p>
                     </div>
@@ -350,24 +350,24 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
               <h4 className="font-black text-lg text-slate-900 dark:text-white">
                 Tax Successfully Deposited to Government!
               </h4>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-300">
                 Official Challan Identification Number (CIN) generated and recorded
               </p>
             </div>
 
             {/* Generated Receipt Voucher Badge */}
-            <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800/50 space-y-2.5 font-mono text-xs">
-              <div className="flex justify-between items-center pb-2 border-b border-emerald-200 dark:border-emerald-800/40">
+            <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-[#062417] border border-emerald-300 dark:border-emerald-500/40 space-y-2.5 font-mono text-xs">
+              <div className="flex justify-between items-center pb-2 border-b border-emerald-200 dark:border-emerald-500/30">
                 <span className="text-emerald-800 dark:text-emerald-300">Official CIN:</span>
                 <span className="font-bold text-emerald-950 dark:text-white">
                   0210045091811409202600{taxItem.amount}
                 </span>
               </div>
-              <div className="flex justify-between items-center pb-2 border-b border-emerald-200 dark:border-emerald-800/40">
+              <div className="flex justify-between items-center pb-2 border-b border-emerald-200 dark:border-emerald-500/30">
                 <span className="text-emerald-800 dark:text-emerald-300">BSR Code:</span>
                 <span className="font-bold text-slate-900 dark:text-white">0210045 (State Bank of India)</span>
               </div>
-              <div className="flex justify-between items-center pb-2 border-b border-emerald-200 dark:border-emerald-800/40">
+              <div className="flex justify-between items-center pb-2 border-b border-emerald-200 dark:border-emerald-500/30">
                 <span className="text-emerald-800 dark:text-emerald-300">Total Deposited:</span>
                 <span className="font-black text-emerald-950 dark:text-white text-sm">
                   {formatINR(taxItem.amount)}
@@ -394,7 +394,7 @@ export const PreDebitAlertModal: React.FC<PreDebitAlertModalProps> = ({
 
               <button
                 onClick={() => handleCompleteAndClose(false)}
-                className="w-full py-2.5 px-4 rounded-2xl font-bold text-xs bg-slate-100 dark:bg-[#1A1A1A] hover:bg-slate-200 text-slate-700 dark:text-neutral-300 transition-colors cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-2xl font-bold text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
               >
                 Done & Return to Dashboard
               </button>

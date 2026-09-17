@@ -117,9 +117,9 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 flex items-center justify-center shrink-0">
               <FileCheck2 className="w-5 h-5 text-blue-700 dark:text-blue-400" />
@@ -133,7 +133,7 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
                   TRACES Verified
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Live cryptographic cross-check between employer/bank TDS and Income Tax portal
               </p>
             </div>
@@ -152,7 +152,7 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
               aria-label="Close 26AS modal"
             >
               <X className="w-5 h-5" />
@@ -161,13 +161,13 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
         </div>
 
         {/* Total Credit Overview Banner */}
-        <div className="p-5 bg-gradient-to-r from-blue-50/80 to-indigo-50/60 dark:from-[#061226] dark:to-[#0A1633] border-b border-slate-100 dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shrink-0">
+        <div className="p-5 bg-gradient-to-r from-blue-50/80 to-indigo-50/60 dark:from-[#0C1E3D] dark:to-[#0F2347] border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shrink-0">
           <div className="space-y-1">
             <span className="text-xs font-bold uppercase tracking-wider text-blue-900 dark:text-blue-300 flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               Total Verified TDS Deposited on PAN: <span className="font-mono font-black">{user.pan}</span>
             </span>
-            <p className="text-[11px] text-slate-600 dark:text-neutral-400 max-w-xl">
+            <p className="text-[11px] text-slate-600 dark:text-slate-300 max-w-xl">
               This amount is automatically subtracted from your gross annual tax liability. You only pay Advance Tax on the remaining gap.
             </p>
           </div>
@@ -175,12 +175,12 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
           <div className="text-right shrink-0">
             <span className="text-xs text-blue-800 dark:text-blue-300 font-semibold block">Total 26AS TDS Credits</span>
             <span className="text-2xl font-black text-blue-950 dark:text-blue-100">{formatINR(totalTdsCredits)}</span>
-            <span className="text-[10px] text-slate-500 dark:text-neutral-400 block font-mono">Last verified: {lastSyncTime}</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Last verified: {lastSyncTime}</span>
           </div>
         </div>
 
         {/* Filter Tabs */}
-        <div className="px-5 py-2.5 bg-slate-50/70 dark:bg-[#070707] border-b border-slate-100 dark:border-white/[0.08] flex items-center gap-2 overflow-x-auto text-xs font-bold shrink-0">
+        <div className="px-5 py-2.5 bg-slate-50/70 dark:bg-[#090D16] border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto text-xs font-bold shrink-0">
           {[
             { id: 'all', label: `All Deductions (${tdsEntries.length})` },
             { id: 'salary', label: 'Salary (Sec 192)' },
@@ -194,7 +194,7 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
               className={`px-3 py-1.5 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === tab.id
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-white dark:bg-[#141414] text-slate-600 dark:text-neutral-400 hover:bg-slate-100 dark:hover:bg-[#202020] border border-slate-200/80 dark:border-white/[0.06]'
+                  : 'bg-white dark:bg-[#1E293B] text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700'
               }`}
             >
               {tab.label}
@@ -209,11 +209,11 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
             return (
               <div
                 key={item.id}
-                className="p-4 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-3 hover:border-blue-300 dark:hover:border-blue-500/50 transition-colors"
+                className="p-4 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-3 hover:border-blue-300 dark:hover:border-blue-500/50 transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-white dark:bg-[#181818] border border-slate-200 dark:border-white/[0.1] text-blue-700 dark:text-blue-400 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 text-blue-700 dark:text-blue-400 flex items-center justify-center shrink-0">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div>
@@ -223,21 +223,21 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
                           {item.section}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-neutral-400">
-                        TAN: <span className="font-mono font-bold text-slate-700 dark:text-neutral-300">{item.tan}</span> • {item.quarter} • Credited: {item.depositDate}
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                        TAN: <span className="font-mono font-bold text-slate-700 dark:text-slate-200">{item.tan}</span> • {item.quarter} • Credited: {item.depositDate}
                       </p>
                     </div>
                   </div>
 
                   <div className="text-right shrink-0">
-                    <span className="text-[11px] text-slate-500 dark:text-neutral-400 block">TDS Deposited</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block">TDS Deposited</span>
                     <span className="text-lg font-black text-emerald-700 dark:text-emerald-400">{formatINR(item.tdsDeducted)}</span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white dark:bg-[#121212] border border-slate-200/70 dark:border-white/[0.06] flex items-center justify-between text-xs font-mono">
-                  <span className="text-slate-500 dark:text-neutral-400">
-                    Gross Income Paid: <strong className="text-slate-800 dark:text-neutral-200">{formatINR(item.incomeCredited)}</strong>
+                <div className="p-3 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200/70 dark:border-slate-700/60 flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-500 dark:text-slate-400">
+                    Gross Income Paid: <strong className="text-slate-800 dark:text-slate-200">{formatINR(item.incomeCredited)}</strong>
                   </span>
                   <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" /> {item.status}
@@ -259,7 +259,7 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 shrink-0">
+        <div className="p-4 bg-slate-50 dark:bg-[#0B1325] border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 shrink-0">
           <span className="flex items-center gap-1.5 font-medium">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>End-to-End Encrypted TRACES Handshake • CBDT Compliant</span>
@@ -267,7 +267,7 @@ export const Form26AsModal: React.FC<Form26AsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold hover:bg-slate-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-slate-900 dark:bg-[#1E293B] text-white dark:text-slate-100 font-bold hover:bg-slate-800 dark:hover:bg-slate-700 border border-transparent dark:border-slate-700 transition-colors cursor-pointer"
           >
             Close Inspector
           </button>

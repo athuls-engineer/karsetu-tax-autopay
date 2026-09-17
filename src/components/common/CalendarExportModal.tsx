@@ -147,9 +147,9 @@ END:VEVENT
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 flex items-center justify-center shrink-0">
               <Calendar className="w-5 h-5 text-blue-700 dark:text-blue-400" />
@@ -158,7 +158,7 @@ END:VEVENT
               <h3 className="font-bold text-slate-900 dark:text-white text-base">
                 Statutory Tax Deadlines (FY 2026-27 / AY 2027-28)
               </h3>
-              <p className="text-xs text-slate-500 dark:text-neutral-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Official calendar for CBDT Advance Tax, BBPS Municipal Rebate, and ITR
               </p>
             </div>
@@ -167,7 +167,7 @@ END:VEVENT
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
             aria-label="Close calendar modal"
           >
             <X className="w-5 h-5" />
@@ -175,13 +175,13 @@ END:VEVENT
         </div>
 
         {/* Action Callout */}
-        <div className="p-4 sm:p-5 bg-gradient-to-r from-blue-50/80 to-indigo-50/60 dark:from-[#061226] dark:to-[#0A1633] border-b border-slate-100 dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0">
+        <div className="p-4 sm:p-5 bg-gradient-to-r from-blue-50/80 to-indigo-50/60 dark:from-[#0C1E3D] dark:to-[#0F2347] border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0">
           <div className="space-y-0.5">
             <span className="font-bold text-xs text-blue-950 dark:text-blue-200 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-amber-500" />
               Never Miss an Installment or 5% Municipal Rebate
             </span>
-            <p className="text-[11px] text-slate-600 dark:text-neutral-400">
+            <p className="text-[11px] text-slate-600 dark:text-slate-300">
               Import all 6 official government compliance milestones directly into your phone or PC calendar with 72h alarms.
             </p>
           </div>
@@ -201,9 +201,9 @@ END:VEVENT
           {taxMilestones.map((m) => (
             <div
               key={m.date}
-              className="p-4 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] flex items-start gap-3.5 text-xs hover:border-blue-300 dark:hover:border-blue-500/50 transition-colors"
+              className="p-4 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 flex items-start gap-3.5 text-xs hover:border-blue-300 dark:hover:border-blue-500/50 transition-colors"
             >
-              <div className="w-12 h-12 rounded-2xl bg-white dark:bg-[#181818] border border-slate-200 dark:border-white/[0.1] text-blue-700 dark:text-blue-400 flex flex-col items-center justify-center shrink-0 shadow-2xs">
+              <div className="w-12 h-12 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 text-blue-700 dark:text-blue-400 flex flex-col items-center justify-center shrink-0 shadow-2xs">
                 <span className="text-[10px] font-bold text-slate-400 uppercase leading-none">
                   {m.date.split(' ')[1].slice(0, 3)}
                 </span>
@@ -220,11 +220,11 @@ END:VEVENT
                   </span>
                 </div>
 
-                <p className="text-[11px] text-slate-600 dark:text-neutral-300 leading-relaxed">
+                <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                   {m.desc}
                 </p>
 
-                <div className="pt-1 flex items-center gap-2 text-[10px] text-slate-500 dark:text-neutral-400">
+                <div className="pt-1 flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-semibold">
                     <Bell className="w-3 h-3" /> Auto-Alert: 72h Prior
                   </span>
@@ -237,7 +237,7 @@ END:VEVENT
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 shrink-0">
+        <div className="p-4 bg-slate-50 dark:bg-[#0B1325] border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 shrink-0">
           <span className="flex items-center gap-1.5 font-medium">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Compatible with Google Calendar, Apple Calendar, and Outlook</span>
@@ -245,7 +245,7 @@ END:VEVENT
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold hover:bg-slate-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-slate-900 dark:bg-[#1E293B] text-white dark:text-slate-100 font-bold hover:bg-slate-800 dark:hover:bg-slate-700 border border-transparent dark:border-slate-700 transition-colors cursor-pointer"
           >
             Close Calendar
           </button>

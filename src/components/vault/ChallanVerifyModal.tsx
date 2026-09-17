@@ -96,9 +96,9 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#0B1325] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
@@ -112,7 +112,7 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
                   Live Scannable
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Cryptographic verification directly with {portalName}
               </p>
             </div>
@@ -121,7 +121,7 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
             aria-label="Close verification modal"
           >
             <X className="w-4 h-4" />
@@ -131,7 +131,7 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
         {/* Content Body */}
         <div className="p-5 sm:p-6 space-y-5 overflow-y-auto flex-1 text-xs">
           {/* QR Code & Scan Instructions */}
-          <div className="flex flex-col sm:flex-row items-center gap-5 p-4 sm:p-5 rounded-3xl bg-slate-50 dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row items-center gap-5 p-4 sm:p-5 rounded-3xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80">
             <div className="p-3 bg-white rounded-2xl shadow-sm border border-slate-200/80 shrink-0">
               {qrDataUrl ? (
                 <img
@@ -156,7 +156,7 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
                 Authentic Government QR Code
               </h4>
 
-              <p className="text-slate-600 dark:text-neutral-400 leading-relaxed text-xs">
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-xs">
                 Scanning this QR code with your smartphone opens the official <strong>{portalName}</strong> verification screen with pre-filled CIN, BSR Code, and amount.
               </p>
 
@@ -173,7 +173,7 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
 
                 <button
                   onClick={() => handleCopy(verifyUrl, 'url')}
-                  className="px-3 py-2 rounded-xl bg-white dark:bg-[#1A1A1A] hover:bg-slate-100 dark:hover:bg-[#222] text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-white/[0.08] font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-3 py-2 rounded-xl bg-white dark:bg-[#0F172A] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   {copiedField === 'url' ? (
                     <>
@@ -192,14 +192,14 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
           </div>
 
           {/* CIN & BSR Code Details Table */}
-          <div className="p-4 rounded-2xl bg-white dark:bg-[#0E0E0E] border border-slate-200 dark:border-white/[0.08] space-y-2.5 font-mono">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/[0.06]">
-              <span className="text-slate-500 dark:text-neutral-400">Official CIN (Challan ID):</span>
+          <div className="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-slate-700/80 space-y-2.5 font-mono">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700/60">
+              <span className="text-slate-500 dark:text-slate-400">Official CIN (Challan ID):</span>
               <div className="flex items-center gap-2">
                 <span className="font-bold text-slate-900 dark:text-white break-all">{challan.cin}</span>
                 <button
                   onClick={() => handleCopy(challan.cin, 'cin')}
-                  className="p-1 hover:bg-slate-100 dark:hover:bg-[#1A1A1A] rounded transition-colors text-slate-500 cursor-pointer"
+                  className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-slate-500 cursor-pointer"
                   title="Copy CIN"
                 >
                   {copiedField === 'cin' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -207,33 +207,33 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/[0.06]">
-              <span className="text-slate-500 dark:text-neutral-400">BSR Code (7 Digits):</span>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700/60">
+              <span className="text-slate-500 dark:text-slate-400">BSR Code (7 Digits):</span>
               <span className="font-bold text-slate-900 dark:text-white">{challan.bsrCode || '0210045'} (SBI Agency Branch)</span>
             </div>
 
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/[0.06]">
-              <span className="text-slate-500 dark:text-neutral-400">Challan Ref No (CRN):</span>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700/60">
+              <span className="text-slate-500 dark:text-slate-400">Challan Ref No (CRN):</span>
               <span className="font-bold text-blue-600 dark:text-blue-400">{challan.crn}</span>
             </div>
 
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/[0.06]">
-              <span className="text-slate-500 dark:text-neutral-400">Tender Date & Amount:</span>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700/60">
+              <span className="text-slate-500 dark:text-slate-400">Tender Date & Amount:</span>
               <span className="font-bold text-emerald-600 dark:text-emerald-400">
                 {challan.paidOn} • {formatINR(challan.amount)}
               </span>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-slate-500 dark:text-neutral-400">Government Treasury Account:</span>
-              <span className="font-bold text-slate-800 dark:text-neutral-300">
+              <span className="text-slate-500 dark:text-slate-400">Government Treasury Account:</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">
                 {isBBPS ? 'Municipal Urban Local Body (ULB)' : 'Consolidated Fund of India (RBI 0021-100)'}
               </span>
             </div>
           </div>
 
           {/* Interactive Live Query Simulator */}
-          <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40 space-y-3">
+          <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-[#0C1E3D] border border-blue-200 dark:border-blue-700/60 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -252,7 +252,7 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
             </div>
 
             {queryState === 'querying' && (
-              <div className="p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-blue-200 dark:border-blue-800/40 space-y-1 text-slate-600 dark:text-neutral-400 font-mono text-[11px] animate-pulse">
+              <div className="p-3 rounded-xl bg-white dark:bg-[#0F172A] border border-blue-200 dark:border-blue-700/60 space-y-1 text-slate-600 dark:text-slate-300 font-mono text-[11px] animate-pulse">
                 <p>➔ Handshaking with TIN 2.0 Gateway (incometax.gov.in)...</p>
                 <p>➔ Querying BSR {challan.bsrCode || '0210045'} & Sequence #{challan.challanNo}...</p>
               </div>
@@ -276,14 +276,14 @@ export const ChallanVerifyModal: React.FC<ChallanVerifyModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 dark:bg-[#040404] border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 shrink-0">
+        <div className="p-4 bg-slate-50 dark:bg-[#0B1325] border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 shrink-0">
           <span className="flex items-center gap-1.5 font-medium">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Direct Government Cryptographic Record</span>
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold hover:bg-slate-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-[#1E293B] text-white dark:text-slate-100 font-bold hover:bg-slate-800 dark:hover:bg-slate-700 border border-transparent dark:border-slate-700 transition-colors cursor-pointer"
           >
             Close
           </button>

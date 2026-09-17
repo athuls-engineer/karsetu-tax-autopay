@@ -102,9 +102,9 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-3xl max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-white/[0.08] overflow-hidden transition-colors my-auto">
+      <div className="bg-white dark:bg-[#0F172A] rounded-3xl max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-m3-4 border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors my-auto">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between bg-m3-surface-container-low dark:bg-[#040404] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-m3-surface-container-low dark:bg-[#090D16] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-m3-primary-container dark:bg-emerald-950 text-m3-on-primary-container dark:text-emerald-300 flex items-center justify-center">
               <ShieldCheck className="w-6 h-6 text-m3-primary dark:text-emerald-400" />
@@ -112,11 +112,11 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Government Challan & Receipt Vault</h2>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border dark:border-emerald-500/30">
                   CIN & BSR Verified
                 </span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-neutral-400">
+              <p className="text-xs text-slate-600 dark:text-slate-300">
                 100% Tax Department & BBPS verified receipts stored with permanent BSR verification
               </p>
             </div>
@@ -126,7 +126,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
             <button
               type="button"
               onClick={handleExportCsv}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-neutral-200 text-xs font-bold transition-colors cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-colors cursor-pointer"
               title="Download CSV statement of all paid tax challans"
             >
               <Download className="w-3.5 h-3.5" />
@@ -135,7 +135,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#141414] rounded-full transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
               aria-label="Close vault"
             >
               <X className="w-5 h-5" />
@@ -144,7 +144,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
         </div>
 
         {/* Search & Filter Toolbar */}
-        <div className="px-5 py-3 border-b border-slate-100 dark:border-white/[0.08] bg-slate-50/70 dark:bg-[#070707] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
+        <div className="px-5 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0F172A] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
           {/* Category Filter Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto text-xs font-bold">
             {[
@@ -160,7 +160,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
                 className={`px-3 py-1.5 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-white dark:bg-[#141414] text-slate-600 dark:text-neutral-400 hover:bg-slate-100 dark:hover:bg-[#202020] border border-slate-200/80 dark:border-white/[0.06]'
+                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700'
                 }`}
               >
                 {cat.label}
@@ -176,21 +176,21 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search CIN, BSR, or tax..."
-              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/[0.1] bg-white dark:bg-[#0E0E0E] text-xs font-medium text-slate-800 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-xs font-medium text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-600 focus:outline-none"
             />
           </div>
         </div>
 
         {/* Mobile View Toggle (Challan List vs View Receipt) */}
         <div className="lg:hidden px-5 pt-3 shrink-0">
-          <div className="flex items-center p-1 bg-slate-100 dark:bg-[#141414] rounded-2xl border border-slate-200/80 dark:border-white/[0.06]">
+          <div className="flex items-center p-1 bg-slate-100 dark:bg-[#1E293B] rounded-2xl border border-slate-200/80 dark:border-slate-700">
             <button
               type="button"
               onClick={() => setMobileTab('list')}
               className={`flex-1 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 mobileTab === 'list'
-                  ? 'bg-white dark:bg-[#202020] text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-neutral-400'
+                  ? 'bg-white dark:bg-[#0F172A] text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 dark:text-slate-300'
               }`}
             >
               Challan List ({filteredChallans.length})
@@ -200,8 +200,8 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
               onClick={() => setMobileTab('receipt')}
               className={`flex-1 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 mobileTab === 'receipt'
-                  ? 'bg-white dark:bg-[#202020] text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-neutral-400'
+                  ? 'bg-white dark:bg-[#0F172A] text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 dark:text-slate-300'
               }`}
             >
               View Receipt
@@ -214,7 +214,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
           {/* List of Receipts (4 cols on lg) */}
           <div className={`lg:col-span-4 space-y-3 ${mobileTab === 'receipt' ? 'hidden lg:block' : 'block'}`}>
             <div className="flex items-center justify-between text-xs px-1">
-              <span className="font-bold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
+              <span className="font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
                 Filtered Receipts ({filteredChallans.length})
               </span>
               <button
@@ -227,7 +227,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
             </div>
 
             {filteredChallans.length === 0 ? (
-              <div className="p-6 text-center text-xs text-slate-400 rounded-2xl border border-dashed border-slate-200 dark:border-white/10">
+              <div className="p-6 text-center text-xs text-slate-400 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
                 No receipts match your search or filter.
               </div>
             ) : (
@@ -242,12 +242,12 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
                     }}
                     className={`w-full text-left p-4 rounded-2xl border transition-all text-sm flex flex-col gap-1.5 cursor-pointer ${
                       isSelected
-                        ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 shadow-sm ring-1 ring-blue-500/20'
-                        : 'bg-white dark:bg-[#0E0E0E] border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-[#141414]'
+                        ? 'bg-blue-50/80 dark:bg-[#0C1E3D] border-blue-500 shadow-sm ring-1 ring-blue-500/20'
+                        : 'bg-white dark:bg-[#1E293B] border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-slate-500 dark:text-neutral-400">
+                      <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-300">
                         {challan.bsrCode ? `BSR: ${challan.bsrCode}` : 'BBPS'}
                       </span>
                       <span className="font-extrabold text-slate-900 dark:text-white">{formatINR(challan.amount)}</span>
@@ -255,7 +255,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
 
                     <p className="font-semibold text-slate-900 dark:text-slate-200 text-xs line-clamp-1">{challan.taxType}</p>
 
-                    <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-neutral-400 pt-1 border-t border-slate-100 dark:border-white/[0.08]">
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-300 pt-1 border-t border-slate-100 dark:border-slate-700/80">
                       <span>{challan.paidOn.split(',')[0]}</span>
                       <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                         Verified <ArrowRight className="w-3 h-3" />
@@ -266,7 +266,7 @@ export const ChallanVaultModal: React.FC<ChallanVaultModalProps> = ({
               })
             )}
 
-            <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200">
+            <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-[#1E293B] border border-amber-200/80 dark:border-amber-500/30 text-xs text-amber-900 dark:text-amber-200">
               <div className="flex items-center gap-2 font-bold mb-1">
                 <FileText className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                 <span>ITR Filing Ready</span>

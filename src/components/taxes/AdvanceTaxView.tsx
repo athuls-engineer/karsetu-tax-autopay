@@ -58,7 +58,7 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in">
       {/* Overview Banner */}
-      <div className="bg-white dark:bg-[#0A0A0A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-white/[0.08] shadow-m3-1 transition-colors">
+      <div className="bg-white dark:bg-[#0F172A] rounded-4xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-m3-1 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
@@ -76,16 +76,16 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-2">
               {t.tabAdvance} (Challan 280)
             </h3>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-1 max-w-xl">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-1 max-w-xl">
               {t.radarSubtitle}
             </p>
           </div>
 
           <div
             onClick={onOpen26As}
-            className={`p-4 rounded-3xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 text-right shrink-0 transition-all ${
+            className={`p-4 rounded-3xl bg-blue-50/80 dark:bg-[#1E293B] border border-blue-200 dark:border-slate-700/80 text-right shrink-0 transition-all ${
               onOpen26As
-                ? 'cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:scale-[1.02] active:scale-95 shadow-2xs group'
+                ? 'cursor-pointer hover:bg-blue-100 dark:hover:bg-slate-700 hover:scale-[1.02] active:scale-95 shadow-2xs group'
                 : ''
             }`}
           >
@@ -120,10 +120,10 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
               key={inst.quarter}
               className={`p-6 rounded-4xl border transition-all flex flex-col justify-between ${
                 isScheduled
-                  ? 'bg-blue-50/70 dark:bg-blue-950/30 border-blue-500 dark:border-blue-500/70 shadow-m3-2 ring-1 ring-blue-500/20'
+                  ? 'bg-blue-50/70 dark:bg-[#0C1E3D] border-blue-500 dark:border-blue-400/60 shadow-m3-2 ring-1 ring-blue-500/20'
                   : isPaid
-                  ? 'bg-white dark:bg-[#0A0A0A] border-emerald-200 dark:border-emerald-800/40'
-                  : 'bg-white dark:bg-[#0A0A0A] border-slate-200 dark:border-white/[0.08]'
+                  ? 'bg-white dark:bg-[#0F172A] border-emerald-200 dark:border-emerald-500/30'
+                  : 'bg-white dark:bg-[#0F172A] border-slate-200 dark:border-slate-800'
               }`}
             >
               <div>
@@ -132,13 +132,13 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
                     <span className="text-sm font-black text-slate-900 dark:text-white">
                       {inst.quarter} ({inst.periodLabel})
                     </span>
-                    <span className="text-xs font-bold text-slate-500 dark:text-neutral-400">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-300">
                       {inst.targetPercentage}%
                     </span>
                   </div>
 
                   {isPaid ? (
-                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center gap-1">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center gap-1 border dark:border-emerald-500/30">
                       <CheckCircle2 className="w-3.5 h-3.5" /> {t.amountAutopaid}
                     </span>
                   ) : isScheduled ? (
@@ -146,27 +146,27 @@ export const AdvanceTaxView: React.FC<AdvanceTaxViewProps> = ({
                       <Clock className="w-3.5 h-3.5" /> {t.tomorrowBadge}
                     </span>
                   ) : (
-                    <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-neutral-400 text-xs font-medium">
+                    <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium">
                       {t.upcomingBadge}
                     </span>
                   )}
                 </div>
 
                 <div className="space-y-1 mb-4">
-                  <span className="text-xs text-slate-500 dark:text-neutral-400">
+                  <span className="text-xs text-slate-500 dark:text-slate-300">
                     {isPaid ? t.amountAutopaid : t.scheduledInstallment}
                   </span>
                   <div className="text-2xl font-black text-slate-900 dark:text-white">
                     {formatINR(isPaid ? inst.paidAmount : inst.installmentDue)}
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-neutral-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-300">
                     {actionLabels.cumTarget} {formatINR(inst.cumulativeLiability)}
                   </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs">
-                <span className="text-slate-600 dark:text-neutral-400 font-medium flex items-center gap-1">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span className="text-slate-600 dark:text-slate-300 font-medium flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5 text-slate-400" />
                   {t.dueLabel} <strong className="text-slate-900 dark:text-slate-200">{inst.deadline}</strong>
                 </span>
