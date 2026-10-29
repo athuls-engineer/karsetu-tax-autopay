@@ -105,7 +105,7 @@ X-WR-CALNAME:India Tax Compliance Deadlines FY 2026-27
     taxMilestones.forEach((m) => {
       icsString += `BEGIN:VEVENT
 UID:karsetu-${m.icsDateStart}@karsetu.gov.in
-DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15)}Z
+DTSTAMP:${new Date().toISOString().replace(/[.\-:]/g, '').slice(0, 15)}Z
 DTSTART:${m.icsDateStart}
 DTEND:${m.icsDateEnd}
 SUMMARY:${m.title}
